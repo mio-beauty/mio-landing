@@ -4,3 +4,27 @@
     margin: 0;
     font-family: "Montserrat", sans-serif;
 }
+
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background-color: black;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #87878D;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #747479;
+}
+
+::-webkit-scrollbar-button {
+    height: none;
+    display: none;
+}
