@@ -1,6 +1,8 @@
-import { useLayoutEffect, useMemo, useRef } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import modalPng from "../assets/img/modal.png";
+import ConsultationModal from "./ConsultationModal";
 
 function clampInt(value, min, max) {
   return Math.min(max, Math.max(min, value | 0));
@@ -9,6 +11,16 @@ function clampInt(value, min, max) {
 function mod(n, m) {
   return ((n % m) + m) % m;
 }
+
+const DEFAULT_TITLES = [
+  "Пигментация",
+  "Чувствительность",
+  "Сухость",
+  "Акне и воспаления",
+  "Тусклый тон",
+];
+
+const MODAL_IMAGES = DEFAULT_TITLES.map(() => modalPng);
 
 export default function ScrollGalleryShowcase({
   images,
@@ -20,18 +32,21 @@ export default function ScrollGalleryShowcase({
     return Array.isArray(images) ? images.filter(Boolean) : [];
   }, [images]);
   const count = safeImages.length;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalIndex, setModalIndex] = useState(0);
 
   const sectionRef = useRef(null);
   const galleryViewportRef = useRef(null);
+  const titleRef = useRef(null);
   const bgLayerRefA = useRef(null);
   const bgLayerRefB = useRef(null);
   const bgImgRefA = useRef(null);
   const bgImgRefB = useRef(null);
   const itemsRef = useRef([]);
   const activeIndexRef = useRef(0);
-  const activeBgLayerRef = useRef(0); // 0 => A visible, 1 => B visible
+  const activeBgLayerRef = useRef(0);
   const stepPxRef = useRef(140);
-  const axisRef = useRef("y"); // "y" at md+ (vertical rail), "x" on mobile (bottom strip)
+  const axisRef = useRef("y");
   const stRef = useRef(null);
   const roRef = useRef(null);
 
@@ -61,8 +76,37 @@ export default function ScrollGalleryShowcase({
     const bgImgA = bgImgRefA.current;
     const bgImgB = bgImgRefB.current;
     const viewport = galleryViewportRef.current;
+    const titleEl = titleRef.current;
 
     if (!bgA || !bgB || !bgImgA || !bgImgB || !viewport) return;
+
+    const setTitleInstant = (nextIndex) => {
+      if (!titleEl) return;
+      const nextTitle = DEFAULT_TITLES[nextIndex] ?? title ?? "";
+      titleEl.textContent = nextTitle;
+    };
+
+    const swapTitleTo = (nextIndex) => {
+      if (!titleEl) return;
+      const nextTitle = DEFAULT_TITLES[nextIndex] ?? title ?? "";
+      if (titleEl.textContent === nextTitle) return;
+
+      if (prefersReducedMotion) {
+        titleEl.textContent = nextTitle;
+        return;
+      }
+
+      gsap.killTweensOf(titleEl);
+      const tl = gsap.timeline({
+        defaults: { ease: "power2.out", overwrite: "auto" },
+      });
+      tl.to(titleEl, { autoAlpha: 0, y: -6, duration: 0.18 })
+        .add(() => {
+          titleEl.textContent = nextTitle;
+        })
+        .set(titleEl, { y: 6 })
+        .to(titleEl, { autoAlpha: 1, y: 0, duration: 0.28 });
+    };
 
     const computeAxis = () => {
       axisRef.current = window.matchMedia?.("(min-width: 768px)")?.matches
@@ -156,11 +200,12 @@ export default function ScrollGalleryShowcase({
       activeIndexRef.current = nextIndex;
       crossfadeBackgroundTo(nextIndex);
       applyGalleryState(nextIndex, { immediate });
+      swapTitleTo(nextIndex);
     };
 
-    // Initial state
     activeIndexRef.current = 0;
     activeBgLayerRef.current = 0;
+    setTitleInstant(0);
 
     bgImgA.src = safeImages[0].src;
     bgImgA.alt = safeImages[0].alt || "";
@@ -210,16 +255,21 @@ export default function ScrollGalleryShowcase({
       stRef.current = null;
       gsap.killTweensOf([bgA, bgB, ...itemsForCleanup]);
     };
-  }, [count, prefersReducedMotion, safeImages]);
+  }, [count, prefersReducedMotion, safeImages, title]);
 
   if (count === 0) return null;
+
+  const openModal = () => {
+    const n = DEFAULT_TITLES.length || 1;
+    setModalIndex(mod(activeIndexRef.current, n));
+    setIsModalOpen(true);
+  };
 
   return (
     <section
       ref={sectionRef}
       className="relative h-screen w-full overflow-hidden"
     >
-      {/* Background crossfade layers */}
       <div className="absolute inset-0">
         <div ref={bgLayerRefA} className="absolute inset-0">
           <img
@@ -244,8 +294,15 @@ export default function ScrollGalleryShowcase({
       </div>
 
       <div className="relative z-10 flex h-full w-full items-end px-6 pb-6 sm:px-10 lg:px-20 md:items-center md:pb-0">
-        <div className="absolute bottom-6 left-1/2 z-20 w-[calc(100%-3rem)] max-w-[23.5rem] -translate-x-1/2 md:bottom-[3.75rem] md:left-20 md:w-auto md:max-w-none md:translate-x-0">
-          <a href={buttonHref || "#"} className="inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 font-semibold leading-5 text-black cursor-pointer md:w-auto">
+        <div className="absolute bottom-6 left-1/2 z-20 w-[calc(100%-3rem)] max-w-94 -translate-x-1/2 md:bottom-15 md:left-20 md:w-auto md:max-w-none md:translate-x-0">
+          <a
+            href={buttonHref || "#"}
+            onClick={(e) => {
+              e.preventDefault();
+              openModal();
+            }}
+            className="inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 font-semibold leading-5 text-black cursor-pointer md:w-auto"
+          >
             Посмотреть решения
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -265,20 +322,22 @@ export default function ScrollGalleryShowcase({
           </a>
         </div>
         <div className="grid w-full grid-cols-1 items-end gap-6 pb-24 md:grid-cols-12 md:items-center md:gap-10 md:pb-0">
-          <div className="md:col-span-5 md:max-w-[32.5rem]">
-            {title ? (
-              <h2 className="text-[32px] font-medium leading-[120%] text-white pb-4">
-                {title}
-              </h2>
-            ) : null}
+          <div className="md:col-span-5 md:max-w-130">
             <p className="text-white leading-5 font-normal">{buttonText}</p>
+
+            <h2
+              ref={titleRef}
+              className="text-[32px] font-medium leading-[120%] text-white pt-4 will-change-transform"
+            >
+              {DEFAULT_TITLES[0] ?? title}
+            </h2>
           </div>
 
           <div className="md:col-span-7">
             <div className="flex w-full items-center justify-center md:justify-end">
               <div
                 ref={galleryViewportRef}
-                className="relative h-20 w-full max-w-[23.5rem] overflow-hidden md:h-[32.5rem] md:w-20 md:max-w-none"
+                className="relative h-20 w-full max-w-94 overflow-hidden md:h-130 md:w-20 md:max-w-none"
               >
                 <div className="absolute inset-0">
                   {safeImages.map((img, i) => (
@@ -309,6 +368,13 @@ export default function ScrollGalleryShowcase({
           </div>
         </div>
       </div>
+
+      <ConsultationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        imageSrc={MODAL_IMAGES[modalIndex] ?? modalPng}
+        prefersReducedMotion={prefersReducedMotion}
+      />
     </section>
   );
 }

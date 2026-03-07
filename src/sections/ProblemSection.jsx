@@ -5,8 +5,7 @@ export default function ProblemSection() {
   return (
     <ScrollGalleryShowcase
       images={problemShowcaseImages}
-      title="Жирный блеск и расширенные поры"
-      buttonText="Короткое описание → чем помогает ваш продукт"
+      buttonText="Какую проблему кожи помогаем решить"
       buttonHref="/"
     />
   );
