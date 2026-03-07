@@ -4,6 +4,7 @@ export default function CompositionVisual({
   orbitRef,
   productOuterRef,
   productInnerRef,
+  cursorCtaRef,
   features,
   cardsOuterRefs,
   cardsFloatRefs,
@@ -51,6 +52,22 @@ export default function CompositionVisual({
               // style={{ transform: "rotate(-5deg)" }}
               draggable="false"
             />
+          </div>
+
+          <div
+            ref={cursorCtaRef}
+            className={[
+              "pointer-events-none absolute left-0 top-0 z-40",
+              "flex w-28.75 h-28.75 items-center justify-center gap-2",
+              "rounded-full px-3.75 py-2",
+              "cursor-pointer",
+              "bg-black/10 text-white text-sm font-normal",
+              "backdrop-blur-sm",
+              "opacity-0 scale-0 select-none will-change-transform transform-gpu",
+            ].join(" ")}
+            aria-hidden="true"
+          >
+            Shop now
           </div>
         </div>
       </div>
