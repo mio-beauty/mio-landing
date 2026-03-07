@@ -107,7 +107,7 @@ export default function ConsultationModal({
                       ref={firstFieldRef}
                       type="text"
                       placeholder="Ваше имя"
-                      className="mt-2 h-9 w-full rounded-[8px] border border-[#CCCCCC] px-4 text-black outline-none focus:border-black/30"
+                      className="mt-2 h-9 w-full rounded-lg border border-[#CCCCCC] px-4 text-black outline-none focus:border-black/30"
                     />
                   </label>
                   <label className="block mb-5">
@@ -117,14 +117,14 @@ export default function ConsultationModal({
                     <input
                       type="tel"
                       placeholder="+998"
-                      className="mt-2 h-9 w-full rounded-[8px] border border-[#CCCCCC] px-4 text-black outline-none focus:border-black/30"
+                      className="mt-2 h-9 w-full rounded-lg border border-[#CCCCCC] px-4 text-black outline-none focus:border-black/30"
                     />
                   </label>
                 </div>
 
                 <button
                   type="button"
-                  className="inline-flex h-11 w-full items-center justify-center rounded-[8px] bg-black px-6 font-normal text-white cursor-pointer"
+                  className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-black px-6 font-normal text-white cursor-pointer"
                 >
                   Получить консультацию
                 </button>
