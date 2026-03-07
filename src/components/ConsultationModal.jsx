@@ -84,7 +84,7 @@ export default function ConsultationModal({
           ].join(" ")}
         >
           <div className="grid h-full grid-cols-1 md:grid-cols-2">
-            <div className="relative h-56 md:h-full">
+            <div className="relative hidden md:block md:h-full">
               <img
                 src={imageSrc}
                 alt=""
