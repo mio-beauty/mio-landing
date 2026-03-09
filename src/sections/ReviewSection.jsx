@@ -8,7 +8,6 @@ export default function ReviewSection() {
       </div>
 
       <div className="w-full flex flex-col">
-
         <div className="flex items-center gap-4 border-b border-[#ECECEE] py-6 px-4 lg:justify-between lg:px-0 lg:gap-0">
           <h2 className="min-w-[60px] font-semibold text-5xl lg:text-7xl text-[#C4C4CC]">
             01
@@ -59,9 +58,7 @@ export default function ReviewSection() {
             <h5 className="text-[20px] lg:text-2xl font-semibold">
               100 000+ клиентов
             </h5>
-            <p className="text-[16px]">
-              Тысячи девушек уже прошли курс ухода
-            </p>
+            <p className="text-[16px]">Тысячи девушек уже прошли курс ухода</p>
           </div>
         </div>
 
@@ -77,7 +74,6 @@ export default function ReviewSection() {
             <p className="text-[16px]">По результатам опросов клиентов</p>
           </div>
         </div>
-
       </div>
     </div>
   );

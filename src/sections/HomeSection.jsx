@@ -1,32 +1,30 @@
 import Navbar from "../components/Navbar.jsx";
 import heroImg from "../assets/imags/hero-img.png";
-import heroImg2 from "../assets/imags/hero2.png"
+import heroImg2 from "../assets/imags/hero2.png";
 
 export default function HomeSection() {
-
   return (
     <section
       className="bg-[#FFFFFF] lg:bg-[#D0C1AD] bg-no-repeat bg-cover lg:bg-right
-             bg-[image:var(--hero-mobile)]
-             lg:bg-[image:var(--hero-desktop)]"
-
-             style={{
-            "--hero-mobile": `url(${heroImg2})`,
-            "--hero-desktop": `url(${heroImg})`,
-          }}
-          >
+             bg-(image:--hero-mobile)
+             lg:bg-(image:--hero-desktop)"
+      style={{
+        "--hero-mobile": `url(${heroImg2})`,
+        "--hero-desktop": `url(${heroImg})`,
+      }}
+    >
       <div className="lg:h-screen lg:px-36">
         <div className="min-h-screen flex flex-col justify-between pb-6 lg:pb-0">
           <Navbar />
 
-        <div className="text-[#FFFFFF] lg:px-0 px-4 lg:absolute lg:bottom-[422px] lg:left-0 lg:px-[120px]">
-          <h1 className="lg:text-[64px] text-[32px]  font-normal leading-[100%] lg:max-w-[600px] max-w-[300px]">
-            Решение проблем кожи лица{" "}
-          </h1>
-          <p className="text-[16px]  font-normal leading-[120%] mt-4">
-            Акне | Пигментация | Сухость | Чувствительность
-          </p>
-        </div>
+          <div className="text-[#FFFFFF] lg:px-0 px-4 lg:absolute lg:bottom-[422px] lg:left-0 lg:px-[120px]">
+            <h1 className="lg:text-[64px] text-[32px]  font-normal leading-[100%] lg:max-w-[600px] max-w-[300px]">
+              Решение проблем кожи лица{" "}
+            </h1>
+            <p className="text-[16px]  font-normal leading-[120%] mt-4">
+              Акне | Пигментация | Сухость | Чувствительность
+            </p>
+          </div>
         </div>
 
         <div className="lg:absolute lg:bottom-[60px] lg:left-0 lg:px-[120px] w-full flex flex-col lg:flex-row items-start lg:items-center lg:gap-14 lg:text-[#FFFFFF] text-[#0B0B0B] bg-[#FFFFFF] lg:bg-transparent lg:pt-52">
