@@ -16,7 +16,7 @@ export default function LandingPage() {
       <CompositionSection />
       <ProblemSection /> */}
       <ReviewSection />
-      <TrustSection />
+      {/* <TrustSection /> */}
       {/* <ProductsSection />
       <ResultSection />
       <ConsultationSection />
