@@ -12,16 +12,16 @@ import ReviewSection from "../sections/TrustSection.jsx";
 export default function LandingPage() {
   return (
     <>
-      <HomeSection />
-      <CompositionSection />
-      <ProblemSection />
-      <TrustSection />
-      <ReviewSection />
-      <ProductsSection />
-      <ResultSection />
+      {/* <HomeSection /> */}
+      {/* <CompositionSection /> */}
+      {/* <ProblemSection /> */}
+      {/* <TrustSection /> */}
+      {/* <ReviewSection /> */}
+      {/* <ProductsSection /> */}
+      {/* <ResultSection /> */}
       <ConsultationSection />
-      <QuestionSection />
-      <AboutSection />
+      {/* <QuestionSection /> */}
+      {/* <AboutSection /> */}
     </>
   );
 }
