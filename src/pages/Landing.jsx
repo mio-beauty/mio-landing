@@ -6,19 +6,19 @@ import ProblemSection from "../sections/ProblemSection.jsx";
 import ProductsSection from "../sections/ProductsSection.jsx";
 import QuestionSection from "../sections/QuestionSection.jsx";
 import ResultSection from "../sections/ResultSection.jsx";
-import ReviewSection from "../sections/ReviewSection.jsx";
-import TrustSection from "../sections/TrustSection.jsx";
+import TrustSection from "../sections/ReviewSection.jsx";
+import ReviewSection from "../sections/TrustSection.jsx";
 
 export default function LandingPage() {
   return (
     <>
       <HomeSection />
-      <TrustSection />
-      {/* <ProblemSection /> */}
       <CompositionSection />
+      <ProblemSection />
+      <TrustSection />
+      <ReviewSection />
       <ProductsSection />
       <ResultSection />
-      <ReviewSection />
       <ConsultationSection />
       <QuestionSection />
       <AboutSection />
