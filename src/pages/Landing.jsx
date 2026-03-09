@@ -13,11 +13,11 @@ export default function LandingPage() {
   return (
     <>
       {/* <HomeSection />
-      <CompositionSection />
-      <ProblemSection /> */}
-      <ReviewSection />
-      {/* <TrustSection /> */}
-      {/* <ProductsSection />
+      <CompositionSection /> */}
+      <ProblemSection />
+      {/* <ReviewSection />
+      <TrustSection />
+      <ProductsSection />
       <ResultSection />
       <ConsultationSection />
       <QuestionSection />
