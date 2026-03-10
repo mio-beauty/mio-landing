@@ -1,5 +1,5 @@
-import SectionShell from './SectionShell.jsx'
+import SectionShell from "./SectionShell.jsx";
 
 export default function AboutSection() {
-  return <SectionShell id="about" />
+  return <SectionShell id="about" />;
 }
