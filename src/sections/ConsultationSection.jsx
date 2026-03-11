@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Check, ChevronDown, LoaderCircle } from "lucide-react";
+import QuestionSection from "./QuestionSection";
+import ResultSection from "./ResultSection";
 
 export default function ConsultationSection() {
   const [open, setOpen] = useState(false);
@@ -21,6 +23,9 @@ export default function ConsultationSection() {
   const formatPhone = (value) => {
     let numbers = value.replace(/\D/g, "");
     if (numbers.startsWith("998")) numbers = numbers.slice(3);
+    numbers = numbers.slice(0, 9);
+
+    if (numbers.length === 0) return "+998 ";
 
     let formatted = "+998";
     if (numbers.length > 0) formatted += " " + numbers.slice(0, 2);
@@ -41,7 +46,8 @@ export default function ConsultationSection() {
   };
 
   const handlePhoneBlur = () => {
-    if (form.phone === "+998 ") setForm((prev) => ({ ...prev, phone: "" }));
+    if (form.phone === "+998 " || form.phone === "+998")
+      setForm((prev) => ({ ...prev, phone: "" }));
   };
 
   const handleNameChange = (e) => {
@@ -79,7 +85,7 @@ export default function ConsultationSection() {
 
   return (
     <section className="bg-[#F8F8F8]">
-      <div className="relative px-4 py-8 lg:px-[134px] lg:py-36 flex flex-col justify-center">
+      <div className="relative px-4 py-8 lg:px-33.5 lg:py-36 flex flex-col justify-center">
         {/* TITLE */}
         <div className="flex flex-col gap-3 text-center">
           <h2 className="text-[#0B0B0B] text-2xl lg:text-5xl font-medium leading-tight">
@@ -150,27 +156,34 @@ export default function ConsultationSection() {
           </div>
 
           {/* CUSTOM SELECT */}
-          <div className="relative px-3 py-2.5 border-b text-sm border-[#CCCCCC]">
-            <div
-              className="flex justify-between"
-              onClick={() => setOpen(!open)}
-            >
-              <span
-                className={form.problem ? "text-[#0B0B0B]" : "text-[#757575]"}
+          <div className="relative">
+            <div className="px-3 py-2.5 border-b border-[#CCCCCC] text-sm">
+              <div
+                className="flex justify-between items-center cursor-pointer"
+                onClick={() => setOpen(!open)}
               >
-                {form.problem || "Акне, пигментация, сухость и т.д."}
-              </span>
-
-              <ChevronDown
-                size={20}
-                className={`transition cursor-pointer text-[#757575] ${
-                  open ? "rotate-180" : ""
-                }`}
-              />
+                <span
+                  className={form.problem ? "text-[#0B0B0B]" : "text-[#757575]"}
+                >
+                  {form.problem || "Акне, пигментация, сухость и т.д."}
+                </span>
+                <ChevronDown
+                  size={20}
+                  className={`transition-transform duration-300 text-[#757575] ${
+                    open ? "rotate-180" : ""
+                  }`}
+                />
+              </div>
             </div>
 
-            {open && (
-              <ul className="absolute left-0 w-full bg-[#FFFFFF] border border-[#CCCCCC] rounded overflow-hidden z-50">
+            <div
+              className={`absolute left-0 top-full mt-1 w-full z-50 transition-all duration-300 origin-top ${
+                open
+                  ? "opacity-100 scale-y-100 pointer-events-auto"
+                  : "opacity-0 scale-y-0 pointer-events-none"
+              }`}
+            >
+              <ul className="bg-white shadow-[0_0_24px_rgba(41,42,53,0.1)] rounded-xl overflow-hidden">
                 {options.map((item, index) => (
                   <li
                     key={index}
@@ -178,16 +191,15 @@ export default function ConsultationSection() {
                       setForm((prev) => ({ ...prev, problem: item }));
                       setOpen(false);
                     }}
-                    className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                    className="px-3 py-2 cursor-pointer transition-colors hover:bg-gray-100"
                   >
                     {item}
                   </li>
                 ))}
               </ul>
-            )}
+            </div>
           </div>
 
-          {/* BUTTON + TEXT */}
           <div className="flex flex-col lg:flex-row-reverse lg:items-center lg:justify-between gap-3.5 pt-8">
             <button
               onClick={handleClick}
@@ -211,9 +223,9 @@ export default function ConsultationSection() {
 
         {/* NOTIFICATIONS */}
         <div className="flex flex-col items-center lg:px-96">
-          <div className="absolute bottom-0 translate-y-1/2 w-full flex flex-col items-center gap-3 z-50 px-4 lg:px-[432px]">
+          <div className="absolute bottom-0 translate-y-1/2 w-full flex flex-col items-center gap-3 z-50 px-4 lg:px-108">
             {status === "error" && (
-              <div className="flex flex-col lg:flex-row items-center justify-between gap-2 bg-[#000000D9] border border-[#757575] py-2.5 px-3 rounded-[12px]">
+              <div className="flex flex-col lg:flex-row items-center justify-between gap-2 bg-[#000000D9] border border-[#757575] py-2.5 px-3 rounded-xl">
                 <div className="flex lg:items-start items-center gap-2">
                   <img src="/src/assets/img/ic_error.svg" alt="" />
                   <p className="text-[#FFFFFF] text-[16px]">
@@ -222,13 +234,13 @@ export default function ConsultationSection() {
                   </p>
                 </div>
                 <div className="hidden lg:flex justify-between items-center gap-2">
-                  <button className="bg-[#FFFFFF4D] text-[#FFFFFF] font-medium text-sm rounded-[6px] py-2 px-3">
+                  <button className="bg-[#FFFFFF4D] text-[#FFFFFF] font-medium text-sm rounded-md py-2 px-3">
                     Инфо
                   </button>
                   <div className="border-[#FFFFFF4D] h-5 border"></div>
                   <button
                     onClick={() => setStatus("idle")}
-                    className="bg-[#FFFFFF] text-[#0B0B0B] font-medium text-sm rounded-[6px] py-2 px-3"
+                    className="bg-[#FFFFFF] text-[#0B0B0B] font-medium text-sm rounded-md py-2 px-3"
                   >
                     закрыть
                   </button>
@@ -246,7 +258,7 @@ export default function ConsultationSection() {
                 </div>
                 <button
                   onClick={() => setStatus("idle")}
-                  className="hidden lg:block bg-[#FFFFFF] text-[#0B0B0B] font-medium text-sm rounded-[6px] py-2 px-3"
+                  className="hidden lg:block bg-[#FFFFFF] text-[#0B0B0B] font-medium text-sm rounded-md py-2 px-3"
                 >
                   закрыть
                 </button>
@@ -263,7 +275,7 @@ export default function ConsultationSection() {
                 </div>
                 <button
                   onClick={() => setStatus("idle")}
-                  className="hidden lg:block bg-[#FFFFFF] text-[#0B0B0B] font-medium text-sm rounded-[6px] py-2 px-3"
+                  className="hidden lg:block bg-[#FFFFFF] text-[#0B0B0B] font-medium text-sm rounded-md py-2 px-3"
                 >
                   закрыть
                 </button>

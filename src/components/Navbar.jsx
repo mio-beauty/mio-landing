@@ -28,7 +28,7 @@ export default function Navbar() {
   return (
     <div className="flex justify-between items-center lg:pt-12 pt-4 lg:px-0 px-4 bg-transparent relative">
       <img
-        className="w-[149px] h-[24px] lg:w-auto lg:h-auto"
+        className="w-37.25 h-6 lg:w-auto lg:h-auto"
         src="/src/assets/imags/Logo.svg"
         alt="MIO BEAUTY"
       />
@@ -110,11 +110,7 @@ export default function Navbar() {
       <div
         className={`fixed top-0 right-0 w-full h-screen flex flex-col justify-between bg-white lg:hidden z-50
         transform transition-transform duration-300 ease-in-out
-        ${
-          openMenu
-            ? "translate-x-0"
-            : "translate-x-full pointer-events-none"
-        }`}
+        ${openMenu ? "translate-x-0" : "translate-x-full pointer-events-none"}`}
       >
         <div>
           <div className="flex justify-between px-4 py-4">

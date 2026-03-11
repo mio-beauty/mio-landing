@@ -1,3 +1,3 @@
 export default function CertificatePage() {
-  return <div />
+  return <div />;
 }

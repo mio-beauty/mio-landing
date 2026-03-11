@@ -9,6 +9,9 @@ export default function Footer() {
   const formatPhone = (value) => {
     let numbers = value.replace(/\D/g, "");
     if (numbers.startsWith("998")) numbers = numbers.slice(3);
+    numbers = numbers.slice(0, 9);
+
+    if (numbers.length === 0) return "+998 ";
 
     let formatted = "+998";
     if (numbers.length > 0) formatted += " " + numbers.slice(0, 2);
@@ -31,16 +34,18 @@ export default function Footer() {
 
   const handlePhoneBlur = () => {
     setFocused(false);
-    if (phone === "+998 ") setPhone("");
+    if (phone === "+998 " || phone === "+998") setPhone("");
   };
 
   const handleSubmit = () => {
     const phoneNumbers = phone.replace(/\D/g, "");
+
     if (!phone.trim() || phone === "+998 " || phoneNumbers.length < 12) {
       setPhone("");
       setError(true);
       return;
     }
+
     // API call shu yerda
     setPhone("");
     setError(false);
@@ -99,7 +104,6 @@ export default function Footer() {
               <p>Телефон</p>
 
               <div className="flex flex-col gap-2 lg:flex-row">
-                {/* INPUT */}
                 <div className="relative lg:w-[60%]">
                   <input
                     className={`w-full bg-[#FFFFFF] border-none outline-none px-3 py-2.5 rounded-lg ${
@@ -113,7 +117,7 @@ export default function Footer() {
                     onFocus={handlePhoneFocus}
                     onBlur={handlePhoneBlur}
                   />
-                  {/* Fake placeholder — xato bo'lsa */}
+
                   {error && !phone && !focused && (
                     <span className="absolute left-3 top-2.5 text-sm pointer-events-none text-[#757575]">
                       +998<span className="text-red-500">*</span>
