@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function Navbar() {
+export default function Navbar({ textColor = "white" }) {
   const [openLang, setOpenLang] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [activeLang, setActiveLang] = useState("Русский");
@@ -29,12 +29,22 @@ export default function Navbar() {
     <div className="flex justify-between items-center lg:pt-12 pt-4 lg:px-0 px-4 bg-transparent relative">
       <img
         className="w-37.25 h-6 lg:w-auto lg:h-auto"
-        src="/src/assets/imags/Logo.svg"
+        src={
+          textColor === "dark"
+            ? "/src/assets/imags/Logo-dark.svg"
+            : "/src/assets/imags/Logo.svg"
+        }
         alt="MIO BEAUTY"
       />
 
-      <ul className="hidden lg:flex items-center gap-10 text-sm text-[#FFFFFF] cursor-pointer">
-        <li>Контакты</li>
+      <ul
+        className={`hidden lg:flex items-center gap-10 text-sm font-medium cursor-pointer ${
+          textColor === "dark" ? "text-[#0B0B0B]" : "text-[#FFFFFF]"
+        }`}
+      >
+        <li className="relative cursor-pointer after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full">
+          Контакты
+        </li>
         <li>Результаты</li>
         <li>Состав</li>
         <li>Отзывы</li>
@@ -43,7 +53,11 @@ export default function Navbar() {
 
         <li className="relative" ref={langRef}>
           <img
-            src="/src/assets/imags/ic_language.svg"
+            src={
+              textColor === "dark"
+                ? "/src/assets/imags/ic_language-dark.svg"
+                : "/src/assets/imags/ic_language.svg"
+            }
             alt="Translate"
             className="cursor-pointer"
             onClick={() => setOpenLang((prev) => !prev)}
@@ -51,7 +65,7 @@ export default function Navbar() {
 
           <div
             className={`absolute right-0 mt-3 w-40 rounded-2xl p-4 bg-white z-50 flex flex-col gap-2
-            transition-all duration-200 ease-out origin-top
+            transition-all duration-200 ease-out origin-top shadow-[0_0_24px_rgba(41,42,53,0.1)]
             ${
               openLang
                 ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
@@ -92,7 +106,11 @@ export default function Navbar() {
       </ul>
 
       <img
-        src="/src/assets/imags/ic_burger2.svg"
+        src={
+          textColor === "dark"
+            ? "/src/assets/imags/ic_burger2-dark.svg"
+            : "/src/assets/imags/ic_burger2.svg"
+        }
         alt="Menu"
         className="block lg:hidden cursor-pointer"
         onClick={() => setOpenMenu(true)}
@@ -160,7 +178,7 @@ export default function Navbar() {
         <ul className="flex justify-center font-semibold gap-14 text-[16px] py-6">
           <li
             onClick={() => handleSelectLanguage("Русский")}
-            className={`cursor-pointer transition-colors duration-200 ${
+            className={`cursor-pointer ${
               activeLang === "Русский" ? "text-[#131314]" : "text-[#C4C4CC]"
             }`}
           >
@@ -169,7 +187,7 @@ export default function Navbar() {
 
           <li
             onClick={() => handleSelectLanguage("English")}
-            className={`cursor-pointer transition-colors duration-200 ${
+            className={`cursor-pointer ${
               activeLang === "English" ? "text-[#131314]" : "text-[#C4C4CC]"
             }`}
           >
@@ -178,7 +196,7 @@ export default function Navbar() {
 
           <li
             onClick={() => handleSelectLanguage("Uzbek")}
-            className={`cursor-pointer transition-colors duration-200 ${
+            className={`cursor-pointer ${
               activeLang === "Uzbek" ? "text-[#131314]" : "text-[#C4C4CC]"
             }`}
           >

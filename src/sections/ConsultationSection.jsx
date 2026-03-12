@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { Check, ChevronDown, LoaderCircle } from "lucide-react";
-import QuestionSection from "./QuestionSection";
-import ResultSection from "./ResultSection";
 
 export default function ConsultationSection() {
   const [open, setOpen] = useState(false);
