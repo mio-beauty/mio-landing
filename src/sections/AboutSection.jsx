@@ -2,7 +2,7 @@ export default function AboutSection() {
   return (
     <section>
       <div className="px-4 py-7.5 lg:py-30 lg:px-36 ">
-        <h2 className="text-[#0B0B0B] text-2xl font-semibold pb-425 lg:pb-4.25 lg:text-5xl">
+        <h2 className="text-[#0B0B0B] text-2xl font-semibold pb-4 lg:pb-4.25 lg:text-5xl">
           Мы — доверенная косметика с 6-летним опытом.
         </h2>
 

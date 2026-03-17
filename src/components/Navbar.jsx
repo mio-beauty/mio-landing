@@ -42,9 +42,7 @@ export default function Navbar({ textColor = "white" }) {
           textColor === "dark" ? "text-[#0B0B0B]" : "text-[#FFFFFF]"
         }`}
       >
-        <li className="relative cursor-pointer after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full">
-          Контакты
-        </li>
+        <li>Контакты</li>
         <li>Результаты</li>
         <li>Состав</li>
         <li>Отзывы</li>

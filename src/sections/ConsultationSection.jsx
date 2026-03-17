@@ -247,7 +247,7 @@ export default function ConsultationSection() {
             )}
 
             {status === "success" && (
-              <div className="flex items-center justify-between bg-[#000000D9] border border-[#757575] py-2.5 px-3 rounded-[12px] lg:w-[60%] w-full">
+              <div className="flex items-center justify-between bg-[#000000D9] border border-[#757575] py-2.5 px-3 rounded-xl lg:w-[60%] w-full">
                 <div className="flex items-center gap-2">
                   <img src="/src/assets/img/ic_check_filled.svg" alt="" />
                   <p className="text-[#FFFFFF] text-[16px]">
@@ -264,7 +264,7 @@ export default function ConsultationSection() {
             )}
 
             {status === "failed" && (
-              <div className="flex items-center justify-between bg-[#000000D9] border border-[#757575] py-2.5 px-3 rounded-[12px] lg:w-[60%] w-full">
+              <div className="flex items-center justify-between bg-[#000000D9] border border-[#757575] py-2.5 px-3 rounded-xl lg:w-[60%] w-full">
                 <div className="flex items-center gap-2">
                   <img src="/src/assets/img/ic_close_filled.svg" alt="" />
                   <p className="text-[#FFFFFF] text-[16px]">
