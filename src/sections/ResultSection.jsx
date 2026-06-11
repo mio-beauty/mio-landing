@@ -96,7 +96,10 @@ export default function ResultSection() {
         </div>
 
         <div className="flex flex-col lg:flex-row lg:justify-center items-center gap-6">
-          <button className="bg-[#1D1D1D] text-[#FFFFFF] text-[16px] py-3 px-4 rounded-3xl">
+          <button
+            type="button"
+            className="bg-[#1D1D1D] text-[#FFFFFF] text-[16px] py-3 px-4 rounded-3xl"
+          >
             Хочу такой же результат
           </button>
           <div className="flex gap-1 text-[#757575] text-[16px]">
