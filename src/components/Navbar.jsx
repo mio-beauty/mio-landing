@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function Navbar() {
+export default function Navbar({ textColor = "white" }) {
   const [openLang, setOpenLang] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [activeLang, setActiveLang] = useState("Русский");
@@ -33,7 +33,11 @@ export default function Navbar() {
         alt="MIO BEAUTY"
       />
 
-      <ul className="hidden lg:flex items-center gap-10 text-sm text-[#FFFFFF] cursor-pointer">
+      <ul
+        className={`hidden lg:flex items-center gap-10 text-sm font-medium cursor-pointer ${
+          textColor === "dark" ? "text-[#0B0B0B]" : "text-[#FFFFFF]"
+        }`}
+      >
         <li>Контакты</li>
         <li>Результаты</li>
         <li>Состав</li>
@@ -51,7 +55,7 @@ export default function Navbar() {
 
           <div
             className={`absolute right-0 mt-3 w-40 rounded-2xl p-4 bg-white z-50 flex flex-col gap-2
-            transition-all duration-200 ease-out origin-top
+            transition-all duration-200 ease-out origin-top shadow-[0_0_24px_rgba(41,42,53,0.1)]
             ${
               openLang
                 ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
@@ -110,11 +114,7 @@ export default function Navbar() {
       <div
         className={`fixed top-0 right-0 w-full h-screen flex flex-col justify-between bg-white lg:hidden z-50
         transform transition-transform duration-300 ease-in-out
-        ${
-          openMenu
-            ? "translate-x-0"
-            : "translate-x-full pointer-events-none"
-        }`}
+        ${openMenu ? "translate-x-0" : "translate-x-full pointer-events-none"}`}
       >
         <div>
           <div className="flex justify-between px-4 py-4">
@@ -164,7 +164,7 @@ export default function Navbar() {
         <ul className="flex justify-center font-semibold gap-14 text-[16px] py-6">
           <li
             onClick={() => handleSelectLanguage("Русский")}
-            className={`cursor-pointer transition-colors duration-200 ${
+            className={`cursor-pointer ${
               activeLang === "Русский" ? "text-[#131314]" : "text-[#C4C4CC]"
             }`}
           >
@@ -173,7 +173,7 @@ export default function Navbar() {
 
           <li
             onClick={() => handleSelectLanguage("English")}
-            className={`cursor-pointer transition-colors duration-200 ${
+            className={`cursor-pointer ${
               activeLang === "English" ? "text-[#131314]" : "text-[#C4C4CC]"
             }`}
           >
@@ -182,7 +182,7 @@ export default function Navbar() {
 
           <li
             onClick={() => handleSelectLanguage("Uzbek")}
-            className={`cursor-pointer transition-colors duration-200 ${
+            className={`cursor-pointer ${
               activeLang === "Uzbek" ? "text-[#131314]" : "text-[#C4C4CC]"
             }`}
           >
