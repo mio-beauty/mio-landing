@@ -126,10 +126,15 @@ export default function ScrollGalleryShowcase({
           : rect?.height
             ? Math.max(1, rect.height)
             : 80;
-      stepPxRef.current = size + 10;
+      stepPxRef.current = size + GAP;
     };
+    const VISIBLE_COUNT = 4;
+    const GAP = 10;
 
-    const applyGalleryState = (nextActiveIndex, { immediate } = {}) => {
+    const applyGalleryState = (
+      nextActiveIndex,
+      { immediate, direction = 1 } = {}
+    ) => {
       const duration = prefersReducedMotion || immediate ? 0 : 0.9;
       const ease = "power3.out";
       const n = count;
@@ -138,23 +143,98 @@ export default function ScrollGalleryShowcase({
 
       itemsRef.current.forEach((el, originalIndex) => {
         if (!el) return;
-        const pos = mod(originalIndex - nextActiveIndex, n); // 0 = active at top
-        const v = pos * step;
 
-        const isActive = pos === 0;
+        const rel = mod(originalIndex - nextActiveIndex, n);
+        const prevRelAttr = el.dataset.rel;
+        const prevRel = prevRelAttr == null ? null : Number(prevRelAttr);
+        el.dataset.rel = String(rel);
 
+        let offset = 0;
+        let autoAlpha = 1;
+        let scale = 1;
+        let zIndex = 1;
+
+        // tepaga chiqib ketayotgan eski rasm (forward scroll)
+        if (direction === 1 && rel === n - 1) {
+          offset = -step;
+          autoAlpha = 1; // fade emas, tepaga yurib chiqib ketsin
+          scale = 0.92;
+          zIndex = 25;
+        }
+        // 4 ta visible rasm
+        else if (rel >= 0 && rel < VISIBLE_COUNT) {
+          offset = rel * step;
+          autoAlpha = 1;
+          scale = rel === 0 ? 1 : 0.96;
+          zIndex = 20 - rel;
+        }
+        // pastda navbatda turgan rasm (rel === n-1 bo'lmaganda)
+        else if (rel === VISIBLE_COUNT) {
+          offset = VISIBLE_COUNT * step;
+          autoAlpha = 1; // fade emas, overflow-hidden yashiradi
+          scale = 0.92;
+          zIndex = 5;
+        }
+        // qolganlari ancha pastda turadi
+        else {
+          offset = (VISIBLE_COUNT + 1) * step;
+          autoAlpha = 1;
+          scale = 0.9;
+          zIndex = 1;
+        }
+
+        const isActive = rel === 0;
         el.setAttribute("aria-current", isActive ? "true" : "false");
         el.dataset.active = isActive ? "true" : "false";
+        el.style.zIndex = String(zIndex);
+
+        const target = {
+          x: axis === "x" ? offset : 0,
+          y: axis === "y" ? offset : 0,
+          autoAlpha,
+          scale,
+        };
+
+        const shouldWrapFromTopStartBelow =
+          !prefersReducedMotion &&
+          !immediate &&
+          direction === 1 &&
+          prevRel != null &&
+          prevRel === n - 1 &&
+          rel !== n - 1 &&
+          rel <= VISIBLE_COUNT;
+
+        if (shouldWrapFromTopStartBelow) {
+          const startOffset = (VISIBLE_COUNT + 1) * step;
+          const start = {
+            x: axis === "x" ? startOffset : 0,
+            y: axis === "y" ? startOffset : 0,
+          };
+          gsap.killTweensOf(el);
+          gsap.set(el, start);
+        }
+
+        const shouldTeleport =
+          !prefersReducedMotion &&
+          !immediate &&
+          direction === 1 &&
+          prevRel != null &&
+          ((prevRel === n - 1 && rel > VISIBLE_COUNT) ||
+            (prevRel > VISIBLE_COUNT && rel === n - 1));
+
+        if (shouldTeleport) {
+          gsap.killTweensOf(el);
+          gsap.set(el, target);
+          return;
+        }
 
         gsap.to(el, {
-          x: axis === "x" ? v : 0,
-          y: axis === "y" ? v : 0,
+          ...target,
           duration,
           ease,
+          force3D: true,
           overwrite: "auto",
         });
-
-        el.style.zIndex = String(n - pos);
       });
     };
 
@@ -195,11 +275,17 @@ export default function ScrollGalleryShowcase({
         });
     };
 
-    const setActiveIndexInternal = (nextIndex, { immediate } = {}) => {
+    const setActiveIndexInternal = (
+      nextIndex,
+      { immediate, direction } = {}
+    ) => {
       if (nextIndex === activeIndexRef.current) return;
+      const prevIndex = activeIndexRef.current;
+      const resolvedDir =
+        direction ?? (nextIndex > prevIndex ? 1 : nextIndex < prevIndex ? -1 : 1);
       activeIndexRef.current = nextIndex;
       crossfadeBackgroundTo(nextIndex);
-      applyGalleryState(nextIndex, { immediate });
+      applyGalleryState(nextIndex, { immediate, direction: resolvedDir });
       swapTitleTo(nextIndex);
     };
 
@@ -337,7 +423,7 @@ export default function ScrollGalleryShowcase({
             <div className="flex w-full items-center justify-center md:justify-end">
               <div
                 ref={galleryViewportRef}
-                className="relative h-20 w-full max-w-94 overflow-hidden md:h-130 md:w-20 md:max-w-none"
+                className="relative h-20 w-[350px] overflow-hidden md:h-[350px] md:w-20 md:max-w-none"
               >
                 <div className="absolute inset-0">
                   {safeImages.map((img, i) => (

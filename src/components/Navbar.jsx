@@ -28,12 +28,8 @@ export default function Navbar({ textColor = "white" }) {
   return (
     <div className="flex justify-between items-center lg:pt-12 pt-4 lg:px-0 px-4 bg-transparent relative">
       <img
-        className="w-37.25 h-6 lg:w-auto lg:h-auto"
-        src={
-          textColor === "dark"
-            ? "/src/assets/imags/Logo-dark.svg"
-            : "/src/assets/imags/Logo.svg"
-        }
+        className="w-[149px] h-[24px] lg:w-auto lg:h-auto"
+        src="/src/assets/img/Logo.svg"
         alt="MIO BEAUTY"
       />
 
@@ -51,11 +47,7 @@ export default function Navbar({ textColor = "white" }) {
 
         <li className="relative" ref={langRef}>
           <img
-            src={
-              textColor === "dark"
-                ? "/src/assets/imags/ic_language-dark.svg"
-                : "/src/assets/imags/ic_language.svg"
-            }
+            src="/src/assets/img/ic_language.svg"
             alt="Translate"
             className="cursor-pointer"
             onClick={() => setOpenLang((prev) => !prev)}
@@ -76,7 +68,7 @@ export default function Navbar({ textColor = "white" }) {
             >
               <span className="text-sm text-[#0B0B0B]">Русский</span>
               {activeLang === "Русский" && (
-                <img src="/src/assets/imags/ic_check.svg" alt="" />
+                <img src="/src/assets/img/ic_check.svg" alt="" />
               )}
             </div>
 
@@ -86,7 +78,7 @@ export default function Navbar({ textColor = "white" }) {
             >
               <span className="text-sm text-[#0B0B0B]">English</span>
               {activeLang === "English" && (
-                <img src="/src/assets/imags/ic_check.svg" alt="" />
+                <img src="/src/assets/img/ic_check.svg" alt="" />
               )}
             </div>
 
@@ -96,7 +88,7 @@ export default function Navbar({ textColor = "white" }) {
             >
               <span className="text-sm text-[#0B0B0B]">Uzbek</span>
               {activeLang === "Uzbek" && (
-                <img src="/src/assets/imags/ic_check.svg" alt="" />
+                <img src="/src/assets/img/ic_check.svg" alt="" />
               )}
             </div>
           </div>
@@ -104,11 +96,7 @@ export default function Navbar({ textColor = "white" }) {
       </ul>
 
       <img
-        src={
-          textColor === "dark"
-            ? "/src/assets/imags/ic_burger2-dark.svg"
-            : "/src/assets/imags/ic_burger2.svg"
-        }
+        src="/src/assets/img/ic_burger2.svg"
         alt="Menu"
         className="block lg:hidden cursor-pointer"
         onClick={() => setOpenMenu(true)}
@@ -130,10 +118,10 @@ export default function Navbar({ textColor = "white" }) {
       >
         <div>
           <div className="flex justify-between px-4 py-4">
-            <img src="/src/assets/imags/burger-logo.svg" alt="" />
+            <img src="/src/assets/img/burger-logo.svg" alt="" />
 
             <img
-              src="/src/assets/imags/ic_X_mark.svg"
+              src="/src/assets/img/ic_X_mark.svg"
               alt="Close"
               className="cursor-pointer"
               onClick={() => setOpenMenu(false)}
@@ -143,32 +131,32 @@ export default function Navbar({ textColor = "white" }) {
           <ul className="flex flex-col px-4">
             <li className="flex items-center justify-between py-4">
               <span className="text-[#0B0B0B] text-sm">Контакты</span>
-              <img src="/src/assets/imags/chevron.svg" alt="" />
+              <img src="/src/assets/img/chevron.svg" alt="" />
             </li>
 
             <li className="flex items-center justify-between py-4">
               <span className="text-[#0B0B0B] text-sm">Результаты</span>
-              <img src="/src/assets/imags/chevron.svg" alt="" />
+              <img src="/src/assets/img/chevron.svg" alt="" />
             </li>
 
             <li className="flex items-center justify-between py-4">
               <span className="text-[#0B0B0B] text-sm">Состав</span>
-              <img src="/src/assets/imags/chevron.svg" alt="" />
+              <img src="/src/assets/img/chevron.svg" alt="" />
             </li>
 
             <li className="flex items-center justify-between py-4">
               <span className="text-[#0B0B0B] text-sm">Отзывы</span>
-              <img src="/src/assets/imags/chevron.svg" alt="" />
+              <img src="/src/assets/img/chevron.svg" alt="" />
             </li>
 
             <li className="flex items-center justify-between py-4">
               <span className="text-[#0B0B0B] text-sm">Вопросы</span>
-              <img src="/src/assets/imags/chevron.svg" alt="" />
+              <img src="/src/assets/img/chevron.svg" alt="" />
             </li>
 
             <li className="flex items-center justify-between py-5">
               <span className="text-[#0B0B0B] text-sm">О нас</span>
-              <img src="/src/assets/imags/chevron.svg" alt="" />
+              <img src="/src/assets/img/chevron.svg" alt="" />
             </li>
           </ul>
         </div>

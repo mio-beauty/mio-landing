@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Navbar from "../components/Navbar.jsx";
-import heroImg from "../assets/imags/hero-img.png";
-import heroImg2 from "../assets/imags/hero2.png";
-import { ArrowRight } from "lucide-react";
+import heroImg from "../assets/img/hero-img.png";
+import heroImg2 from "../assets/img/hero2.png";
 
 export default function HomeSection() {
   const categories = ["АКНЕ", "ПИГМЕНТАЦИЯ", "СУХОСТЬ", "ЧУСТВИТЕЛЬНОСТЬ"];
