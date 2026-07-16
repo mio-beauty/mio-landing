@@ -21,6 +21,7 @@ const DEFAULT_TITLES = [
 ];
 
 const MODAL_IMAGES = DEFAULT_TITLES.map(() => modalPng);
+const SCROLL_STEP_VIEWPORT_RATIO = 0.72;
 
 export default function ScrollGalleryShowcase({
   images,
@@ -34,6 +35,8 @@ export default function ScrollGalleryShowcase({
   const count = safeImages.length;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
+  const [modalOrigin, setModalOrigin] = useState(null);
+  const [isButtonLaunching, setIsButtonLaunching] = useState(false);
 
   const sectionRef = useRef(null);
   const galleryViewportRef = useRef(null);
@@ -46,7 +49,9 @@ export default function ScrollGalleryShowcase({
   const activeIndexRef = useRef(0);
   const activeBgLayerRef = useRef(0);
   const stepPxRef = useRef(140);
+  const startOffsetRef = useRef(0);
   const axisRef = useRef("y");
+  const viewportSizeRef = useRef({ width: 0, height: 0 });
   const stRef = useRef(null);
   const roRef = useRef(null);
 
@@ -64,7 +69,6 @@ export default function ScrollGalleryShowcase({
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // Preload to avoid crossfade stutter.
     safeImages.forEach((img) => {
       if (!img?.src) return;
       const pre = new Image();
@@ -86,7 +90,7 @@ export default function ScrollGalleryShowcase({
       titleEl.textContent = nextTitle;
     };
 
-    const swapTitleTo = (nextIndex) => {
+    const swapTitleTo = (nextIndex, direction = 1) => {
       if (!titleEl) return;
       const nextTitle = DEFAULT_TITLES[nextIndex] ?? title ?? "";
       if (titleEl.textContent === nextTitle) return;
@@ -97,14 +101,15 @@ export default function ScrollGalleryShowcase({
       }
 
       gsap.killTweensOf(titleEl);
+      const offset = direction < 0 ? -12 : 12;
       const tl = gsap.timeline({
         defaults: { ease: "power2.out", overwrite: "auto" },
       });
-      tl.to(titleEl, { autoAlpha: 0, y: -6, duration: 0.18 })
+      tl.to(titleEl, { autoAlpha: 0, y: direction < 0 ? 8 : -8, duration: 0.18 })
         .add(() => {
           titleEl.textContent = nextTitle;
         })
-        .set(titleEl, { y: 6 })
+        .set(titleEl, { y: offset })
         .to(titleEl, { autoAlpha: 1, y: 0, duration: 0.28 });
     };
 
@@ -117,6 +122,7 @@ export default function ScrollGalleryShowcase({
     const measureStep = () => {
       const first = itemsRef.current?.[0];
       const rect = first?.getBoundingClientRect?.();
+      const viewportRect = viewport.getBoundingClientRect?.();
       const axis = axisRef.current;
       const size =
         axis === "x"
@@ -126,115 +132,117 @@ export default function ScrollGalleryShowcase({
           : rect?.height
             ? Math.max(1, rect.height)
             : 80;
-      stepPxRef.current = size + GAP;
+      stepPxRef.current = size + 10;
+
+      const viewportSize =
+        axis === "x"
+          ? viewportRect?.width
+            ? Math.max(1, viewportRect.width)
+            : size * 4
+          : viewportRect?.height
+            ? Math.max(1, viewportRect.height)
+            : size * 4;
+
+      const visibleSpan = size * 4 + 10 * 3;
+      startOffsetRef.current = Math.max((viewportSize - visibleSpan) / 2, 0);
     };
+
     const VISIBLE_COUNT = 4;
-    const GAP = 10;
 
     const applyGalleryState = (
       nextActiveIndex,
       { immediate, direction = 1 } = {}
     ) => {
-      const duration = prefersReducedMotion || immediate ? 0 : 0.9;
+      const duration = prefersReducedMotion || immediate ? 0 : 0.85;
       const ease = "power3.out";
       const n = count;
       const step = stepPxRef.current;
+      const startOffset = startOffsetRef.current;
       const axis = axisRef.current;
+
+      gsap.killTweensOf(itemsRef.current.filter(Boolean));
 
       itemsRef.current.forEach((el, originalIndex) => {
         if (!el) return;
 
-        const rel = mod(originalIndex - nextActiveIndex, n);
-        const prevRelAttr = el.dataset.rel;
-        const prevRel = prevRelAttr == null ? null : Number(prevRelAttr);
-        el.dataset.rel = String(rel);
+        const pos = mod(originalIndex - nextActiveIndex, n);
+        const isActive = pos === 0;
+        const prevSlotAttr = el.dataset.slot;
+        const prevSlot = prevSlotAttr == null ? null : Number(prevSlotAttr);
 
-        let offset = 0;
-        let autoAlpha = 1;
-        let scale = 1;
-        let zIndex = 1;
+        let slot = pos;
+        let autoAlpha = pos < VISIBLE_COUNT ? 1 : 0;
+        let scale = pos === 0 ? 1 : 0.965;
 
-        // tepaga chiqib ketayotgan eski rasm (forward scroll)
-        if (direction === 1 && rel === n - 1) {
-          offset = -step;
-          autoAlpha = 1; // fade emas, tepaga yurib chiqib ketsin
-          scale = 0.92;
-          zIndex = 25;
-        }
-        // 4 ta visible rasm
-        else if (rel >= 0 && rel < VISIBLE_COUNT) {
-          offset = rel * step;
-          autoAlpha = 1;
-          scale = rel === 0 ? 1 : 0.96;
-          zIndex = 20 - rel;
-        }
-        // pastda navbatda turgan rasm (rel === n-1 bo'lmaganda)
-        else if (rel === VISIBLE_COUNT) {
-          offset = VISIBLE_COUNT * step;
-          autoAlpha = 1; // fade emas, overflow-hidden yashiradi
-          scale = 0.92;
-          zIndex = 5;
-        }
-        // qolganlari ancha pastda turadi
-        else {
-          offset = (VISIBLE_COUNT + 1) * step;
-          autoAlpha = 1;
-          scale = 0.9;
-          zIndex = 1;
+        if (direction > 0) {
+          if (pos >= VISIBLE_COUNT) {
+            slot = -1;
+            autoAlpha = 0;
+            scale = 0.92;
+          }
+
+          const enteringFromBottom =
+            !immediate &&
+            prevSlot != null &&
+            prevSlot < 0 &&
+            pos === VISIBLE_COUNT - 1;
+
+          if (enteringFromBottom) {
+            gsap.set(el, {
+              x: axis === "x" ? startOffset + VISIBLE_COUNT * step : 0,
+              y: axis === "y" ? startOffset + VISIBLE_COUNT * step : 0,
+              autoAlpha: 0,
+              scale: 0.9,
+            });
+            slot = VISIBLE_COUNT - 1;
+            autoAlpha = 1;
+            scale = 0.965;
+          }
+        } else {
+          if (pos >= VISIBLE_COUNT) {
+            slot = VISIBLE_COUNT;
+            autoAlpha = 0;
+            scale = 0.92;
+          }
+
+          const enteringFromTop =
+            !immediate &&
+            prevSlot != null &&
+            prevSlot > VISIBLE_COUNT - 1 &&
+            pos === 0;
+
+          if (enteringFromTop) {
+            gsap.set(el, {
+              x: axis === "x" ? startOffset - step : 0,
+              y: axis === "y" ? startOffset - step : 0,
+              autoAlpha: 0,
+              scale: 0.9,
+            });
+            slot = 0;
+            autoAlpha = 1;
+            scale = 1;
+          }
         }
 
-        const isActive = rel === 0;
+        const v = startOffset + slot * step;
         el.setAttribute("aria-current", isActive ? "true" : "false");
         el.dataset.active = isActive ? "true" : "false";
-        el.style.zIndex = String(zIndex);
-
-        const target = {
-          x: axis === "x" ? offset : 0,
-          y: axis === "y" ? offset : 0,
-          autoAlpha,
-          scale,
-        };
-
-        const shouldWrapFromTopStartBelow =
-          !prefersReducedMotion &&
-          !immediate &&
-          direction === 1 &&
-          prevRel != null &&
-          prevRel === n - 1 &&
-          rel !== n - 1 &&
-          rel <= VISIBLE_COUNT;
-
-        if (shouldWrapFromTopStartBelow) {
-          const startOffset = (VISIBLE_COUNT + 1) * step;
-          const start = {
-            x: axis === "x" ? startOffset : 0,
-            y: axis === "y" ? startOffset : 0,
-          };
-          gsap.killTweensOf(el);
-          gsap.set(el, start);
-        }
-
-        const shouldTeleport =
-          !prefersReducedMotion &&
-          !immediate &&
-          direction === 1 &&
-          prevRel != null &&
-          ((prevRel === n - 1 && rel > VISIBLE_COUNT) ||
-            (prevRel > VISIBLE_COUNT && rel === n - 1));
-
-        if (shouldTeleport) {
-          gsap.killTweensOf(el);
-          gsap.set(el, target);
-          return;
-        }
+        el.dataset.slot = String(slot);
 
         gsap.to(el, {
-          ...target,
+          x: axis === "x" ? v : 0,
+          y: axis === "y" ? v : 0,
+          autoAlpha,
+          scale,
           duration,
           ease,
           force3D: true,
           overwrite: "auto",
         });
+
+        el.style.zIndex = String(
+          slot >= 0 && slot < VISIBLE_COUNT ? VISIBLE_COUNT - slot : 0
+        );
       });
     };
 
@@ -281,12 +289,17 @@ export default function ScrollGalleryShowcase({
     ) => {
       if (nextIndex === activeIndexRef.current) return;
       const prevIndex = activeIndexRef.current;
+      const jump = Math.abs(nextIndex - prevIndex);
       const resolvedDir =
-        direction ?? (nextIndex > prevIndex ? 1 : nextIndex < prevIndex ? -1 : 1);
+        direction ??
+        (nextIndex > prevIndex ? 1 : nextIndex < prevIndex ? -1 : 1);
       activeIndexRef.current = nextIndex;
       crossfadeBackgroundTo(nextIndex);
-      applyGalleryState(nextIndex, { immediate, direction: resolvedDir });
-      swapTitleTo(nextIndex);
+      applyGalleryState(nextIndex, {
+        immediate: immediate || jump > 1,
+        direction: resolvedDir,
+      });
+      swapTitleTo(nextIndex, resolvedDir);
     };
 
     activeIndexRef.current = 0;
@@ -303,8 +316,26 @@ export default function ScrollGalleryShowcase({
     computeAxis();
     measureStep();
     applyGalleryState(0, { immediate: true });
+    viewportSizeRef.current = {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
 
     const onResize = () => {
+      const nextWidth = window.innerWidth;
+      const nextHeight = window.innerHeight;
+      const prevViewport = viewportSizeRef.current;
+      const widthChanged = Math.abs(nextWidth - prevViewport.width) > 1;
+      const heightChanged = Math.abs(nextHeight - prevViewport.height) > 120;
+
+      if (!widthChanged && !heightChanged) {
+        return;
+      }
+
+      viewportSizeRef.current = {
+        width: nextWidth,
+        height: nextHeight,
+      };
       computeAxis();
       measureStep();
       applyGalleryState(activeIndexRef.current, { immediate: true });
@@ -317,19 +348,25 @@ export default function ScrollGalleryShowcase({
 
     const itemsForCleanup = itemsRef.current.slice();
 
-    const scrollSteps = Math.max(1, count); // one "panel" per image
+    const scrollSteps = Math.max(1, count);
     stRef.current = ScrollTrigger.create({
       trigger: sectionRef.current,
       start: "top top",
-      end: () => `+=${scrollSteps * window.innerHeight}`,
+      end: () =>
+        `+=${Math.round(
+          scrollSteps * window.innerHeight * SCROLL_STEP_VIEWPORT_RATIO
+        )}`,
       pin: true,
+      refreshPriority: 30,
       anticipatePin: 1,
       scrub: prefersReducedMotion ? false : 0.65,
       invalidateOnRefresh: true,
       onUpdate: (self) => {
         if (count <= 1) return;
         const idx = clampInt(self.progress * count, 0, count - 1);
-        if (idx !== activeIndexRef.current) setActiveIndexInternal(idx);
+        if (idx !== activeIndexRef.current) {
+          setActiveIndexInternal(idx, { direction: self.direction });
+        }
       },
     });
 
@@ -345,16 +382,29 @@ export default function ScrollGalleryShowcase({
 
   if (count === 0) return null;
 
-  const openModal = () => {
+  const openModal = (triggerEl) => {
     const n = DEFAULT_TITLES.length || 1;
+    if (triggerEl) {
+      const rect = triggerEl.getBoundingClientRect();
+      setModalOrigin({
+        left: rect.left,
+        top: rect.top,
+        width: rect.width,
+        height: rect.height,
+      });
+    }
     setModalIndex(mod(activeIndexRef.current, n));
+    setIsButtonLaunching(true);
     setIsModalOpen(true);
+    window.setTimeout(() => {
+      setIsButtonLaunching(false);
+    }, 280);
   };
 
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen w-full overflow-hidden"
+      className="relative h-[100svh] w-full overflow-hidden md:h-screen"
     >
       <div className="absolute inset-0">
         <div ref={bgLayerRefA} className="absolute inset-0">
@@ -379,15 +429,15 @@ export default function ScrollGalleryShowcase({
         </div>
       </div>
 
-      <div className="relative z-10 flex h-full w-full items-end px-6 pb-6 sm:px-10 lg:px-20 md:items-center md:pb-0">
-        <div className="absolute bottom-6 left-1/2 z-20 w-[calc(100%-3rem)] max-w-94 -translate-x-1/2 md:bottom-15 md:left-20 md:w-auto md:max-w-none md:translate-x-0">
+      <div className="relative z-10 flex h-full w-full items-end px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-10 lg:px-20 md:items-center md:pb-0">
+        <div className="absolute bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-1/2 z-20 w-[calc(100%-3rem)] max-w-94 -translate-x-1/2 md:bottom-15 md:left-20 md:w-auto md:max-w-none md:translate-x-0">
           <a
             href={buttonHref || "#"}
             onClick={(e) => {
               e.preventDefault();
-              openModal();
+              openModal(e.currentTarget);
             }}
-            className="inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 font-semibold leading-5 text-black cursor-pointer md:w-auto"
+            className="group inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 font-semibold leading-5 text-black cursor-pointer md:w-auto"
           >
             Посмотреть решения
             <svg
@@ -396,6 +446,13 @@ export default function ScrollGalleryShowcase({
               height="20"
               viewBox="0 0 20 20"
               fill="none"
+              className={[
+                "translate-y-[2px] transition-transform duration-250 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                "group-hover:-translate-x-[2px] group-hover:translate-y-[3px]",
+                isButtonLaunching
+                  ? "translate-x-[9px] -translate-y-[8px] opacity-0"
+                  : "",
+              ].join(" ")}
             >
               <path
                 d="M3.75 16.25L16.25 3.75M16.25 3.75H6.875M16.25 3.75V13.125"
@@ -413,7 +470,7 @@ export default function ScrollGalleryShowcase({
 
             <h2
               ref={titleRef}
-              className="text-[32px] font-medium leading-[120%] text-white pt-4 will-change-transform"
+              className="pt-4 text-[32px] font-medium leading-[120%] text-white will-change-transform"
             >
               {DEFAULT_TITLES[0] ?? title}
             </h2>
@@ -423,7 +480,7 @@ export default function ScrollGalleryShowcase({
             <div className="flex w-full items-center justify-center md:justify-end">
               <div
                 ref={galleryViewportRef}
-                className="relative h-20 w-[350px] overflow-hidden md:h-[350px] md:w-20 md:max-w-none"
+                className="relative h-20 w-full max-w-94 overflow-hidden md:h-130 md:w-20 md:max-w-none"
               >
                 <div className="absolute inset-0">
                   {safeImages.map((img, i) => (
@@ -460,6 +517,7 @@ export default function ScrollGalleryShowcase({
         onClose={() => setIsModalOpen(false)}
         imageSrc={MODAL_IMAGES[modalIndex] ?? modalPng}
         prefersReducedMotion={prefersReducedMotion}
+        originRect={modalOrigin}
       />
     </section>
   );

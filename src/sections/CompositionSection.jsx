@@ -365,7 +365,7 @@ export default function ProductCursorCTA() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden px-5 py-10 sm:px-10 sm:py-14 lg:p-16"
+      className="relative overflow-hidden px-2 py-10 sm:px-8 sm:py-14 lg:h-screen lg:p-16"
     >
       <div className="mx-auto w-full">
         <div className="flex flex-col gap-10 lg:gap-15">

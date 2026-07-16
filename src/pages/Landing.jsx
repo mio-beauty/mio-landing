@@ -1,3 +1,5 @@
+import { useLayoutEffect } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AboutSection from "../sections/AboutSection.jsx";
 import CompositionSection from "../sections/CompositionSection.jsx";
 import ConsultationSection from "../sections/ConsultationSection.jsx";
@@ -10,18 +12,44 @@ import ReviewSection from "../sections/ReviewSection.jsx";
 import TrustSection from "../sections/TrustSection.jsx";
 
 export default function LandingPage() {
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    let rafTwo = 0;
+
+    const refreshScrollLayout = () => {
+      ScrollTrigger.refresh();
+    };
+
+    const rafOne = window.requestAnimationFrame(() => {
+      rafTwo = window.requestAnimationFrame(refreshScrollLayout);
+    });
+
+    const onLoad = () => {
+      window.requestAnimationFrame(refreshScrollLayout);
+    };
+
+    window.addEventListener("load", onLoad);
+
+    return () => {
+      window.cancelAnimationFrame(rafOne);
+      if (rafTwo) window.cancelAnimationFrame(rafTwo);
+      window.removeEventListener("load", onLoad);
+    };
+  }, []);
+
   return (
     <>
-      {/* <HomeSection />
-      <CompositionSection /> */}
-      <ProblemSection />
-      {/* <ReviewSection />
+      <HomeSection />
       <TrustSection />
+      <ProblemSection />
+      <CompositionSection />
       <ProductsSection />
       <ResultSection />
-      <ConsultationSection />
+      <ReviewSection />
       <QuestionSection />
-      <AboutSection /> */}
+      <ConsultationSection />
+      <AboutSection />
     </>
   );
 }

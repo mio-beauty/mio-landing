@@ -67,7 +67,7 @@ export default function Footer() {
         </div>
 
         <div className="flex items-start flex-col lg:flex-row lg:justify-between px-4 lg:px-0">
-          <div className="flex py-7 lg:text-2xl lg:order-2 gap-12">
+          <div className="flex py-7 pb-0 lg:text-2xl lg:order-2 gap-12">
             <ul className="flex flex-col text-sm gap-3">
               <li className="font-semibold">Инфо</li>
               <li>Результаты</li>
@@ -100,7 +100,7 @@ export default function Footer() {
               Свяжитесь с нами для получения дополнительной информации
             </p>
 
-            <div className="flex flex-col gap-2 py-6 text-sm">
+            <div className="flex flex-col gap-2 py-6 pb-0 text-sm">
               <p>Телефон</p>
 
               <div className="flex flex-col gap-2 lg:flex-row">
@@ -141,7 +141,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="text-[#757575] text-lg px-4 lg:px-0 lg:pt-9 pb-11 lg:flex items-center justify-between">
+        <div className="text-[#757575] text-lg px-4 lg:px-0 lg:pt-8 pb-10 lg:flex items-center justify-between">
           <div className="flex flex-col lg:flex-row gap-3 lg:gap-[18px] py-2.5 font-medium text-sm lg:order-2">
             <a href="#" className="border-b border-[#757575] w-fit">
               Политика конфиденциальности

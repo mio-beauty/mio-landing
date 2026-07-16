@@ -11,14 +11,14 @@ export default function CompositionVisual({
   cardsInnerRefs,
 }) {
   return (
-    <div className="relative mx-auto ">
-      <div className="relative mx-auto h-105 w-full sm:h-120 lg:h-140">
+    <div className="relative mx-auto w-full">
+      <div className="relative mx-auto h-[310px] w-full sm:h-[430px] lg:h-140">
         <div
           ref={orbitRef}
           className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
         >
           <svg
-            className="h-80 w-155 opacity-70 sm:h-95 sm:w-185 lg:h-162.5 lg:w-350"
+            className="h-[220px] w-[410px] opacity-70 sm:h-95 sm:w-185 lg:h-162.5 lg:w-350"
             viewBox="0 0 920 460"
             fill="none"
             style={{ transform: "rotate(9.36deg)" }}
@@ -36,7 +36,7 @@ export default function CompositionVisual({
         </div>
 
         <div
-          className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-80 w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.9),rgba(246,246,244,0)_62%)] blur-2xl sm:h-95 sm:w-95 lg:h-110 lg:w-110"
+          className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.9),rgba(246,246,244,0)_62%)] blur-2xl sm:h-95 sm:w-95 lg:h-110 lg:w-110"
           aria-hidden="true"
         />
 
@@ -48,8 +48,7 @@ export default function CompositionVisual({
             <img
               src={SpfImage}
               alt="Product bottle"
-              className="h-auto w-64 select-none drop-shadow-[0_40px_70px_rgba(15,23,42,0.16)] sm:w-72 lg:w-102.25"
-              // style={{ transform: "rotate(-5deg)" }}
+              className="h-auto w-[170px] select-none drop-shadow-[0_28px_48px_rgba(15,23,42,0.14)] sm:w-72 sm:drop-shadow-[0_40px_70px_rgba(15,23,42,0.16)] lg:w-102.25"
               draggable="false"
             />
           </div>
@@ -72,7 +71,7 @@ export default function CompositionVisual({
         </div>
       </div>
 
-      <div className="relative z-20 mt-8 grid grid-cols-2 gap-4 sm:gap-6 lg:absolute lg:inset-0 lg:mt-0 lg:block">
+      <div className="relative z-20 mt-3 grid grid-cols-2 gap-2 sm:mt-8 sm:gap-6 lg:absolute lg:inset-0 lg:mt-0 lg:block">
         {features.map((f, i) => (
           <article
             key={f.title}
@@ -96,16 +95,16 @@ export default function CompositionVisual({
                 ref={(el) => {
                   cardsInnerRefs.current[i] = el;
                 }}
-                className="pointer-events-none w-full max-w-none flex flex-col items-center gap-4 rounded-2xl bg-[#F8F8F8] p-5 text-center  will-change-transform sm:p-6 lg:pointer-events-auto lg:max-w-62.5 lg:p-6"
+                className="pointer-events-none flex min-h-[156px] w-full max-w-none flex-col items-center gap-3 rounded-[14px] bg-[#F8F8F8] px-3 py-4 text-center will-change-transform sm:min-h-[210px] sm:gap-4 sm:rounded-2xl sm:p-6 lg:pointer-events-auto lg:max-w-62.5 lg:p-6"
               >
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white">
+                <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-white sm:h-12 sm:w-12">
                   {f.iconSrc}
                 </div>
                 <div>
-                  <h3 className="mt-5 text-[15px] font-medium leading-snug tracking-[-0.01em] text-slate-900">
+                  <h3 className="mt-3 text-[13px] font-medium leading-[1.05] tracking-[-0.01em] text-slate-900 sm:mt-5 sm:text-[15px] sm:leading-snug">
                     {f.title}
                   </h3>
-                  <p className="mt-2 text-[13px] leading-relaxed text-slate-600">
+                  <p className="mt-2 text-[11px] leading-[1.1] text-slate-600 sm:text-[13px] sm:leading-relaxed">
                     {f.text}
                   </p>
                 </div>
