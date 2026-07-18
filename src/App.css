@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+}
+
+:root {
+    --footer-reveal-space: 0px;
+    --footer-side-gap: 0px;
+    --footer-radius: 0px;
+}
+
+.site-page {
+    position: relative;
+}
+
+.site-page[data-footer-reveal='true'] {
+    padding-bottom: var(--footer-reveal-space);
+    --footer-progress: 0;
+    background-color: #1D1D1E;
+}
+
+.site-main {
+    position: relative;
+    z-index: 2;
+    background: #ffffff;
+    will-change: border-radius;
+    overflow: visible;
+    clip-path: inset(0px 0px 0px 0px round 0px 0px 0px 0px);
+}
+
+.site-footer-reveal {
+    position: relative;
+    z-index: 1;
+}
+
+.site-page[data-footer-reveal='true'] .site-footer-reveal {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    filter: saturate(calc(0.92 + (var(--footer-progress) * 0.08)));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-page {
+        padding-bottom: 0;
+    }
+
+    .site-main {
+        will-change: auto;
+        overflow: visible;
+    }
+
+    .site-footer-reveal {
+        position: relative;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background-color: black;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #87878D;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #747479;
+}
+
+::-webkit-scrollbar-button {
+    height: none;
+    display: none;
+}

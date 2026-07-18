@@ -1,0 +1,341 @@
+.voice-review-phone {
+  width: 100%;
+  height: 100%;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Text",
+    "Segoe UI",
+    sans-serif;
+
+  &__screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 0;
+    background: #fff;
+  }
+
+  &__screen::before {
+    content: none;
+  }
+
+  &__telegram {
+    position: absolute;
+    inset: 38px 0 12px;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+  }
+
+  &__telegram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px 10px;
+    background: rgba(255, 255, 255, 0.96);
+    border-bottom: 1px solid #e8edf2;
+  }
+
+  &__header-left {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-width: 78px;
+  }
+
+  &__icon-button {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    color: #0a84ff;
+    background: transparent;
+    border: 0;
+  }
+
+  &__icon-button--back {
+    width: 22px;
+  }
+
+  &__back-label {
+    color: #0a84ff;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  &__avatar {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #74d2f6, #52aef2);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+
+  &__contact-name,
+  &__contact-status {
+    margin: 0;
+  }
+
+  &__contact-name {
+    color: #111827;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  &__contact-status {
+    margin-top: 2px;
+    font-size: 11px;
+    color: #0a84ff;
+  }
+
+  &__contact--center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  &__chat {
+    position: relative;
+    flex: 1;
+    padding: 14px 14px 10px;
+    background: #fff;
+  }
+
+  &__day-pill {
+    width: fit-content;
+    margin: 0 auto 14px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: #eef2f6;
+    color: #7a8897;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  &__incoming {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding-left: 5px;
+  }
+
+  &__message {
+    position: relative;
+    max-width: 266px;
+    border-radius: 18px;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05);
+    border: 1px solid #eff2f5;
+  }
+
+  &__message--incoming::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    bottom: 10px;
+    width: 12px;
+    height: 18px;
+    background: #fff;
+    border-left: 1px solid #eff2f5;
+    border-bottom: 1px solid #eff2f5;
+    border-bottom-left-radius: 12px;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+
+  &__message--media {
+    width: 148px;
+    padding: 8px;
+    background: #fff;
+  }
+
+  &__product-panel {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    min-height: 210px;
+    border-radius: 16px;
+    background: #fff;
+  }
+
+  &__product-image {
+    width: 68%;
+    object-fit: contain;
+  }
+
+  &__product-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    color: #7a8897;
+    font-size: 10px;
+    font-weight: 600;
+    gap: 10px;
+    align-items: center;
+
+    span:first-child {
+      white-space: nowrap;
+    }
+  }
+
+  &__message--voice {
+    width: 252px;
+    padding: 11px 14px 18px;
+    background: #fff;
+    color: #1f2937;
+    border-radius: 18px;
+  }
+
+  &__voice-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__play-button {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #0a84ff;
+    color: #fff;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  &__wave-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__wave {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 22px;
+
+    span {
+      width: 2px;
+      border-radius: 999px;
+      background: #d9e8f4;
+      transition: background-color 180ms ease;
+    }
+
+    span.is-active {
+      background: #78b6eb;
+    }
+  }
+
+  &__seek {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  &__voice-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 6px;
+  }
+
+  &__voice-meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: #8a97a5;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  &__voice-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #b3bec8;
+  }
+
+  &__message-time {
+    position: absolute;
+    right: 10px;
+    bottom: 6px;
+    color: #99a6b3;
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  &__composer {
+    display: grid;
+    grid-template-columns: 28px 1fr 34px;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 18px 4px;
+    background: #fff;
+    border-top: 1px solid #edf1f5;
+  }
+
+  &__composer-attach,
+  &__composer-send {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: #fff;
+  }
+
+  &__composer-attach {
+    color: #a6b1bc;
+  }
+
+  &__composer-field {
+    display: flex;
+    align-items: center;
+    height: 34px;
+    padding: 0 14px;
+    border-radius: 17px;
+    background: #f4f5f7;
+    color: #98a2ad;
+    font-size: 14px;
+  }
+
+  &__composer-send {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #fff;
+    color: #a6b1bc;
+  }
+
+  &__home-indicator {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    z-index: 4;
+    width: 134px;
+    height: 5px;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: #0f172a;
+    opacity: 0.12;
+  }
+
+}
