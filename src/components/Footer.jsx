@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
+import footerLogoImg from "../assets/img/Logo-footer.svg";
+import footerOrangeLogoImg from "../assets/img/Logo-footer-orange.svg";
 
 export default function Footer() {
   const [phone, setPhone] = useState("");
@@ -56,14 +58,14 @@ export default function Footer() {
       <div className="p-3 lg:pb-[102px]">
         <img
           className="w-full h-auto"
-          src="/src/assets/img/Logo-footer.svg"
+          src={footerLogoImg}
           alt=""
         />
       </div>
 
       <div className="flex flex-col lg:px-20">
         <div className="hidden lg:block pb-6">
-          <img src="/src/assets/img/Logo-footer-orange.svg" alt="logo" />
+          <img src={footerOrangeLogoImg} alt="logo" />
         </div>
 
         <div className="flex items-start flex-col lg:flex-row lg:justify-between px-4 lg:px-0">

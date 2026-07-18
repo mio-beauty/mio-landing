@@ -23,17 +23,11 @@ const REVIEW_STEPS = [
   {
     id: "review-1",
     order: "01",
-    tags: [
-      "Акне",
-      "Чувствительная кожа",
-      "Результат через 1 месяц",
-    ],
+    tags: ["Акне", "Чувствительная кожа", "Результат через 1 месяц"],
     concernTitle: "С чем обратилась",
-    concernText:
-      "Высыпания, чувствительность и неровный тон кожи",
+    concernText: "Высыпания, чувствительность и неровный тон кожи",
     resultTitle: "Что получила",
-    resultText:
-      "Более спокойную кожу и понятный ежедневный уход",
+    resultText: "Более спокойную кожу и понятный ежедневный уход",
     productTitle: "Увлажняющий крем",
     productDescription:
       "Глубоко питает кожу, помогает удерживать влагу и делает её мягкой",
@@ -47,17 +41,11 @@ const REVIEW_STEPS = [
   {
     id: "review-2",
     order: "02",
-    tags: [
-      "Сухость",
-      "Стянутость",
-      "Ежедневный уход",
-    ],
+    tags: ["Сухость", "Стянутость", "Ежедневный уход"],
     concernTitle: "С чем обратилась",
-    concernText:
-      "Сухость после умывания, стянутость и ощущение уставшей кожи",
+    concernText: "Сухость после умывания, стянутость и ощущение уставшей кожи",
     resultTitle: "Что получила",
-    resultText:
-      "Комфорт после очищения и более мягкую, спокойную кожу",
+    resultText: "Комфорт после очищения и более мягкую, спокойную кожу",
     productTitle: "Очищающая пенка",
     productDescription:
       "Бережно очищает, не пересушивает и поддерживает комфорт кожи",
@@ -71,17 +59,11 @@ const REVIEW_STEPS = [
   {
     id: "review-3",
     order: "03",
-    tags: [
-      "Покраснение",
-      "Чувствительность",
-      "Восстановление",
-    ],
+    tags: ["Покраснение", "Чувствительность", "Восстановление"],
     concernTitle: "С чем обратилась",
-    concernText:
-      "Покраснение, реактивность кожи и дискомфорт после ухода",
+    concernText: "Покраснение, реактивность кожи и дискомфорт после ухода",
     resultTitle: "Что получила",
-    resultText:
-      "Более ровный тон и снижение чувствительности кожи",
+    resultText: "Более ровный тон и снижение чувствительности кожи",
     productTitle: "Успокаивающая сыворотка",
     productDescription:
       "Снижает чувствительность и помогает коже быстрее восстановиться",
@@ -97,11 +79,9 @@ const REVIEW_STEPS = [
     order: "04",
     tags: ["Тусклый тон", "Неровность", "Сияние"],
     concernTitle: "С чем обратилась",
-    concernText:
-      "Тусклый цвет лица, неровный тон и ощущение уставшей кожи",
+    concernText: "Тусклый цвет лица, неровный тон и ощущение уставшей кожи",
     resultTitle: "Что получила",
-    resultText:
-      "Более свежий вид и визуально более ровный тон",
+    resultText: "Более свежий вид и визуально более ровный тон",
     productTitle: "Крем для восстановления",
     productDescription:
       "Поддерживает защитный барьер и делает тон кожи более ровным",
@@ -347,8 +327,9 @@ export default function ReviewSection() {
 
   return (
     <section
+      id="reviews"
       ref={sectionRef}
-      className="relative overflow-x-hidden bg-white text-black lg:overflow-hidden"
+      className="relative overflow-x-hidden scroll-mt-28 bg-white text-black lg:overflow-hidden"
     >
       <div className="mx-auto w-full px-4 py-10 sm:px-8 lg:px-8 lg:py-12 xl:px-10">
         <div
@@ -358,10 +339,10 @@ export default function ReviewSection() {
           <div className="lg:col-start-2 lg:row-start-1">
             <div ref={headerRef} className="mx-auto text-center">
               <h2 className="pb-2 text-[28px] font-semibold leading-none text-[#161616] sm:text-[34px]">
-                ÐžÑ‚Ð·Ñ‹Ð²Ñ‹ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð¾Ð²
+                Отзывы клиентов
               </h2>
               <p className="mt-3 pb-5 text-[14px] leading-[1.25] text-[#969696] sm:mt-4 sm:pb-6 sm:text-[18px]">
-                Ð¡ÐºÑ€Ð¸Ð½ÑˆÐ¾Ñ‚Ñ‹ Ð¸Ð· Ð¼ÐµÑÑÐµÐ½Ð´Ð¶ÐµÑ€Ð¾Ð² Ð¸ ÑÐ¾Ñ†ÑÐµÑ‚ÐµÐ¹
+                Скриншоты из мессенджеров и соцсетей
               </p>
 
               <div className="hidden rounded-full bg-[#f3f3f3] p-1 sm:inline-flex">

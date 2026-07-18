@@ -6,3 +6,7 @@ body,
   min-height: 100%;
   background: #1D1D1E;
 }
+
+html {
+  scroll-behavior: smooth;
+}

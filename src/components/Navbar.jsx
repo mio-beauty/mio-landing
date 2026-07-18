@@ -1,12 +1,19 @@
 import { useEffect, useRef, useState } from "react";
+import burgerLogoImg from "../assets/img/burger-logo.svg";
+import chevronImg from "../assets/img/chevron.svg";
+import closeIconImg from "../assets/img/ic_X_mark.svg";
+import burgerIconImg from "../assets/img/ic_burger2.svg";
+import checkIconImg from "../assets/img/ic_check.svg";
+import languageIconImg from "../assets/img/ic_language.svg";
+import logoImg from "../assets/img/Logo.svg";
 
 const NAV_ITEMS = [
-  "Контакты",
-  "Результаты",
-  "Состав",
-  "Отзывы",
-  "Вопросы",
-  "О нас",
+  { label: "Контакты", href: "#contacts" },
+  { label: "Результаты", href: "#results" },
+  { label: "Состав", href: "#composition" },
+  { label: "Отзывы", href: "#reviews" },
+  { label: "Вопросы", href: "#questions" },
+  { label: "О нас", href: "#about" },
 ];
 
 const LANGUAGES = ["Русский", "English", "Uzbek"];
@@ -46,6 +53,11 @@ export default function Navbar({ textColor = "white" }) {
     };
   }, [openMenu]);
 
+  const resetNavHover = () => {
+    setHoveredIndex(null);
+    setHoverOffsets({});
+  };
+
   const handleSelectLanguage = (lang) => {
     setActiveLang(lang);
     setOpenLang(false);
@@ -73,7 +85,7 @@ export default function Navbar({ textColor = "white" }) {
     <div className="relative z-[200] flex items-center justify-between bg-transparent px-4 pt-4 lg:px-0 lg:pt-12">
       <img
         className="h-[24px] w-[149px] lg:h-auto lg:w-auto"
-        src="/src/assets/img/Logo.svg"
+        src={logoImg}
         alt="MIO BEAUTY"
       />
 
@@ -86,13 +98,15 @@ export default function Navbar({ textColor = "white" }) {
 
           return (
             <li
-              key={item}
+              key={item.href}
               className="group relative"
               onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
+              onMouseLeave={resetNavHover}
               onMouseMove={(event) => handleNavMove(index, event)}
             >
-              <span
+              <a
+                href={item.href}
+                onClick={resetNavHover}
                 className="relative block transition-transform duration-300 ease-out"
                 style={{
                   transform: isHovered
@@ -100,8 +114,8 @@ export default function Navbar({ textColor = "white" }) {
                     : "translate3d(0, 0, 0)",
                 }}
               >
-                {item}
-              </span>
+                {item.label}
+              </a>
 
               <span
                 className="pointer-events-none absolute left-1/2 top-full mt-3 h-1.5 w-1.5 rounded-full bg-current transition-all duration-300 ease-out"
@@ -125,7 +139,7 @@ export default function Navbar({ textColor = "white" }) {
             aria-label="Select language"
           >
             <img
-              src="/src/assets/img/ic_language.svg"
+              src={languageIconImg}
               alt=""
               className={`transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${openLang ? "scale-95" : "scale-100"}`}
             />
@@ -165,7 +179,7 @@ export default function Navbar({ textColor = "white" }) {
                   }}
                 >
                   <span>{lang}</span>
-                  {isActive && <img src="/src/assets/img/ic_check.svg" alt="" />}
+                  {isActive && <img src={checkIconImg} alt="" />}
                 </button>
               );
             })}
@@ -179,7 +193,7 @@ export default function Navbar({ textColor = "white" }) {
         onClick={() => setOpenMenu(true)}
         aria-label="Open menu"
       >
-        <img src="/src/assets/img/ic_burger2.svg" alt="" />
+        <img src={burgerIconImg} alt="" />
       </button>
 
       <div
@@ -201,22 +215,21 @@ export default function Navbar({ textColor = "white" }) {
         <div className="flex h-full min-h-0 flex-col justify-between overflow-hidden">
           <div className="min-h-0 flex-1 overflow-hidden">
             <div className="flex justify-between px-4 pb-4 pt-[max(16px,env(safe-area-inset-top))]">
-              <img src="/src/assets/img/burger-logo.svg" alt="" />
+              <img src={burgerLogoImg} alt="" />
 
               <button
                 type="button"
                 onClick={() => setOpenMenu(false)}
                 aria-label="Close menu"
               >
-                <img src="/src/assets/img/ic_X_mark.svg" alt="" />
+                <img src={closeIconImg} alt="" />
               </button>
             </div>
 
             <ul className="flex flex-col px-4">
               {NAV_ITEMS.map((item, index) => (
                 <li
-                  key={item}
-                  className="flex items-center justify-between py-4"
+                  key={item.href}
                   style={{
                     opacity: openMenu ? 1 : 0,
                     transform: openMenu
@@ -227,8 +240,17 @@ export default function Navbar({ textColor = "white" }) {
                     transitionDelay: openMenu ? `${110 + index * 55}ms` : "0ms",
                   }}
                 >
-                  <span className="text-sm text-[#0B0B0B]">{item}</span>
-                  <img src="/src/assets/img/chevron.svg" alt="" />
+                  <a
+                    href={item.href}
+                    onClick={() => {
+                      resetNavHover();
+                      setOpenMenu(false);
+                    }}
+                    className="flex items-center justify-between py-4"
+                  >
+                    <span className="text-sm text-[#0B0B0B]">{item.label}</span>
+                    <img src={chevronImg} alt="" />
+                  </a>
                 </li>
               ))}
             </ul>
