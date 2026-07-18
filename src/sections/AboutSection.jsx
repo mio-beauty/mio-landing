@@ -230,7 +230,7 @@ export default function AboutSection() {
   const mobileYearsOffset = activeIndex * 56;
 
   return (
-    <section className="bg-white pt-30">
+    <section id="about" className="scroll-mt-28 bg-white pt-30">
       <div
         ref={sectionRef}
         className="hidden lg:block  "

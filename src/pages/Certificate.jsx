@@ -1,15 +1,16 @@
 import Navbar from "../components/Navbar";
 import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import certificateImg from "../assets/img/certifikat.png";
 
 export default function CertificatePage() {
   const certificates = [
-    "/src/assets/img/certifikat.png",
-    "/src/assets/img/certifikat.png",
-    "/src/assets/img/certifikat.png",
-    "/src/assets/img/certifikat.png",
-    "/src/assets/img/certifikat.png",
-    "/src/assets/img/certifikat.png",
+    certificateImg,
+    certificateImg,
+    certificateImg,
+    certificateImg,
+    certificateImg,
+    certificateImg,
   ];
 
   return (

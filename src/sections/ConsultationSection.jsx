@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
 import { Check, ChevronDown, LoaderCircle } from "lucide-react";
+import consultationImg from "../assets/img/Consultation.png";
+import consultationWideImg from "../assets/img/Consultation2.png";
+import consultationAltImg from "../assets/img/Consultation3.png";
+import checkFilledIconImg from "../assets/img/ic_check_filled.svg";
+import closeFilledIconImg from "../assets/img/ic_close_filled.svg";
+import errorIconImg from "../assets/img/ic_error.svg";
 
 export default function ConsultationSection() {
   const [open, setOpen] = useState(false);
@@ -82,7 +88,7 @@ export default function ConsultationSection() {
   };
 
   return (
-    <section className="bg-[#F8F8F8]">
+    <section id="contacts" className="scroll-mt-28 bg-[#F8F8F8]">
       <div className="relative px-4 py-8 lg:px-33.5 lg:py-36 flex flex-col justify-center">
         {/* TITLE */}
         <div className="flex flex-col gap-3 text-center">
@@ -91,7 +97,7 @@ export default function ConsultationSection() {
               Не знаете, с чего начать?
               <img
                 className="hidden lg:inline-block px-3 align-middle"
-                src="/src/assets/img/Consultation2.png"
+                src={consultationWideImg}
                 alt=""
               />
               Получите
@@ -99,13 +105,13 @@ export default function ConsultationSection() {
             <span className="block mt-2">
               <img
                 className="hidden lg:inline-block px-3 align-middle"
-                src="/src/assets/img/Consultation.png"
+                src={consultationImg}
                 alt=""
               />
               бесплатную консультацию косметолога
               <img
                 className="hidden lg:inline-block px-3 align-middle"
-                src="/src/assets/img/Consultation3.png"
+                src={consultationAltImg}
                 alt=""
               />
             </span>
@@ -225,7 +231,7 @@ export default function ConsultationSection() {
             {status === "error" && (
               <div className="flex flex-col lg:flex-row items-center justify-between gap-2 bg-[#000000D9] border border-[#757575] py-2.5 px-3 rounded-xl">
                 <div className="flex lg:items-start items-center gap-2">
-                  <img src="/src/assets/img/ic_error.svg" alt="" />
+                  <img src={errorIconImg} alt="" />
                   <p className="text-[#FFFFFF] text-[16px]">
                     Вы достигли лимита на отправку сообщений, пожалуйста,
                     попробуйте позже
@@ -249,7 +255,7 @@ export default function ConsultationSection() {
             {status === "success" && (
               <div className="flex items-center justify-between bg-[#000000D9] border border-[#757575] py-2.5 px-3 rounded-xl lg:w-[60%] w-full">
                 <div className="flex items-center gap-2">
-                  <img src="/src/assets/img/ic_check_filled.svg" alt="" />
+                  <img src={checkFilledIconImg} alt="" />
                   <p className="text-[#FFFFFF] text-[16px]">
                     Ваше сообщение отправлено
                   </p>
@@ -266,7 +272,7 @@ export default function ConsultationSection() {
             {status === "failed" && (
               <div className="flex items-center justify-between bg-[#000000D9] border border-[#757575] py-2.5 px-3 rounded-xl lg:w-[60%] w-full">
                 <div className="flex items-center gap-2">
-                  <img src="/src/assets/img/ic_close_filled.svg" alt="" />
+                  <img src={closeFilledIconImg} alt="" />
                   <p className="text-[#FFFFFF] text-[16px]">
                     Ваше сообщение не отправлено
                   </p>

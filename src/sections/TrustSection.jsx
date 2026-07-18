@@ -44,6 +44,7 @@ const PREVIEW_SCALE_EASE = "cubic-bezier(0.32, 0, 0.67, 0)";
 const PREVIEW_ENTER_SCALE = 0.18;
 const PREVIEW_CLOSE_SCALE = 0.2;
 const PREVIEW_HIDE_DELAY_MS = 420;
+const SCROLL_IDLE_DELAY_MS = 140;
 
 export default function TrustSection() {
   const sectionRef = useRef(null);
@@ -62,6 +63,8 @@ export default function TrustSection() {
   const moveLabelYRef = useRef(null);
   const moveLabelTextXRef = useRef(null);
   const moveLabelTextYRef = useRef(null);
+  const scrollIdleTimeoutRef = useRef(0);
+  const isScrollLockedRef = useRef(false);
 
   const activeItem = useMemo(
     () => TRUST_ITEMS.find((item) => item.id === activeId) ?? TRUST_ITEMS[0],
@@ -126,11 +129,48 @@ export default function TrustSection() {
       if (showFrameRef.current) {
         window.cancelAnimationFrame(showFrameRef.current);
       }
+      if (scrollIdleTimeoutRef.current) {
+        window.clearTimeout(scrollIdleTimeoutRef.current);
+      }
     },
     [],
   );
 
+  useEffect(() => {
+    const dismissPreview = () => {
+      isScrollLockedRef.current = true;
+      if (showFrameRef.current) {
+        window.cancelAnimationFrame(showFrameRef.current);
+        showFrameRef.current = 0;
+      }
+      if (scrollIdleTimeoutRef.current) {
+        window.clearTimeout(scrollIdleTimeoutRef.current);
+      }
+      setHoverPreview((current) => ({
+        ...current,
+        visible: false,
+      }));
+      setHoveredId(null);
+      moveLabelTextXRef.current?.(0);
+      moveLabelTextYRef.current?.(0);
+
+      scrollIdleTimeoutRef.current = window.setTimeout(() => {
+        isScrollLockedRef.current = false;
+      }, SCROLL_IDLE_DELAY_MS);
+    };
+
+    window.addEventListener("scroll", dismissPreview, { passive: true });
+    window.addEventListener("hashchange", dismissPreview);
+
+    return () => {
+      window.removeEventListener("scroll", dismissPreview);
+      window.removeEventListener("hashchange", dismissPreview);
+    };
+  }, []);
+
   const updatePreviewPosition = (event) => {
+    if (isScrollLockedRef.current) return;
+
     const section = sectionRef.current;
     if (!section) return;
 
@@ -195,12 +235,14 @@ export default function TrustSection() {
   };
 
   const handleItemEnter = (itemId, event) => {
+    if (isScrollLockedRef.current) return;
     setActiveId(itemId);
     setHoveredId(itemId);
     updatePreviewPosition(event);
   };
 
   const handleItemMove = (itemId, event) => {
+    if (isScrollLockedRef.current) return;
     if (activeId !== itemId) {
       setActiveId(itemId);
     }

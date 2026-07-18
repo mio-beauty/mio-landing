@@ -1,5 +1,6 @@
 import { ChevronRight, Clock3, File } from "lucide-react";
 import { useState } from "react";
+import cashIconImg from "../assets/img/ic_cash.svg";
 
 export default function QuestionSection() {
   const [open1, setOpen1] = useState(false);
@@ -7,7 +8,7 @@ export default function QuestionSection() {
   const [open3, setOpen3] = useState(false);
 
   return (
-    <section className="">
+    <section id="questions" className="scroll-mt-28">
       <div className="px-4 py-7.5 lg:px-36">
         <div className="text-[#0B0B0B]">
           <h2 className="text-2xl lg:text-5xl font-semibold pb-2">
@@ -26,7 +27,7 @@ export default function QuestionSection() {
               className="flex justify-between items-center p-4 cursor-pointer lg:hover:bg-[#F8F8F8] transition-colors"
             >
               <span className="flex items-center gap-4">
-                <img src="/src/assets/img/ic_cash.svg" alt="" />
+                <img src={cashIconImg} alt="" />
                 <p className="text-[#0B0B0B] text-[16px]">Цена</p>
               </span>
               <ChevronRight
