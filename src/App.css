@@ -42,6 +42,20 @@
     filter: saturate(calc(0.92 + (var(--footer-progress) * 0.08)));
 }
 
+@media (max-width: 1023px) {
+    .site-page[data-footer-reveal='true'] {
+        padding-bottom: 0;
+        background-color: #ffffff;
+    }
+
+    .site-page[data-footer-reveal='true'] .site-footer-reveal {
+        position: relative;
+        inset-inline: auto;
+        bottom: auto;
+        filter: none;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .site-page {
         padding-bottom: 0;

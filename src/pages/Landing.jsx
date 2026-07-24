@@ -49,7 +49,9 @@ export default function LandingPage() {
       <ReviewSection />
       <QuestionSection />
       <ConsultationSection />
-      <AboutSection />
+      <div className="hidden lg:block">
+        <AboutSection />
+      </div>
     </>
   );
 }

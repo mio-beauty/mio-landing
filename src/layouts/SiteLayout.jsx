@@ -21,6 +21,7 @@ export default function SiteLayout() {
     }
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const desktopMotionQuery = window.matchMedia('(min-width: 1024px)')
     const applyStaticLayout = () => {
       const footerHeight = footer.getBoundingClientRect().height
       page.style.setProperty('--footer-reveal-space', isLandingPage ? `${footerHeight}px` : '0px')
@@ -42,15 +43,17 @@ export default function SiteLayout() {
 
       mm.add(
         {
+          isDesktop: '(min-width: 1024px)',
           reduceMotion: '(prefers-reduced-motion: reduce)',
           allowMotion: '(prefers-reduced-motion: no-preference)',
         },
         (context) => {
-          const { reduceMotion, allowMotion } = context.conditions
+          const { isDesktop, reduceMotion, allowMotion } = context.conditions
 
           applyStaticLayout()
 
-          if (!isLandingPage || reduceMotion || !allowMotion) {
+          if (!isLandingPage || !isDesktop || reduceMotion || !allowMotion) {
+            page.style.setProperty('--footer-reveal-space', '0px')
             return undefined
           }
 
@@ -122,16 +125,19 @@ export default function SiteLayout() {
           })
 
           const handleViewportChange = () => {
+            if (!desktopMotionQuery.matches) return
             updateFooterSpace()
             ScrollTrigger.refresh()
           }
 
           window.addEventListener('resize', handleViewportChange)
           prefersReducedMotion.addEventListener('change', handleViewportChange)
+          desktopMotionQuery.addEventListener('change', handleViewportChange)
 
           return () => {
             window.removeEventListener('resize', handleViewportChange)
             prefersReducedMotion.removeEventListener('change', handleViewportChange)
+            desktopMotionQuery.removeEventListener('change', handleViewportChange)
           }
         },
       )

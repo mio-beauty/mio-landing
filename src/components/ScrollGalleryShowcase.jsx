@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import modalPng from "../assets/img/modal.png";
 import ConsultationModal from "./ConsultationModal";
+import { useI18n } from "../i18n/I18nProvider.jsx";
 
 function clampInt(value, min, max) {
   return Math.min(max, Math.max(min, value | 0));
@@ -23,12 +24,19 @@ const DEFAULT_TITLES = [
 const MODAL_IMAGES = DEFAULT_TITLES.map(() => modalPng);
 const SCROLL_STEP_VIEWPORT_RATIO = 0.72;
 
+function getStableViewportHeight() {
+  if (typeof window === "undefined") return 0;
+  return Math.round(window.visualViewport?.height || window.innerHeight || 0);
+}
+
 export default function ScrollGalleryShowcase({
   images,
   title,
   buttonText,
   buttonHref,
 }) {
+  const { get, t } = useI18n();
+  const defaultTitles = get("showcase.problemTitles", []);
   const safeImages = useMemo(() => {
     return Array.isArray(images) ? images.filter(Boolean) : [];
   }, [images]);
@@ -81,18 +89,20 @@ export default function ScrollGalleryShowcase({
     const bgImgB = bgImgRefB.current;
     const viewport = galleryViewportRef.current;
     const titleEl = titleRef.current;
+    const isDesktop = window.matchMedia?.("(min-width: 768px)")?.matches ?? false;
+    const viewportHeight = getStableViewportHeight();
 
     if (!bgA || !bgB || !bgImgA || !bgImgB || !viewport) return;
 
     const setTitleInstant = (nextIndex) => {
       if (!titleEl) return;
-      const nextTitle = DEFAULT_TITLES[nextIndex] ?? title ?? "";
+      const nextTitle = defaultTitles[nextIndex] ?? title ?? "";
       titleEl.textContent = nextTitle;
     };
 
     const swapTitleTo = (nextIndex, direction = 1) => {
       if (!titleEl) return;
-      const nextTitle = DEFAULT_TITLES[nextIndex] ?? title ?? "";
+      const nextTitle = defaultTitles[nextIndex] ?? title ?? "";
       if (titleEl.textContent === nextTitle) return;
 
       if (prefersReducedMotion) {
@@ -318,15 +328,15 @@ export default function ScrollGalleryShowcase({
     applyGalleryState(0, { immediate: true });
     viewportSizeRef.current = {
       width: window.innerWidth,
-      height: window.innerHeight,
+      height: viewportHeight,
     };
 
     const onResize = () => {
       const nextWidth = window.innerWidth;
-      const nextHeight = window.innerHeight;
+      const nextHeight = getStableViewportHeight();
       const prevViewport = viewportSizeRef.current;
       const widthChanged = Math.abs(nextWidth - prevViewport.width) > 1;
-      const heightChanged = Math.abs(nextHeight - prevViewport.height) > 120;
+      const heightChanged = isDesktop && Math.abs(nextHeight - prevViewport.height) > 120;
 
       if (!widthChanged && !heightChanged) {
         return;
@@ -354,13 +364,13 @@ export default function ScrollGalleryShowcase({
       start: "top top",
       end: () =>
         `+=${Math.round(
-          scrollSteps * window.innerHeight * SCROLL_STEP_VIEWPORT_RATIO
+          scrollSteps * viewportHeight * (isDesktop ? SCROLL_STEP_VIEWPORT_RATIO : 0.42)
         )}`,
       pin: true,
       refreshPriority: 30,
-      anticipatePin: 1,
-      scrub: prefersReducedMotion ? false : 0.65,
-      invalidateOnRefresh: true,
+      anticipatePin: isDesktop ? 1 : 0,
+      scrub: prefersReducedMotion ? false : isDesktop ? 0.65 : 0.18,
+      invalidateOnRefresh: isDesktop,
       onUpdate: (self) => {
         if (count <= 1) return;
         const idx = clampInt(self.progress * count, 0, count - 1);
@@ -383,7 +393,7 @@ export default function ScrollGalleryShowcase({
   if (count === 0) return null;
 
   const openModal = (triggerEl) => {
-    const n = DEFAULT_TITLES.length || 1;
+    const n = defaultTitles.length || 1;
     if (triggerEl) {
       const rect = triggerEl.getBoundingClientRect();
       setModalOrigin({
@@ -404,7 +414,7 @@ export default function ScrollGalleryShowcase({
   return (
     <section
       ref={sectionRef}
-      className="relative h-[100svh] w-full overflow-hidden md:h-screen"
+      className="relative h-[100dvh] min-h-[100svh] w-full overflow-hidden md:h-screen"
     >
       <div className="absolute inset-0">
         <div ref={bgLayerRefA} className="absolute inset-0">

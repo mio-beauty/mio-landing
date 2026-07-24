@@ -1,0 +1,253 @@
+{
+  "common": {
+    "languages": {
+      "uz": "O'zbek",
+      "ru": "Русский",
+      "en": "English"
+    }
+  },
+  "navbar": {
+    "navItems": [
+      { "label": "Contacts", "href": "#contacts" },
+      { "label": "Results", "href": "#results" },
+      { "label": "Ingredients", "href": "#composition" },
+      { "label": "Reviews", "href": "#reviews" },
+      { "label": "Questions", "href": "#questions" },
+      { "label": "About", "href": "#about" }
+    ],
+    "selectLanguage": "Select language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "home": {
+    "categories": ["ACNE", "PIGMENTATION", "DRYNESS", "SENSITIVITY"],
+    "stats": [
+      { "value": 100000, "suffix": "+", "text": "Customers chose MIO Beauty" },
+      { "value": 92, "suffix": "%", "text": "Customers come back again" },
+      { "value": 300, "suffix": "+", "text": "Orders delivered the same day" }
+    ],
+    "title": "We help you choose skincare for your skin concern",
+    "subtitleTop": "Not sure where to start?",
+    "subtitleBottom": "We will suggest products that fit your skin",
+    "cta": "Get skincare подбор"
+  },
+  "showcase": {
+    "title": "Not sure which skincare routine suits you?",
+    "description": "Get a free consultation and we will select the right care for your skin",
+    "productsCta": "Go to products",
+    "consultationCta": "Get consultation",
+    "problemButtonText": "Which skin concerns we help solve",
+    "modalButtonText": "View solutions",
+    "problemTitles": ["Pigmentation", "Sensitivity", "Dryness", "Acne and inflammation", "Dull tone"]
+  },
+  "products": {
+    "featured": [
+      {
+        "id": 1,
+        "title": "Moisturizing cream",
+        "subtitle": "Bestseller",
+        "description": "Hydrates the skin, softens it and works well for daily care",
+        "price": "$24.00"
+      },
+      {
+        "id": 2,
+        "title": "Moisturizing milk toner",
+        "subtitle": "Bestseller",
+        "description": "Lightly hydrates the skin and prepares it for the next step",
+        "price": "$24.00"
+      }
+    ],
+    "cards": [
+      { "id": 1, "title": "Hydrophilic oil", "description": "Gently cleanses and does not dry the skin", "price": "$24.00" },
+      { "id": 2, "title": "Moisturizing toner", "description": "Soothes the skin and helps retain moisture", "price": "$24.00" },
+      { "id": 3, "title": "Hand cream", "description": "Reduces dryness and leaves skin softer", "price": "$24.00" },
+      { "id": 4, "title": "Cleansing foam", "description": "A gentle daily cleansing solution", "price": "$24.00" },
+      { "id": 5, "title": "Hand cream", "description": "Absorbs quickly and feels comfortable", "price": "$24.00" }
+    ],
+    "buyNow": "Buy now",
+    "buy": "Buy",
+    "allTitle": "See all our products"
+  },
+  "result": {
+    "title": "Real before and after results",
+    "description": "All photos are from our clients after a skincare course",
+    "categories": [
+      { "key": "acne", "label": "Acne" },
+      { "key": "pigmentation", "label": "Pigmentation" },
+      { "key": "dryness", "label": "Dryness" },
+      { "key": "oily", "label": "Oily skin" }
+    ],
+    "cta": "I want the same result",
+    "secondaryCta": "Get a skincare plan",
+    "imageAlt": "Result"
+  },
+  "trust": {
+    "title": "Why people trust us",
+    "description": "Care, service and results you want to come back to.",
+    "hoverLabel": "Contact",
+    "items": [
+      { "id": "01", "title": "Ingredients from Europe", "service": "Certified EU components" },
+      { "id": "02", "title": "24/7 support", "service": "Always in touch in messengers and the app" },
+      { "id": "03", "title": "Same-day delivery", "service": "Fast across Tashkent with convenient service" },
+      { "id": "04", "title": "100,000+ customers", "service": "Thousands of women have already chosen MIO Beauty" },
+      { "id": "05", "title": "92% satisfied customers", "service": "High repeat purchases and trust in the brand" }
+    ]
+  },
+  "composition": {
+    "headingLines": ["Natural formula and", "European ingredients"],
+    "description": "We choose eco-conscious skincare with minimum chemistry and maximum natural components so your skin can glow with health.",
+    "instagramAria": "Open @miobeautyuz on Instagram",
+    "features": [
+      { "title": "Suitable for sensitive skin", "text": "Suitable for sensitive skin" },
+      { "title": "Quality certificates", "text": "Verified by global experts" },
+      { "title": "Eco-friendly", "text": "97.8% eco-friendly, no unnecessary chemistry" },
+      { "title": "European components", "text": "Ingredients and components from Europe" }
+    ]
+  },
+  "reviews": {
+    "title": "Customer reviews",
+    "description": "Screenshots from messengers and social media",
+    "modes": { "text": "Text", "voice": "Voice" },
+    "steps": [
+      {
+        "id": "review-1",
+        "order": "01",
+        "tags": ["Acne", "Sensitive skin", "Results in 1 month"],
+        "concernTitle": "Initial concern",
+        "concernText": "Breakouts, sensitivity and uneven skin tone",
+        "resultTitle": "What she got",
+        "resultText": "Calmer skin and a clear daily routine",
+        "productTitle": "Moisturizing cream",
+        "productDescription": "Deeply nourishes the skin, helps retain moisture and leaves it soft"
+      },
+      {
+        "id": "review-2",
+        "order": "02",
+        "tags": ["Dryness", "Tightness", "Daily care"],
+        "concernTitle": "Initial concern",
+        "concernText": "Dryness after cleansing, tightness and tired-looking skin",
+        "resultTitle": "What she got",
+        "resultText": "Comfort after cleansing and softer, calmer skin",
+        "productTitle": "Cleansing foam",
+        "productDescription": "Gently cleanses without overdrying and supports skin comfort"
+      },
+      {
+        "id": "review-3",
+        "order": "03",
+        "tags": ["Redness", "Sensitivity", "Recovery"],
+        "concernTitle": "Initial concern",
+        "concernText": "Redness, reactive skin and discomfort after skincare",
+        "resultTitle": "What she got",
+        "resultText": "More even tone and reduced sensitivity",
+        "productTitle": "Soothing serum",
+        "productDescription": "Reduces sensitivity and helps skin recover faster"
+      },
+      {
+        "id": "review-4",
+        "order": "04",
+        "tags": ["Dull tone", "Unevenness", "Glow"],
+        "concernTitle": "Initial concern",
+        "concernText": "Dull complexion, uneven tone and tired-looking skin",
+        "resultTitle": "What she got",
+        "resultText": "A fresher look and visually more even skin tone",
+        "productTitle": "Recovery cream",
+        "productDescription": "Supports the skin barrier and helps even out the tone"
+      }
+    ],
+    "voice": {
+      "back": "Chats",
+      "status": "online",
+      "day": "Today",
+      "message": "Message",
+      "play": "Play voice review",
+      "pause": "Pause voice review",
+      "seek": "Seek voice review"
+    }
+  },
+  "faq": {
+    "title": "Answers to key questions",
+    "description": "All photos are from our clients after a skincare course",
+    "items": [
+      { "title": "Price", "content": "Each product and care routine is selected based on your skin condition. We will recommend the right option during consultation." },
+      { "title": "Certificates", "content": "Our products come with quality and ingredient documentation. We can show them during consultation if needed." },
+      { "title": "How fast results appear", "content": "The first improvements can usually be noticed within a few weeks depending on the skin condition. Consistency matters for stable results." }
+    ]
+  },
+  "consultation": {
+    "titleStart": "Not sure where to begin?",
+    "titleMiddle": "Get",
+    "titleEnd": "a free cosmetologist consultation",
+    "description": "We will answer your skin questions, select a routine and explain how to use the products",
+    "nameLabel": "Your name",
+    "namePlaceholder": "Your name",
+    "phoneLabel": "Your phone number",
+    "phonePlaceholder": "Your phone number",
+    "problemPlaceholder": "Acne, pigmentation, dryness, etc.",
+    "options": ["Acne", "Pigmentation", "Dryness"],
+    "cta": "Get consultation",
+    "helper": "Consultation is free. We are available 24/7",
+    "notifications": {
+      "error": "You have reached the message limit, please try again later",
+      "success": "Your message has been sent",
+      "failed": "Your message was not sent",
+      "info": "Info",
+      "close": "Close"
+    }
+  },
+  "footer": {
+    "infoTitle": "Info",
+    "infoLinks": ["Results", "Certificates", "Ingredients", "Reviews"],
+    "contactsTitle": "Contacts",
+    "contactHeading": "Contact us for more information",
+    "phoneLabel": "Phone",
+    "cta": "Get consultation",
+    "helper": "Free cosmetologist consultation 24/7",
+    "privacy": "Privacy policy",
+    "terms": "User agreement",
+    "certificates": "Certificates",
+    "copyright": "© 2025 MIOBEAUTY, All rights reserved"
+  },
+  "modal": {
+    "title": "Leave your contact details for a consultation.",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "phone": "Phone number",
+    "phonePlaceholder": "+998",
+    "cta": "Get consultation",
+    "close": "Close"
+  },
+  "about": {
+    "steps": [
+      {
+        "year": "2021",
+        "title": "MIO started with a small but very clear idea.",
+        "titleLines": ["MIO started", "with a small", "but clear idea."],
+        "description": "At the first stage we studied skin concerns and built care systems around real customer needs. The focus was not only on packaging, but on visible results."
+      },
+      {
+        "year": "2022",
+        "title": "The brand launched, and the first customers quickly noticed the results.",
+        "titleLines": ["The brand launched,", "and the first", "customers quickly", "noticed the results."],
+        "description": "The products were adapted for everyday use, and consultation became an important part of the service. A loyal audience started forming around MIO."
+      },
+      {
+        "year": "2023",
+        "title": "The range expanded and the results became even more systematic.",
+        "titleLines": ["The range expanded,", "and the results", "became even", "more systematic."],
+        "description": "Separate solutions appeared for different skin needs. Customers began choosing us not only for the products, but also for the right care direction."
+      },
+      {
+        "year": "2024",
+        "title": "Quality, service and trust came together in one place.",
+        "titleLines": ["Quality, service", "and trust", "came together", "in one place."],
+        "description": "We raised our quality standards and made the user journey simpler. At every step, we aimed to make the process clear and convenient."
+      },
+      {
+        "year": "2025",
+        "title": "Today MIO makes skincare simple, aesthetic and effective.",
+        "titleLines": ["Today MIO", "makes skincare", "simple, aesthetic", "and effective."],
+        "description": "Our goal has not changed: helping each person find the right path for their skin. The brand is growing, but the person and their results are still at the center."
+      }
+    ]
+  }
+}

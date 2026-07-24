@@ -6,25 +6,18 @@ import burgerIconImg from "../assets/img/ic_burger2.svg";
 import checkIconImg from "../assets/img/ic_check.svg";
 import languageIconImg from "../assets/img/ic_language.svg";
 import logoImg from "../assets/img/Logo.svg";
+import { useI18n } from "../i18n/I18nProvider.jsx";
 
-const NAV_ITEMS = [
-  { label: "Контакты", href: "#contacts" },
-  { label: "Результаты", href: "#results" },
-  { label: "Состав", href: "#composition" },
-  { label: "Отзывы", href: "#reviews" },
-  { label: "Вопросы", href: "#questions" },
-  { label: "О нас", href: "#about" },
-];
-
-const LANGUAGES = ["Русский", "English", "Uzbek"];
+const LANGUAGES = ["uz", "ru", "en"];
 
 export default function Navbar({ textColor = "white" }) {
+  const { language, setLanguage, t, get } = useI18n();
   const [openLang, setOpenLang] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
-  const [activeLang, setActiveLang] = useState("Русский");
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [hoverOffsets, setHoverOffsets] = useState({});
   const langRef = useRef(null);
+  const navItems = get("navbar.navItems", []);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -58,8 +51,8 @@ export default function Navbar({ textColor = "white" }) {
     setHoverOffsets({});
   };
 
-  const handleSelectLanguage = (lang) => {
-    setActiveLang(lang);
+  const handleSelectLanguage = (nextLanguage) => {
+    setLanguage(nextLanguage);
     setOpenLang(false);
   };
 
@@ -79,7 +72,7 @@ export default function Navbar({ textColor = "white" }) {
 
   const desktopTextColor =
     textColor === "dark" ? "text-[#0B0B0B]" : "text-[#FFFFFF]";
-  const activeLanguageIndex = LANGUAGES.indexOf(activeLang);
+  const activeLanguageIndex = Math.max(LANGUAGES.indexOf(language), 0);
 
   return (
     <div className="relative z-[200] flex items-center justify-between bg-transparent px-4 pt-4 lg:px-0 lg:pt-12">
@@ -92,7 +85,7 @@ export default function Navbar({ textColor = "white" }) {
       <ul
         className={`hidden cursor-pointer items-center gap-10 text-sm font-medium lg:flex ${desktopTextColor}`}
       >
-        {NAV_ITEMS.map((item, index) => {
+        {navItems.map((item, index) => {
           const offset = hoverOffsets[index] ?? { x: 0, y: 0 };
           const isHovered = hoveredIndex === index;
 
@@ -136,7 +129,7 @@ export default function Navbar({ textColor = "white" }) {
             className="relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-full"
             onClick={() => setOpenLang((prev) => !prev)}
             aria-expanded={openLang}
-            aria-label="Select language"
+            aria-label={t("navbar.selectLanguage")}
           >
             <img
               src={languageIconImg}
@@ -156,7 +149,7 @@ export default function Navbar({ textColor = "white" }) {
             }}
           >
             {LANGUAGES.map((lang, index) => {
-              const isActive = activeLang === lang;
+              const isActive = language === lang;
 
               return (
                 <button
@@ -178,7 +171,7 @@ export default function Navbar({ textColor = "white" }) {
                     transitionDelay: openLang ? `${index * 55}ms` : "0ms",
                   }}
                 >
-                  <span>{lang}</span>
+                  <span>{t(`common.languages.${lang}`)}</span>
                   {isActive && <img src={checkIconImg} alt="" />}
                 </button>
               );
@@ -191,7 +184,7 @@ export default function Navbar({ textColor = "white" }) {
         type="button"
         className="block cursor-pointer lg:hidden"
         onClick={() => setOpenMenu(true)}
-        aria-label="Open menu"
+        aria-label={t("navbar.openMenu")}
       >
         <img src={burgerIconImg} alt="" />
       </button>
@@ -220,14 +213,14 @@ export default function Navbar({ textColor = "white" }) {
               <button
                 type="button"
                 onClick={() => setOpenMenu(false)}
-                aria-label="Close menu"
+                aria-label={t("navbar.closeMenu")}
               >
                 <img src={closeIconImg} alt="" />
               </button>
             </div>
 
             <ul className="flex flex-col px-4">
-              {NAV_ITEMS.map((item, index) => (
+              {navItems.map((item, index) => (
                 <li
                   key={item.href}
                   style={{
@@ -285,10 +278,10 @@ export default function Navbar({ textColor = "white" }) {
                       type="button"
                       onClick={() => handleSelectLanguage(lang)}
                       className={`relative z-10 w-full px-3 py-2 text-center text-[15px] tracking-[-0.02em] transition-colors duration-300 ${
-                        activeLang === lang ? "text-[#2D241B]" : "text-[#8D7B6A]"
+                        language === lang ? "text-[#2D241B]" : "text-[#8D7B6A]"
                       }`}
                     >
-                      {lang}
+                      {t(`common.languages.${lang}`)}
                     </button>
                   </li>
                 ))}

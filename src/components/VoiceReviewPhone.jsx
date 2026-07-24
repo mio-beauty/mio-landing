@@ -1,12 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  ArrowLeft,
-  Paperclip,
-  Mic,
-  Pause,
-  Play,
-} from "lucide-react";
-
+import { ArrowLeft, Mic, Paperclip, Pause, Play } from "lucide-react";
+import { useI18n } from "../i18n/I18nProvider.jsx";
 import "./VoiceReviewPhone.scss";
 
 function formatTime(seconds) {
@@ -33,23 +27,24 @@ export default function VoiceReviewPhone({
   city,
   productImage,
 }) {
+  const { t, language } = useI18n();
   const audioRef = useRef(null);
-
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  const messageClock = useMemo(
-    () => {
-      const now = new Date();
-      return new Intl.DateTimeFormat("en-GB", {
+  const messageClock = useMemo(() => {
+    const now = new Date();
+
+    return new Intl.DateTimeFormat(
+      language === "ru" ? "ru-RU" : language === "en" ? "en-GB" : "uz-UZ",
+      {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
-      }).format(now);
-    },
-    [],
-  );
+      },
+    ).format(now);
+  }, [language]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -145,12 +140,12 @@ export default function VoiceReviewPhone({
               >
                 <ArrowLeft size={19} />
               </button>
-              <span className="voice-review-phone__back-label">Chats</span>
+              <span className="voice-review-phone__back-label">{t("reviews.voice.back")}</span>
             </div>
 
             <div className="voice-review-phone__contact voice-review-phone__contact--center">
               <p className="voice-review-phone__contact-name">{customerName}</p>
-              <p className="voice-review-phone__contact-status">online</p>
+              <p className="voice-review-phone__contact-status">{t("reviews.voice.status")}</p>
             </div>
 
             <div className="voice-review-phone__avatar">
@@ -159,14 +154,14 @@ export default function VoiceReviewPhone({
           </div>
 
           <div className="voice-review-phone__chat">
-            <div className="voice-review-phone__day-pill">Today</div>
+            <div className="voice-review-phone__day-pill">{t("reviews.voice.day")}</div>
 
             <div className="voice-review-phone__incoming">
               <div className="voice-review-phone__message voice-review-phone__message--media voice-review-phone__message--incoming">
                 <div className="voice-review-phone__product-panel">
                   <img
                     src={productImage}
-                    alt={customerName}
+                    alt={city || customerName}
                     className="voice-review-phone__product-image"
                     draggable="false"
                   />
@@ -182,7 +177,7 @@ export default function VoiceReviewPhone({
                     type="button"
                     className="voice-review-phone__play-button"
                     onClick={handleTogglePlayback}
-                    aria-label={isPlaying ? "Pause voice review" : "Play voice review"}
+                    aria-label={isPlaying ? t("reviews.voice.pause") : t("reviews.voice.play")}
                   >
                     {isPlaying ? (
                       <Pause size={20} strokeWidth={2.8} />
@@ -211,7 +206,7 @@ export default function VoiceReviewPhone({
                       onChange={handleSeek}
                       disabled={duration <= 0}
                       className="voice-review-phone__seek"
-                      aria-label="Seek voice review"
+                      aria-label={t("reviews.voice.seek")}
                     />
                   </div>
                 </div>
@@ -236,7 +231,7 @@ export default function VoiceReviewPhone({
               <Paperclip size={18} />
             </button>
             <div className="voice-review-phone__composer-field">
-              <span>Message</span>
+              <span>{t("reviews.voice.message")}</span>
             </div>
             <button type="button" className="voice-review-phone__composer-send">
               <Mic size={19} strokeWidth={2.3} />

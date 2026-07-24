@@ -98,6 +98,11 @@ const MOTION_MS = 760;
 const MOTION_SEC = 0.76;
 const PRODUCT_EXIT_MS = 760;
 
+function getStableViewportHeight() {
+  if (typeof window === "undefined") return 0;
+  return Math.round(window.visualViewport?.height || window.innerHeight || 0);
+}
+
 function ReviewInfo({ title, text }) {
   return (
     <div>
@@ -220,16 +225,19 @@ export default function ReviewSection() {
           const triggerEl = sectionRef.current;
           const phoneEl = phonePinRef.current;
           if (!triggerEl || !phoneEl) return () => {};
+
+          const mobileViewportHeight = getStableViewportHeight();
           const mobileScrollDistance = Math.round(
-            window.innerHeight * totalSteps * 0.92,
+            mobileViewportHeight * totalSteps * 0.42,
           );
 
           const progressSt = ScrollTrigger.create({
             trigger: triggerEl,
-            start: "top top+=16",
-            end: () => `+=${mobileScrollDistance}`,
-            scrub: 1,
-            invalidateOnRefresh: true,
+            start: "top top+=12",
+            end: `+=${mobileScrollDistance}`,
+            scrub: 0.16,
+            anticipatePin: 0,
+            invalidateOnRefresh: false,
             onUpdate: (self) => {
               const nextIndex = clamp(
                 Math.floor(self.progress * totalSteps),
@@ -246,13 +254,13 @@ export default function ReviewSection() {
 
           const pinSt = ScrollTrigger.create({
             trigger: phoneEl,
-            start: "top top+=16",
-            end: () => `+=${mobileScrollDistance}`,
+            start: "top top+=12",
+            end: `+=${mobileScrollDistance}`,
             pin: phoneEl,
             pinSpacing: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            refreshPriority: 10,
+            anticipatePin: 0,
+            invalidateOnRefresh: false,
+            refreshPriority: 5,
           });
 
           return () => {

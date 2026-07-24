@@ -5,53 +5,33 @@ import face2Img from "../assets/img/face2.jpg";
 import face3Img from "../assets/img/face3.jpg";
 import face4Img from "../assets/img/face4.jpg";
 import result1Img from "../assets/img/result1.png";
+import { useI18n } from "../i18n/I18nProvider.jsx";
 
-const TRUST_ITEMS = [
-  {
-    id: "01",
-    title: "Ингредиенты из Европы",
-    service: "Сертифицированные компоненты из ЕС",
-    preview: faceImg,
-  },
-  {
-    id: "02",
-    title: "24/7 поддержка",
-    service: "Всегда на связи в мессенджерах и приложении",
-    preview: face2Img,
-  },
-  {
-    id: "03",
-    title: "Доставка в день заказа",
-    service: "Быстро по Ташкенту и с удобным сервисом",
-    preview: face3Img,
-  },
-  {
-    id: "04",
-    title: "100 000+ клиентов",
-    service: "Тысячи девушек уже выбрали уход MIO Beauty",
-    preview: face4Img,
-  },
-  {
-    id: "05",
-    title: "92% довольных клиентов",
-    service: "Высокая повторная покупка и доверие к бренду",
-    preview: result1Img,
-  },
-];
-
+const PREVIEWS = [faceImg, face2Img, face3Img, face4Img, result1Img];
 const PREVIEW_EDGE_GUTTER = 24;
 const PREVIEW_SCALE_EASE = "cubic-bezier(0.32, 0, 0.67, 0)";
 const PREVIEW_ENTER_SCALE = 0.18;
-const PREVIEW_CLOSE_SCALE = 0.2;
-const PREVIEW_HIDE_DELAY_MS = 420;
+const PREVIEW_CLOSE_SCALE = 0;
+const PREVIEW_HIDE_DELAY_MS = 120;
 const SCROLL_IDLE_DELAY_MS = 140;
 
 export default function TrustSection() {
+  const { get, t } = useI18n();
+  const translatedItems = get("trust.items", []);
+  const items = useMemo(
+    () =>
+      translatedItems.map((item, index) => ({
+        ...item,
+        preview: PREVIEWS[index],
+      })),
+    [translatedItems],
+  );
+
   const sectionRef = useRef(null);
   const previewRef = useRef(null);
   const labelRef = useRef(null);
   const labelTextRef = useRef(null);
-  const [activeId, setActiveId] = useState(TRUST_ITEMS[0].id);
+  const [activeId, setActiveId] = useState(items[0]?.id ?? "01");
   const [hoveredId, setHoveredId] = useState(null);
   const [hoverPreview, setHoverPreview] = useState({ visible: false });
   const [isPreviewMounted, setIsPreviewMounted] = useState(false);
@@ -66,13 +46,19 @@ export default function TrustSection() {
   const scrollIdleTimeoutRef = useRef(0);
   const isScrollLockedRef = useRef(false);
 
+  useEffect(() => {
+    if (items[0]?.id) {
+      setActiveId(items[0].id);
+    }
+  }, [items]);
+
   const activeItem = useMemo(
-    () => TRUST_ITEMS.find((item) => item.id === activeId) ?? TRUST_ITEMS[0],
-    [activeId],
+    () => items.find((item) => item.id === activeId) ?? items[0],
+    [activeId, items],
   );
   const activeIndex = useMemo(
-    () => TRUST_ITEMS.findIndex((item) => item.id === activeItem.id),
-    [activeItem.id],
+    () => items.findIndex((item) => item.id === activeItem?.id),
+    [activeItem, items],
   );
 
   useLayoutEffect(() => {
@@ -208,12 +194,8 @@ export default function TrustSection() {
     moveYRef.current?.(event.clientY);
     moveLabelXRef.current?.(event.clientX);
     moveLabelYRef.current?.(event.clientY);
-    moveLabelTextXRef.current?.(
-      Math.max(-8, Math.min(8, event.movementX * 0.9)),
-    );
-    moveLabelTextYRef.current?.(
-      Math.max(-8, Math.min(8, event.movementY * 0.9)),
-    );
+    moveLabelTextXRef.current?.(Math.max(-8, Math.min(8, event.movementX * 0.9)));
+    moveLabelTextYRef.current?.(Math.max(-8, Math.min(8, event.movementY * 0.9)));
 
     if (!isPreviewMounted) {
       setIsPreviewMounted(true);
@@ -280,16 +262,16 @@ export default function TrustSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate z-20 overflow-hidden bg-[#FBF9F6] py-8 lg:overflow-visible lg:px-36 lg:py-18"
+      className="relative isolate z-20 overflow-hidden bg-[#FBF9F6] pb-0 pt-8 lg:overflow-visible lg:px-36 lg:py-18"
       onPointerLeave={hidePreview}
     >
       <div className="px-4 lg:px-0">
         <div className="mb-8 flex items-end justify-between gap-6 border-b border-[#DED8D1] pb-4 lg:mb-0">
           <h3 className="max-w-[640px] text-[clamp(2rem,9vw,3.25rem)] leading-[0.95] font-semibold tracking-[-0.04em] text-[#171411] lg:text-[64px]">
-            Почему нам доверяют
+            {t("trust.title")}
           </h3>
           <p className="hidden max-w-[280px] text-right text-[15px] leading-[1.35] text-[#7D7369] lg:block">
-            Уход, сервис и результат, к которым хочется возвращаться.
+            {t("trust.description")}
           </p>
         </div>
       </div>
@@ -298,7 +280,7 @@ export default function TrustSection() {
         <>
           <div
             ref={previewRef}
-            className="pointer-events-none fixed left-0 top-0 z-[120] hidden h-[380px] w-[300px] origin-center overflow-hidden rounded-[6px] bg-[#E8DFD4] shadow-[0_30px_80px_rgba(34,24,16,0.16)] transition-transform duration-[420ms] will-change-transform lg:block"
+            className="pointer-events-none fixed left-0 top-0 z-[120] hidden h-[380px] w-[300px] origin-center overflow-hidden rounded-[6px] bg-[#E8DFD4] shadow-[0_30px_80px_rgba(34,24,16,0.16)] transition-transform duration-[120ms] will-change-transform lg:block"
             style={{
               transform: `translate3d(-50%, -50%, 0) scale(${hoverPreview.visible ? 1 : isPreviewMounted ? PREVIEW_CLOSE_SCALE : PREVIEW_ENTER_SCALE})`,
               transitionTimingFunction: PREVIEW_SCALE_EASE,
@@ -311,7 +293,7 @@ export default function TrustSection() {
                 transition: "top 0.55s cubic-bezier(0.76, 0, 0.24, 1)",
               }}
             >
-              {TRUST_ITEMS.map((item) => (
+              {items.map((item) => (
                 <div
                   key={item.id}
                   className="flex h-full w-full items-center justify-center"
@@ -329,21 +311,21 @@ export default function TrustSection() {
 
           <div
             ref={labelRef}
-            className="pointer-events-none fixed left-0 top-0 z-[130] hidden h-[80px] w-[80px] origin-center items-center justify-center rounded-full border border-white/30 bg-white/16 text-[14px] font-medium text-white shadow-[0_10px_35px_rgba(17,12,8,0.22)] backdrop-blur-[14px] transition-transform duration-[420ms] will-change-transform lg:flex"
+            className="pointer-events-none fixed left-0 top-0 z-[130] hidden h-[80px] w-[80px] origin-center items-center justify-center rounded-full border border-white/30 bg-white/16 text-[14px] font-medium text-white shadow-[0_10px_35px_rgba(17,12,8,0.22)] backdrop-blur-[14px] transition-transform duration-[120ms] will-change-transform lg:flex"
             style={{
               transform: `translate3d(-50%, -50%, 0) scale(${hoverPreview.visible ? 1 : isPreviewMounted ? 0 : PREVIEW_ENTER_SCALE})`,
               transitionTimingFunction: PREVIEW_SCALE_EASE,
             }}
           >
             <span ref={labelTextRef} className="block will-change-transform">
-              Contact
+              {t("trust.hoverLabel")}
             </span>
           </div>
         </>
       )}
 
-      <div className="relative mt-2 flex flex-col">
-        {TRUST_ITEMS.map((item) => {
+      <div className="relative flex flex-col">
+        {items.map((item) => {
           const isActive = hoveredId === item.id;
 
           return (

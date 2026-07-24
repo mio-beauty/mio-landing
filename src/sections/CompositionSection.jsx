@@ -4,8 +4,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CompositionIntro from "./composition/CompositionIntro.jsx";
 import CompositionVisual from "./composition/CompositionVisual.jsx";
 import { compositionFeatures } from "./composition/compositionFeatures.jsx";
+import { useI18n } from "../i18n/I18nProvider.jsx";
 
 export default function ProductCursorCTA() {
+  const { get, t } = useI18n();
   const instagramUrl = "https://www.instagram.com/miobeautyuz";
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
@@ -19,7 +21,14 @@ export default function ProductCursorCTA() {
   const cardsInnerRefs = useRef([]);
   const cardIconRefs = useRef([]);
 
-  const features = useMemo(() => compositionFeatures, []);
+  const features = useMemo(() => {
+    const translatedFeatures = get("composition.features", []);
+
+    return compositionFeatures.map((feature, index) => ({
+      ...feature,
+      ...(translatedFeatures[index] ?? {}),
+    }));
+  }, [get]);
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -336,7 +345,7 @@ export default function ProductCursorCTA() {
     product.style.cursor = "pointer";
     product.setAttribute("role", "link");
     product.setAttribute("tabindex", "0");
-    product.setAttribute("aria-label", "Open @miobeautyuz on Instagram");
+    product.setAttribute("aria-label", t("composition.instagramAria"));
 
     const openInstagram = () => {
       window.open(instagramUrl, "_blank", "noopener,noreferrer");
@@ -360,7 +369,7 @@ export default function ProductCursorCTA() {
       product.removeEventListener("keydown", onKeyDown);
       product.style.cursor = previousCursor;
     };
-  }, [instagramUrl]);
+  }, [instagramUrl, t]);
 
   return (
     <section

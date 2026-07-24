@@ -1,0 +1,253 @@
+{
+  "common": {
+    "languages": {
+      "uz": "O'zbek",
+      "ru": "Русский",
+      "en": "English"
+    }
+  },
+  "navbar": {
+    "navItems": [
+      { "label": "Kontaktlar", "href": "#contacts" },
+      { "label": "Natijalar", "href": "#results" },
+      { "label": "Tarkib", "href": "#composition" },
+      { "label": "Sharhlar", "href": "#reviews" },
+      { "label": "Savollar", "href": "#questions" },
+      { "label": "Biz haqimizda", "href": "#about" }
+    ],
+    "selectLanguage": "Tilni tanlang",
+    "openMenu": "Menyuni ochish",
+    "closeMenu": "Menyuni yopish"
+  },
+  "home": {
+    "categories": ["AKNE", "PIGMENTATSIYA", "QURUQLIK", "SEZGIRLIK"],
+    "stats": [
+      { "value": 100000, "suffix": "+", "text": "MIO Beauty'ni tanlagan mijozlar" },
+      { "value": 92, "suffix": "%", "text": "Mijozlar yana qaytib keladi" },
+      { "value": 300, "suffix": "+", "text": "Buyurtmalarni shu kunning o'zida yetkazamiz" }
+    ],
+    "title": "Teringiz muammosiga mos parvarishni tanlashga yordam beramiz",
+    "subtitleTop": "Qayerdan boshlashni bilmayapsizmi?",
+    "subtitleBottom": "Aynan teringizga mos vositalarni tavsiya qilamiz",
+    "cta": "Parvarish tanlovini olish"
+  },
+  "showcase": {
+    "title": "Sizga qaysi parvarish mos kelishini bilmayapsizmi?",
+    "description": "Bepul konsultatsiya oling va teringizga mos parvarishni tanlaymiz",
+    "productsCta": "Mahsulotlarga o'tish",
+    "consultationCta": "Konsultatsiya olish",
+    "problemButtonText": "Teri muammosini hal qilishga qanday yordam beramiz",
+    "modalButtonText": "Yechimlarni ko'rish",
+    "problemTitles": ["Pigmentatsiya", "Sezgirlik", "Quruqlik", "Akne va yallig'lanish", "Xira tus"]
+  },
+  "products": {
+    "featured": [
+      {
+        "id": 1,
+        "title": "Namlik beruvchi krem",
+        "subtitle": "Bestseller",
+        "description": "Terni namlaydi, yumshatadi va kundalik parvarishda qulay his beradi",
+        "price": "$24.00"
+      },
+      {
+        "id": 2,
+        "title": "Namlik beruvchi milk toner",
+        "subtitle": "Bestseller",
+        "description": "Terni yengil namlaydi va keyingi parvarish bosqichiga tayyorlaydi",
+        "price": "$24.00"
+      }
+    ],
+    "cards": [
+      { "id": 1, "title": "Gidrofil moy", "description": "Yumshoq tozalaydi va terini quritmaydi", "price": "$24.00" },
+      { "id": 2, "title": "Namlik beruvchi toner", "description": "Terni tinchlantiradi va namlikni ushlab turadi", "price": "$24.00" },
+      { "id": 3, "title": "Qo'l kremi", "description": "Quruqlikni kamaytiradi va terini yumshatadi", "price": "$24.00" },
+      { "id": 4, "title": "Tozalovchi ko'pik", "description": "Nozik tozalash uchun kundalik yechim", "price": "$24.00" },
+      { "id": 5, "title": "Qo'l kremi", "description": "Tez singadi va qulaylik hissini beradi", "price": "$24.00" }
+    ],
+    "buyNow": "Hozir sotib olish",
+    "buy": "Sotib olish",
+    "allTitle": "Barcha mahsulotlarimizni ko'ring"
+  },
+  "result": {
+    "title": "Oldin va keyin haqiqiy natijalar",
+    "description": "Barcha suratlar parvarish kursidan keyingi mijozlarimizga tegishli",
+    "categories": [
+      { "key": "acne", "label": "Akne" },
+      { "key": "pigmentation", "label": "Pigmentatsiya" },
+      { "key": "dryness", "label": "Quruqlik" },
+      { "key": "oily", "label": "Yog'li teri" }
+    ],
+    "cta": "Shunday natija xohlayman",
+    "secondaryCta": "Parvarish rejasini olish",
+    "imageAlt": "Natija"
+  },
+  "trust": {
+    "title": "Nega bizga ishonishadi",
+    "description": "Parvarish, servis va yana qaytishni xohlatadigan natija.",
+    "hoverLabel": "Aloqa",
+    "items": [
+      { "id": "01", "title": "Yevropadan ingredientlar", "service": "YI sertifikatiga ega komponentlar" },
+      { "id": "02", "title": "24/7 qo'llab-quvvatlash", "service": "Messendjer va ilovada doim aloqadamiz" },
+      { "id": "03", "title": "Buyurtma kuni yetkazib berish", "service": "Toshkent bo'ylab tez va qulay servis bilan" },
+      { "id": "04", "title": "100 000+ mijoz", "service": "Minglab qizlar allaqachon MIO Beauty'ni tanlagan" },
+      { "id": "05", "title": "92% mamnun mijoz", "service": "Yuqori qayta xarid va brendga ishonch" }
+    ]
+  },
+  "composition": {
+    "headingLines": ["Tabiiy tarkib va", "Yevropa ingredientlari"],
+    "description": "Biz minimal kimyo va maksimal tabiiy komponentlar bilan ekologik parvarishni tanlaymiz, shunda teringiz sog'lom porlaydi.",
+    "instagramAria": "Instagram'da @miobeautyuz ni ochish",
+    "features": [
+      { "title": "Sezgir teri uchun mos", "text": "Sezgir teri uchun mos" },
+      { "title": "Sifat sertifikatlari", "text": "Jahon ekspertlari tomonidan tasdiqlangan" },
+      { "title": "Ekologik", "text": "97,8% ekologik tarkib, ortiqcha kimyosiz" },
+      { "title": "Yevropadan komponentlar", "text": "Ingredient va komponentlar Yevropadan" }
+    ]
+  },
+  "reviews": {
+    "title": "Mijozlar sharhlari",
+    "description": "Messendjer va ijtimoiy tarmoqlardagi skrinshotlar",
+    "modes": { "text": "Matn", "voice": "Ovozli" },
+    "steps": [
+      {
+        "id": "review-1",
+        "order": "01",
+        "tags": ["Akne", "Sezgir teri", "1 oyda natija"],
+        "concernTitle": "Murojaat sababi",
+        "concernText": "Toshmalar, sezgirlik va notekis teri toni",
+        "resultTitle": "Olingan natija",
+        "resultText": "Tinchlangan teri va tushunarli kundalik parvarish",
+        "productTitle": "Namlik beruvchi krem",
+        "productDescription": "Terni chuqur oziqlantiradi, namlikni ushlab turadi va yumshoq qiladi"
+      },
+      {
+        "id": "review-2",
+        "order": "02",
+        "tags": ["Quruqlik", "Tortishish", "Kundalik parvarish"],
+        "concernTitle": "Murojaat sababi",
+        "concernText": "Yuvilgandan keyingi quruqlik, tortishish va charchagan teri hissi",
+        "resultTitle": "Olingan natija",
+        "resultText": "Tozalashdan keyingi qulaylik va sokinroq, yumshoqroq teri",
+        "productTitle": "Tozalovchi ko'pik",
+        "productDescription": "Nozik tozalaydi, quritmaydi va teri qulayligini saqlaydi"
+      },
+      {
+        "id": "review-3",
+        "order": "03",
+        "tags": ["Qizarish", "Sezgirlik", "Tiklanish"],
+        "concernTitle": "Murojaat sababi",
+        "concernText": "Qizarish, reaktiv teri va parvarishdan keyingi noqulaylik",
+        "resultTitle": "Olingan natija",
+        "resultText": "Teri toni tekisroq va sezgirlik kamaygan",
+        "productTitle": "Tinchlantiruvchi serum",
+        "productDescription": "Sezgirlikni kamaytiradi va terining tiklanishiga yordam beradi"
+      },
+      {
+        "id": "review-4",
+        "order": "04",
+        "tags": ["Xira tus", "Notekislik", "Yorqinlik"],
+        "concernTitle": "Murojaat sababi",
+        "concernText": "Xira yuz rangi, notekis tus va charchagan teri hissi",
+        "resultTitle": "Olingan natija",
+        "resultText": "Yangi ko'rinish va vizual ravishda tekisroq teri tusi",
+        "productTitle": "Tiklovchi krem",
+        "productDescription": "Himoya to'sig'ini qo'llab-quvvatlaydi va teri tonini tekislaydi"
+      }
+    ],
+    "voice": {
+      "back": "Chatlar",
+      "status": "online",
+      "day": "Bugun",
+      "message": "Xabar",
+      "play": "Ovozli sharhni ijro etish",
+      "pause": "Ovozli sharhni to'xtatish",
+      "seek": "Ovozli sharh bo'ylab yurish"
+    }
+  },
+  "faq": {
+    "title": "Asosiy savollarga javoblar",
+    "description": "Barcha suratlar parvarish kursidan keyingi mijozlarimizga tegishli",
+    "items": [
+      { "title": "Narx", "content": "Har bir mahsulot va parvarish tavsiyasi teri ehtiyojiga qarab tanlanadi. Biz sizga mos variantni konsultatsiyada aytamiz." },
+      { "title": "Sertifikatlar", "content": "Mahsulotlarimiz sifati va tarkibi bo'yicha tasdiqlovchi hujjatlarga ega. Kerak bo'lsa konsultatsiyada ko'rsatamiz." },
+      { "title": "Natija qancha vaqtda bilinadi", "content": "Birinchi o'zgarishlar terining holatiga qarab bir necha hafta ichida sezilishi mumkin. Barqaror natija uchun muntazam parvarish muhim." }
+    ]
+  },
+  "consultation": {
+    "titleStart": "Qayerdan boshlashni bilmayapsizmi?",
+    "titleMiddle": "Oling",
+    "titleEnd": "bepul kosmetolog konsultatsiyasi",
+    "description": "Teri bo'yicha savollarga javob beramiz, parvarishni tanlaymiz va mahsulotlarni qanday ishlatishni tushuntiramiz",
+    "nameLabel": "Ismingiz",
+    "namePlaceholder": "Ismingiz",
+    "phoneLabel": "Telefon raqamingiz",
+    "phonePlaceholder": "Telefon raqamingiz",
+    "problemPlaceholder": "Akne, pigmentatsiya, quruqlik va hokazo",
+    "options": ["Akne", "Pigmentatsiya", "Quruqlik"],
+    "cta": "Konsultatsiya olish",
+    "helper": "Konsultatsiya bepul. 24/7 aloqadamiz",
+    "notifications": {
+      "error": "Xabar yuborish limitiga yetdingiz, iltimos keyinroq urinib ko'ring",
+      "success": "Xabaringiz yuborildi",
+      "failed": "Xabaringiz yuborilmadi",
+      "info": "Info",
+      "close": "Yopish"
+    }
+  },
+  "footer": {
+    "infoTitle": "Ma'lumot",
+    "infoLinks": ["Natijalar", "Sertifikatlar", "Tarkib", "Sharhlar"],
+    "contactsTitle": "Kontaktlar",
+    "contactHeading": "Qo'shimcha ma'lumot olish uchun biz bilan bog'laning",
+    "phoneLabel": "Telefon",
+    "cta": "Konsultatsiya olish",
+    "helper": "Kosmetologning bepul konsultatsiyasi 24/7",
+    "privacy": "Maxfiylik siyosati",
+    "terms": "Foydalanuvchi kelishuvi",
+    "certificates": "Sertifikatlar",
+    "copyright": "© 2025 MIOBEAUTY, Barcha huquqlar himoyalangan"
+  },
+  "modal": {
+    "title": "Konsultatsiya uchun kontakt ma'lumotlaringizni qoldiring.",
+    "name": "Ism",
+    "namePlaceholder": "Ismingiz",
+    "phone": "Telefon raqami",
+    "phonePlaceholder": "+998",
+    "cta": "Konsultatsiya olish",
+    "close": "Yopish"
+  },
+  "about": {
+    "steps": [
+      {
+        "year": "2021",
+        "title": "MIO yo'li kichik, lekin aniq g'oya bilan boshlandi.",
+        "titleLines": ["MIO yo'li kichik,", "lekin aniq g'oya", "bilan boshlandi."],
+        "description": "Birinchi bosqichda biz teri muammolarini o'rganib, mijozlarga mos parvarish tizimini shakllantirdik. E'tibor faqat chiroyli qadoqqa emas, real natijaga qaratildi."
+      },
+      {
+        "year": "2022",
+        "title": "Brend ishga tushdi va ilk mijozlar natijani darhol sezishni boshladi.",
+        "titleLines": ["Brend ishga tushdi", "va ilk mijozlar", "natijani darhol", "sezishni boshladi."],
+        "description": "Mahsulotlar kundalik foydalanishga moslandi, maslahat berish jarayoni esa xizmatning muhim qismiga aylandi. Shu yilda MIO atrofida ishonchli auditoriya shakllandi."
+      },
+      {
+        "year": "2023",
+        "title": "Assortiment kengaydi, natijalar esa yanada tizimli bo'ldi.",
+        "titleLines": ["Assortiment kengaydi,", "natijalar esa yanada", "tizimli bo'ldi."],
+        "description": "Turli teri ehtiyojlari uchun alohida yechimlar paydo bo'ldi. Mijozlar bizni faqat mahsulot uchun emas, to'g'ri yo'nalish beradigan yondashuv uchun ham tanlay boshlashdi."
+      },
+      {
+        "year": "2024",
+        "title": "Sifat, servis va ishonch bir nuqtada birlashdi.",
+        "titleLines": ["Sifat, servis va", "ishonch bir", "nuqtada birlashdi."],
+        "description": "Mahsulot sifati bo'yicha talablar kuchaytirildi, foydalanuvchi tajribasi esa yanada soddalashtirildi. Har bir bosqichda mijozga tushunarli va qulay jarayon yaratildi."
+      },
+      {
+        "year": "2025",
+        "title": "Bugun MIO parvarishni oson, estetik va natijador qiladi.",
+        "titleLines": ["Bugun MIO", "parvarishni oson,", "estetik va", "natijador qiladi."],
+        "description": "Bizning maqsad o'zgarmadi: har bir odamga o'z terisi uchun to'g'ri yo'lni topishga yordam berish. Brend o'smoqda, lekin markazda hamon odam va uning natijasi turibdi."
+      }
+    ]
+  }
+}
