@@ -5,7 +5,7 @@ import closeIconImg from "../assets/img/ic_X_mark.svg";
 import burgerIconImg from "../assets/img/ic_burger2.svg";
 import checkIconImg from "../assets/img/ic_check.svg";
 import languageIconImg from "../assets/img/ic_language.svg";
-import logoImg from "../assets/img/logoo.PNG";
+import logoImg from "../assets/img/logoo.png";
 import { useI18n } from "../i18n/I18nProvider.jsx";
 
 const LANGUAGES = ["uz", "ru", "en"];
