@@ -8,57 +8,63 @@ import {
 } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import VoiceReviewPhone from "../components/VoiceReviewPhone";
 import { useI18n } from "../i18n/I18nProvider.jsx";
 import iphoneMockupImg from "../assets/imags/iphone_mockup_1x1.svg";
 import productImg from "../assets/img/cream.png";
-import phoneShotImg from "../assets/img/screenshoot.jpg";
+import phoneShotImg1 from "../assets/img/ph1.jpg";
+import phoneShotImg2 from "../assets/img/ph2.jpg";
+import phoneShotImg3 from "../assets/img/ph3.jpg";
+import phoneShotImg4 from "../assets/img/ph4.jpg";
+import voiceReviewAudio1 from "../assets/img/mp1.mp3";
+import voiceReviewAudio2 from "../assets/img/mp2.mp3";
+import voiceReviewAudio3 from "../assets/img/mp3.mp3";
+import voiceReviewAudio4 from "../assets/img/mp4.mp3";
 
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
-const VOICE_REVIEW_AUDIO_URL = "/audio/voice-review-demo.wav";
-
 const REVIEW_STEP_VISUALS = [
   {
     id: "review-1",
     order: "01",
-    screenImage: phoneShotImg,
+    screenImage: phoneShotImg1,
     voiceReview: {
-      audioUrl: VOICE_REVIEW_AUDIO_URL,
-      customerName: "Haydarova Munisa",
+      audioUrl: voiceReviewAudio1,
+      customerName: "Munisa",
       city: "Andijon",
     },
   },
   {
     id: "review-2",
     order: "02",
-    screenImage: phoneShotImg,
+    screenImage: phoneShotImg2,
     voiceReview: {
-      audioUrl: VOICE_REVIEW_AUDIO_URL,
-      customerName: "Karimova Malika",
+      audioUrl: voiceReviewAudio2,
+      customerName: "Malika",
       city: "Toshkent",
     },
   },
   {
     id: "review-3",
     order: "03",
-    screenImage: phoneShotImg,
+    screenImage: phoneShotImg3,
     voiceReview: {
-      audioUrl: VOICE_REVIEW_AUDIO_URL,
-      customerName: "Tohirova Shaxnoza",
+      audioUrl: voiceReviewAudio3,
+      customerName: "Shaxnoza",
       city: "Namangan",
     },
   },
   {
     id: "review-4",
     order: "04",
-    screenImage: phoneShotImg,
+    screenImage: phoneShotImg4,
     voiceReview: {
-      audioUrl: VOICE_REVIEW_AUDIO_URL,
-      customerName: "Usmonova Nilufar",
+      audioUrl: voiceReviewAudio4,
+      customerName: "Nilufar",
       city: "Samarqand",
     },
   },
@@ -101,7 +107,6 @@ export default function ReviewSection() {
 
   const sectionRef = useRef(null);
   const pinRef = useRef(null);
-  const phonePinRef = useRef(null);
   const leftContentRef = useRef(null);
   const headerRef = useRef(null);
   const rightRef = useRef(null);
@@ -109,8 +114,11 @@ export default function ReviewSection() {
 
   const [activeStep, setActiveStep] = useState(0);
   const [reviewMode, setReviewMode] = useState("text");
+  const [reviewTransitionMs, setReviewTransitionMs] = useState(MOTION_MS);
   const [visibleProducts, setVisibleProducts] = useState(() =>
-    REVIEW_STEP_VISUALS[0] ? [{ ...REVIEW_STEP_VISUALS[0], phase: "entered" }] : [],
+    REVIEW_STEP_VISUALS[0]
+      ? [{ ...REVIEW_STEP_VISUALS[0], phase: "entered" }]
+      : [],
   );
   const step = reviewSteps[activeStep] ?? reviewSteps[0] ?? null;
 
@@ -153,11 +161,24 @@ export default function ReviewSection() {
 
   const updateStep = useCallback(
     (nextStepIndex) => {
-      setActiveStep(nextStepIndex);
-      syncVisibleProducts(nextStepIndex);
+      if (!totalSteps) return;
+      const resolvedIndex = clamp(nextStepIndex, 0, totalSteps - 1);
+      lastStepRef.current = resolvedIndex;
+      setActiveStep(resolvedIndex);
+      syncVisibleProducts(resolvedIndex);
     },
-    [syncVisibleProducts],
+    [syncVisibleProducts, totalSteps],
   );
+
+  const goToPreviousStep = useCallback(() => {
+    setReviewTransitionMs(activeStep === 0 ? 220 : MOTION_MS);
+    updateStep(activeStep === 0 ? totalSteps - 1 : activeStep - 1);
+  }, [activeStep, totalSteps, updateStep]);
+
+  const goToNextStep = useCallback(() => {
+    setReviewTransitionMs(activeStep === totalSteps - 1 ? 220 : MOTION_MS);
+    updateStep(activeStep === totalSteps - 1 ? 0 : activeStep + 1);
+  }, [activeStep, totalSteps, updateStep]);
 
   useEffect(() => {
     if (!reviewSteps.length) return;
@@ -169,7 +190,9 @@ export default function ReviewSection() {
 
       return prev
         .map((item) => {
-          const source = reviewSteps.find((stepItem) => stepItem.id === item.id);
+          const source = reviewSteps.find(
+            (stepItem) => stepItem.id === item.id,
+          );
           return source ? { ...source, phase: item.phase } : null;
         })
         .filter(Boolean);
@@ -182,63 +205,24 @@ export default function ReviewSection() {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      const createStoryTrigger = ({ pin }) => {
-        const triggerEl = sectionRef.current;
-        const pinEl = pinRef.current;
-        if (!triggerEl || !pinEl) return null;
-
-        return ScrollTrigger.create({
-          trigger: triggerEl,
-          start: "top top",
-          end: () => `+=${Math.round(window.innerHeight * totalSteps * 0.88)}`,
-          pin: pin ? pinEl : false,
-          refreshPriority: pin ? 20 : 0,
-          pinSpacing: true,
-          scrub: 1,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            const nextIndex = clamp(
-              Math.floor(self.progress * totalSteps),
-              0,
-              totalSteps - 1,
-            );
-
-            if (nextIndex !== lastStepRef.current) {
-              lastStepRef.current = nextIndex;
-              updateStep(nextIndex);
-            }
-          },
-        });
-      };
-
       mm.add(
         "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
         () => {
-          const st = createStoryTrigger({ pin: true });
-          return () => st?.kill();
-        },
-      );
-
-      mm.add(
-        "(max-width: 1023px) and (prefers-reduced-motion: no-preference)",
-        () => {
           const triggerEl = sectionRef.current;
-          const phoneEl = phonePinRef.current;
-          if (!triggerEl || !phoneEl) return () => {};
+          const pinEl = pinRef.current;
+          if (!triggerEl || !pinEl) return () => {};
 
-          const mobileViewportHeight = getStableViewportHeight();
-          const mobileScrollDistance = Math.round(
-            mobileViewportHeight * totalSteps * 0.42,
-          );
-
-          const progressSt = ScrollTrigger.create({
+          const st = ScrollTrigger.create({
             trigger: triggerEl,
-            start: "top top+=12",
-            end: `+=${mobileScrollDistance}`,
-            scrub: 0.16,
-            anticipatePin: 0,
-            invalidateOnRefresh: false,
+            start: "top top",
+            end: () =>
+              `+=${Math.round(window.innerHeight * totalSteps * 0.88)}`,
+            pin: pinEl,
+            refreshPriority: 20,
+            pinSpacing: true,
+            scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
             onUpdate: (self) => {
               const nextIndex = clamp(
                 Math.floor(self.progress * totalSteps),
@@ -247,32 +231,16 @@ export default function ReviewSection() {
               );
 
               if (nextIndex !== lastStepRef.current) {
-                lastStepRef.current = nextIndex;
                 updateStep(nextIndex);
               }
             },
           });
 
-          const pinSt = ScrollTrigger.create({
-            trigger: phoneEl,
-            start: "top top+=12",
-            end: `+=${mobileScrollDistance}`,
-            pin: phoneEl,
-            pinSpacing: true,
-            anticipatePin: 0,
-            invalidateOnRefresh: false,
-            refreshPriority: 5,
-          });
-
-          return () => {
-            progressSt.kill();
-            pinSt.kill();
-          };
+          return () => st.kill();
         },
       );
 
       mm.add("(prefers-reduced-motion: reduce)", () => {
-        lastStepRef.current = 0;
         updateStep(0);
         return () => {};
       });
@@ -342,7 +310,7 @@ export default function ReviewSection() {
       ref={sectionRef}
       className="relative overflow-x-hidden scroll-mt-28 bg-white text-black lg:overflow-hidden"
     >
-      <div className="mx-auto w-full px-4 py-10 sm:px-8 lg:px-8 lg:py-12 xl:px-10">
+      <div className="mx-auto w-full px-4 py-6 sm:px-8 sm:py-8 lg:px-8 lg:py-12 xl:px-10">
         <div
           ref={pinRef}
           className="grid gap-y-6 lg:min-h-[100vh] lg:grid-cols-[minmax(260px,1fr)_360px_minmax(260px,1fr)] lg:grid-rows-[auto_1fr] lg:items-start lg:gap-x-10 lg:gap-y-8 xl:grid-cols-[minmax(320px,1fr)_380px_minmax(320px,1fr)] xl:gap-x-12"
@@ -387,19 +355,19 @@ export default function ReviewSection() {
 
           <div className="order-2 lg:col-start-1 lg:row-start-2 lg:self-start lg:pt-6">
             <div className="mx-auto max-w-[560px] lg:mx-0 lg:pl-10 lg:pr-8 xl:pl-14">
-              <div className="hidden items-start gap-2 text-[#101010] sm:flex sm:gap-3">
-                <div className="relative h-[150px] overflow-hidden lg:h-[166px]">
+              <div className="hidden items-start gap-3 text-[#101010] lg:flex">
+                <div className="relative h-[166px] overflow-hidden">
                   <div
                     className="transition-transform ease-[cubic-bezier(.16,1,.3,1)] will-change-transform"
                     style={{
                       transform: `translateY(-${activeStep * 25}%)`,
-                      transitionDuration: `${MOTION_MS}ms`,
+                      transitionDuration: `${reviewTransitionMs}ms`,
                     }}
                   >
                     {reviewSteps.map((item) => (
                       <div
                         key={item.id}
-                        className="flex h-[150px] items-start text-[120px] font-normal leading-[0.92] tracking-[-0.075em] lg:h-[166px] lg:text-[142px]"
+                        className="flex h-[166px] items-start text-[142px] font-normal leading-[0.92] tracking-[-0.075em]"
                       >
                         {Number(item.order)}
                       </div>
@@ -407,7 +375,7 @@ export default function ReviewSection() {
                   </div>
                 </div>
 
-                <div className="pt-5 text-[34px] font-medium leading-none tracking-[-0.04em] lg:pt-6 lg:text-[38px]">
+                <div className="pt-6 text-[38px] font-medium leading-none tracking-[-0.04em]">
                   /{totalSteps}
                 </div>
               </div>
@@ -438,9 +406,27 @@ export default function ReviewSection() {
           </div>
 
           <div
-            ref={phonePinRef}
-            className="order-1 z-10 self-start lg:static lg:col-start-2 lg:row-start-2 lg:justify-self-center lg:self-start lg:pt-2"
+            className="relative order-1 z-10 self-start lg:col-start-2 lg:row-start-2 lg:justify-self-center lg:self-start lg:pt-2"
           >
+            <div className="absolute right-2 top-[68px] z-40 flex items-center rounded-full bg-white/88 px-3 py-2 text-[13px] font-semibold leading-none text-[#101010] shadow-[0_10px_24px_rgba(15,15,15,0.12)] backdrop-blur-md sm:right-4 sm:top-20 lg:hidden">
+              <div className="relative h-4 min-w-2.5 overflow-hidden">
+                <div
+                  className="transition-transform ease-[cubic-bezier(.16,1,.3,1)] will-change-transform"
+                  style={{
+                    transform: `translateY(-${activeStep * 16}px)`,
+                    transitionDuration: `${reviewTransitionMs}ms`,
+                  }}
+                >
+                  {reviewSteps.map((item) => (
+                    <div key={item.id} className="h-4 leading-4">
+                      {Number(item.order)}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <span className="ml-0.5 text-[#767676]">/{totalSteps}</span>
+            </div>
+
             <div className="mb-4 flex justify-center sm:hidden ">
               <div className="inline-flex rounded-full bg-[#f3f3f3] p-1">
                 <button
@@ -470,17 +456,27 @@ export default function ReviewSection() {
               </div>
             </div>
 
-            <div className="mx-auto flex justify-center pt-4 lg:mt-0 lg:w-[360px] xl:w-[380px]">
+            <div className="mx-auto grid grid-cols-[30px_minmax(0,1fr)_30px] items-center gap-0 pt-4 sm:grid-cols-[38px_minmax(0,1fr)_38px] lg:flex lg:w-[360px] lg:justify-center xl:w-[380px]">
+              <button
+                type="button"
+                onClick={goToPreviousStep}
+                className="relative z-30 grid h-8 w-8 -translate-x-1 place-items-center rounded-full border border-[#e8e8e8] bg-white text-[#1d1d1f] shadow-[0_10px_24px_rgba(15,15,15,0.1)] transition-transform hover:scale-105 active:scale-95 sm:h-10 sm:w-10 sm:-translate-x-2 lg:hidden"
+                aria-label="Previous review"
+              >
+                <ChevronLeft size={20} strokeWidth={2.2} />
+              </button>
+
+              <div className="flex justify-center">
               {reviewMode === "text" ? (
-                <div className="relative w-[min(300px,82vw)] sm:w-[min(324px,79vw)] xl:w-[344px]">
+                <div className="relative w-[min(330px,90vw)] sm:w-[min(344px,82vw)] xl:w-[344px]">
                   <div className="relative mx-auto aspect-[1014/2048] w-full">
-                    <div className="absolute bottom-[2.65%] left-[2.55%] right-[2.55%] top-[2.55%] overflow-hidden rounded-[42px] bg-white">
+                    <div className="absolute bottom-[1.55%] left-[4.05%] right-[4.05%] top-[1.55%] overflow-hidden rounded-[38px] bg-white">
                       <div className="absolute inset-0">
                         <div
                           className="flex h-full w-full transition-transform ease-[cubic-bezier(.16,1,.3,1)]"
                           style={{
                             transform: `translateX(-${activeStep * 100}%)`,
-                            transitionDuration: `${MOTION_MS}ms`,
+                            transitionDuration: `${reviewTransitionMs}ms`,
                           }}
                         >
                           {reviewSteps.map((item) => (
@@ -500,14 +496,14 @@ export default function ReviewSection() {
                       src={iphoneMockupImg}
                       alt=""
                       draggable="false"
-                      className="absolute inset-0 h-full w-full select-none"
+                      className="pointer-events-none absolute inset-0 h-full w-full select-none"
                     />
                   </div>
                 </div>
               ) : (
-                <div className="relative w-[min(300px,82vw)] sm:w-[min(324px,79vw)] xl:w-[344px]">
+                <div className="relative w-[min(330px,90vw)] sm:w-[min(344px,82vw)] xl:w-[344px]">
                   <div className="relative mx-auto aspect-[1014/2048] w-full">
-                    <div className="absolute bottom-[2.65%] left-[2.55%] right-[2.55%] top-[2.55%] overflow-hidden rounded-[42px] bg-white">
+                    <div className="absolute bottom-[1.55%] left-[4.05%] right-[4.05%] top-[1.55%] overflow-hidden rounded-[38px] bg-white">
                       <VoiceReviewPhone
                         key={step.id}
                         audioUrl={step.voiceReview.audioUrl}
@@ -521,11 +517,21 @@ export default function ReviewSection() {
                       src={iphoneMockupImg}
                       alt=""
                       draggable="false"
-                      className="absolute inset-0 h-full w-full select-none"
+                      className="pointer-events-none absolute inset-0 h-full w-full select-none"
                     />
                   </div>
                 </div>
               )}
+              </div>
+
+              <button
+                type="button"
+                onClick={goToNextStep}
+                className="relative z-30 grid h-8 w-8 translate-x-1 place-items-center rounded-full border border-[#e8e8e8] bg-white text-[#1d1d1f] shadow-[0_10px_24px_rgba(15,15,15,0.1)] transition-transform hover:scale-105 active:scale-95 sm:h-10 sm:w-10 sm:translate-x-2 lg:hidden"
+                aria-label="Next review"
+              >
+                <ChevronRight size={20} strokeWidth={2.2} />
+              </button>
             </div>
           </div>
 
@@ -550,7 +556,7 @@ export default function ReviewSection() {
                           : "",
                       ].join(" ")}
                       style={{
-                        transitionDuration: `${MOTION_MS}ms`,
+                        transitionDuration: `${reviewTransitionMs}ms`,
                       }}
                     >
                       <article
@@ -568,7 +574,7 @@ export default function ReviewSection() {
                             : "",
                         ].join(" ")}
                         style={{
-                          transitionDuration: `${MOTION_MS}ms`,
+                          transitionDuration: `${reviewTransitionMs}ms`,
                         }}
                       >
                         <div className="flex items-center gap-2">

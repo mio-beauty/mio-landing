@@ -180,6 +180,7 @@ export default function ProductsSection() {
     <SectionShell id="products">
       <div className="flex flex-col items-center">
         <div className="mx-auto flex w-full max-w-[1480px] flex-col">
+          <span id="catalog" className="block scroll-mt-28" aria-hidden="true" />
           <div className="grid gap-px bg-[#0000000D] lg:grid-cols-2">
             {featuredProducts.map((product) => (
               <FeaturedProductCard key={product.id} {...product} />

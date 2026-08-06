@@ -8,7 +8,6 @@ import { useI18n } from "../i18n/I18nProvider.jsx";
 
 export default function ProductCursorCTA() {
   const { get, t } = useI18n();
-  const instagramUrl = "https://www.instagram.com/miobeautyuz";
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
   const paragraphRef = useRef(null);
@@ -345,20 +344,21 @@ export default function ProductCursorCTA() {
     product.style.cursor = "pointer";
     product.setAttribute("role", "link");
     product.setAttribute("tabindex", "0");
-    product.setAttribute("aria-label", t("composition.instagramAria"));
+    product.setAttribute("aria-label", t("composition.contactAria"));
 
-    const openInstagram = () => {
-      window.open(instagramUrl, "_blank", "noopener,noreferrer");
+    const scrollToContacts = () => {
+      const contacts = document.getElementById("contacts");
+      contacts?.scrollIntoView({ behavior: "smooth", block: "start" });
     };
 
     const onClick = () => {
-      openInstagram();
+      scrollToContacts();
     };
 
     const onKeyDown = (e) => {
       if (e.key !== "Enter" && e.key !== " ") return;
       e.preventDefault();
-      openInstagram();
+      scrollToContacts();
     };
 
     product.addEventListener("click", onClick);
@@ -369,7 +369,7 @@ export default function ProductCursorCTA() {
       product.removeEventListener("keydown", onKeyDown);
       product.style.cursor = previousCursor;
     };
-  }, [instagramUrl, t]);
+  }, [t]);
 
   return (
     <section

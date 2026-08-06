@@ -8,11 +8,11 @@
   },
   "navbar": {
     "navItems": [
-      { "label": "Kontaktlar", "href": "#contacts" },
-      { "label": "Natijalar", "href": "#results" },
       { "label": "Tarkib", "href": "#composition" },
+      { "label": "Mahsulotlar", "href": "#catalog" },
       { "label": "Sharhlar", "href": "#reviews" },
       { "label": "Savollar", "href": "#questions" },
+      { "label": "Kontaktlar", "href": "#contact" },
       { "label": "Biz haqimizda", "href": "#about" }
     ],
     "selectLanguage": "Tilni tanlang",
@@ -20,25 +20,27 @@
     "closeMenu": "Menyuni yopish"
   },
   "home": {
-    "categories": ["AKNE", "PIGMENTATSIYA", "QURUQLIK", "SEZGIRLIK"],
+    "categories": ["Akne", "Ajin", "Dog'", "Quruqlik"],
     "stats": [
       { "value": 100000, "suffix": "+", "text": "MIO Beauty'ni tanlagan mijozlar" },
-      { "value": 92, "suffix": "%", "text": "Mijozlar yana qaytib keladi" },
-      { "value": 300, "suffix": "+", "text": "Buyurtmalarni shu kunning o'zida yetkazamiz" }
+      { "value": 92, "suffix": "%", "text": "Mijozlarimiz yana bizni tanlaydi" },
+      { "value": 300, "suffix": "+", "text": "buyurtma — har kuni o'z vaqtida yetkaziladi" }
     ],
-    "title": "Teringiz muammosiga mos parvarishni tanlashga yordam beramiz",
+    "titleLead": "Parvarishlash va teri g'amxo'rligi - bu Biz. MIO yuzingiz orzusini xaqiqatga aylantiradi.",
+    "titleRest": "MIO - GO'ZALLIK",
     "subtitleTop": "Qayerdan boshlashni bilmayapsizmi?",
     "subtitleBottom": "Aynan teringizga mos vositalarni tavsiya qilamiz",
-    "cta": "Parvarish tanlovini olish"
+    "cta": "Mos mahsulotlarni topish"
   },
   "showcase": {
     "title": "Sizga qaysi parvarish mos kelishini bilmayapsizmi?",
     "description": "Bepul konsultatsiya oling va teringizga mos parvarishni tanlaymiz",
     "productsCta": "Mahsulotlarga o'tish",
     "consultationCta": "Konsultatsiya olish",
-    "problemButtonText": "Teri muammosini hal qilishga qanday yordam beramiz",
+    "problemButtonText": "Muammoli teri uchun aniq va samarali yechimlar.",
     "modalButtonText": "Yechimlarni ko'rish",
-    "problemTitles": ["Pigmentatsiya", "Sezgirlik", "Quruqlik", "Akne va yallig'lanish", "Xira tus"]
+    "scrollHint": "Pastga scroll qiling",
+    "problemTitles": ["Akne", "Ajin", "Dog'", "Quruqlik", "Sezgirlik"]
   },
   "products": {
     "featured": [
@@ -80,26 +82,28 @@
     "imageAlt": "Natija"
   },
   "trust": {
-    "title": "Nega bizga ishonishadi",
-    "description": "Parvarish, servis va yana qaytishni xohlatadigan natija.",
+    "title": "Nega MIO Beauty?",
+    "description": "Sifatli parvarish, qulay servis va sizni yana bizga qaytaradigan natija.",
     "hoverLabel": "Aloqa",
     "items": [
-      { "id": "01", "title": "Yevropadan ingredientlar", "service": "YI sertifikatiga ega komponentlar" },
-      { "id": "02", "title": "24/7 qo'llab-quvvatlash", "service": "Messendjer va ilovada doim aloqadamiz" },
-      { "id": "03", "title": "Buyurtma kuni yetkazib berish", "service": "Toshkent bo'ylab tez va qulay servis bilan" },
-      { "id": "04", "title": "100 000+ mijoz", "service": "Minglab qizlar allaqachon MIO Beauty'ni tanlagan" },
-      { "id": "05", "title": "92% mamnun mijoz", "service": "Yuqori qayta xarid va brendga ishonch" }
+      { "id": "01", "title": "Premium sifat", "service": "Shveytsariyadan import qilinadigan, dunyo bo'yicha TOP-3 qatoriga kiruvchi premium parvarish mahsulotlari." },
+      { "id": "02", "title": "Shaxsiy konsultatsiya", "service": "Teringizni o'rganib, aynan sizga mos parvarish va mahsulotlarni tavsiya qilamiz." },
+      { "id": "03", "title": "Tezkor yetkazib berish", "service": "Buyurtmangizni Toshkent bo'ylab tez va qulay tarzda yetkazib beramiz." },
+      { "id": "04", "title": "100 000+ mamnun mijoz", "service": "100 mingdan ortiq mijoz kundalik parvarishi uchun MIO Beauty'ni tanlagan." },
+      { "id": "05", "title": "Doimiy natija", "service": "To'g'ri tanlangan parvarish va sifatli mahsulotlar bilan sog'lom va chiroyli teriga erishishingizga yordam beramiz." }
     ]
   },
   "composition": {
-    "headingLines": ["Tabiiy tarkib va", "Yevropa ingredientlari"],
-    "description": "Biz minimal kimyo va maksimal tabiiy komponentlar bilan ekologik parvarishni tanlaymiz, shunda teringiz sog'lom porlaydi.",
+    "headingLines": ["Teringiz uchun xavfsiz", "va tabiiy parvarish"],
+    "description": "Biz Yevropadan keltirilgan eng sarxil va tabiiy komponentlarni jamladik. Maqsadimiz - teringizga zarar yetkazmasdan, uning sog'lom porlashini ta'minlash.",
     "instagramAria": "Instagram'da @miobeautyuz ni ochish",
+    "contactCta": "Contact",
+    "contactAria": "Konsultatsiya bo'limiga o'tish",
     "features": [
-      { "title": "Sezgir teri uchun mos", "text": "Sezgir teri uchun mos" },
-      { "title": "Sifat sertifikatlari", "text": "Jahon ekspertlari tomonidan tasdiqlangan" },
-      { "title": "Ekologik", "text": "97,8% ekologik tarkib, ortiqcha kimyosiz" },
-      { "title": "Yevropadan komponentlar", "text": "Ingredient va komponentlar Yevropadan" }
+      { "title": "Oliy darajadagi sifat", "text": "Xalqaro dermatologlar va kosmetologiya ekspertlarining ishonchini qozongan mahsulot." },
+      { "title": "Sezuvchan teriga mos", "text": "Terini quritmaydi va ziyon yetkazmaydi. Nozik yuzlar uchun mukammal tanlov." },
+      { "title": "Yevropadan keltirilgan tarkib", "text": "Teringiz parvarishi uchun zarur bo'lgan barcha tabiiy va foydali ingredientlar to'g'ridan-to'g'ri Yevropadan import qilinadi." },
+      { "title": "Ekologik toza va xavfsiz", "text": "Tarkibning 97,8% qismi ekologik toza. Hech qanday ortiqcha va zararli kimyosiz sof parvarish." }
     ]
   },
   "reviews": {
@@ -166,9 +170,9 @@
     "title": "Asosiy savollarga javoblar",
     "description": "Barcha suratlar parvarish kursidan keyingi mijozlarimizga tegishli",
     "items": [
-      { "title": "Narx", "content": "Har bir mahsulot va parvarish tavsiyasi teri ehtiyojiga qarab tanlanadi. Biz sizga mos variantni konsultatsiyada aytamiz." },
-      { "title": "Sertifikatlar", "content": "Mahsulotlarimiz sifati va tarkibi bo'yicha tasdiqlovchi hujjatlarga ega. Kerak bo'lsa konsultatsiyada ko'rsatamiz." },
-      { "title": "Natija qancha vaqtda bilinadi", "content": "Birinchi o'zgarishlar terining holatiga qarab bir necha hafta ichida sezilishi mumkin. Barqaror natija uchun muntazam parvarish muhim." }
+      { "title": "Narxi qancha?", "content": "Har bir insonning terisi individual. Shuning uchun aniq narx va sizga mos mahsulotlarni mutaxassis bilan bepul konsultatsiya vaqtida belgilaymiz." },
+      { "title": "Mahsulotlar xavfsizmi?", "content": "Barcha vositalarimiz sifatni tasdiqlovchi rasmiy sertifikatlarga ega. Konsultatsiya vaqtida ularni taqdim eta olamiz." },
+      { "title": "Qachon natija ko'raman?", "content": "Birinchi o'zgarishlar bir necha haftada namoyon bo'ladi. Eng yaxshi va doimiy natija uchun esa muntazam parvarish zarur." }
     ]
   },
   "consultation": {
@@ -206,7 +210,7 @@
     "copyright": "© 2025 MIOBEAUTY, Barcha huquqlar himoyalangan"
   },
   "modal": {
-    "title": "Konsultatsiya uchun kontakt ma'lumotlaringizni qoldiring.",
+    "title": "Bepul konsultatsiya uchun raqamingizni qoldiring.",
     "name": "Ism",
     "namePlaceholder": "Ismingiz",
     "phone": "Telefon raqami",

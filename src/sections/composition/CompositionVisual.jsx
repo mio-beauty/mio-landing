@@ -1,4 +1,5 @@
 import SpfImage from "../../assets/img/spf.png";
+import { useI18n } from "../../i18n/I18nProvider.jsx";
 
 export default function CompositionVisual({
   orbitRef,
@@ -10,6 +11,8 @@ export default function CompositionVisual({
   cardsFloatRefs,
   cardsInnerRefs,
 }) {
+  const { t } = useI18n();
+
   return (
     <div className="relative mx-auto w-full">
       <div className="relative mx-auto h-[310px] w-full sm:h-[430px] lg:h-140">
@@ -66,7 +69,7 @@ export default function CompositionVisual({
             ].join(" ")}
             aria-hidden="true"
           >
-            Shop now
+            {t("composition.contactCta")}
           </div>
         </div>
       </div>

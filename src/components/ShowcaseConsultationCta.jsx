@@ -18,21 +18,21 @@ export default function ShowcaseConsultationCta() {
         </div>
 
         <div className="grid w-full max-w-[868px] grid-cols-1 justify-center gap-2 pt-5 sm:pt-7 lg:grid-cols-2">
-          <button
-            type="button"
+          <a
+            href="#catalog"
             className="mx-auto flex h-[42px] w-full max-w-[430px] cursor-pointer items-center justify-center gap-2 rounded-full bg-[#F2F2F2] px-5 text-[13px] font-medium text-[#171717] transition-colors duration-200 hover:bg-[#EBEBEB] sm:text-[15px] lg:text-[16px]"
           >
             <img src={cartIcon} alt="" className="h-[18px] w-[18px]" />
             <span>{t("showcase.productsCta")}</span>
-          </button>
+          </a>
 
-          <button
-            type="button"
+          <a
+            href="#contact"
             className="mx-auto flex h-[42px] w-full max-w-[430px] cursor-pointer items-center justify-center gap-2 rounded-full bg-[#1F1F1F] px-5 text-[13px] font-medium text-white transition-colors duration-200 hover:bg-[#2B2B2B] sm:text-[15px] lg:text-[16px]"
           >
             <img src={supportIcon} alt="" className="h-[18px] w-[18px]" />
             <span>{t("showcase.consultationCta")}</span>
-          </button>
+          </a>
         </div>
       </div>
     </section>

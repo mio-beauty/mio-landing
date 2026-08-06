@@ -92,6 +92,7 @@ export default function ConsultationSection() {
   return (
     <section id="contacts" className="scroll-mt-28 bg-[#F8F8F8]">
       <div className="relative flex flex-col justify-center px-4 py-8 lg:px-33.5 lg:py-36">
+        <span id="contact" className="absolute -top-28" aria-hidden="true" />
         <div className="flex flex-col gap-3 text-center">
           <h2 className="text-2xl font-medium leading-tight text-[#0B0B0B] lg:text-5xl">
             <span>

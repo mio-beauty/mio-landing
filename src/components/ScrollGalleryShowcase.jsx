@@ -1,4 +1,5 @@
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import modalPng from "../assets/img/modal.png";
@@ -26,7 +27,23 @@ const SCROLL_STEP_VIEWPORT_RATIO = 0.72;
 
 function getStableViewportHeight() {
   if (typeof window === "undefined") return 0;
-  return Math.round(window.visualViewport?.height || window.innerHeight || 0);
+  return Math.round(
+    Math.max(
+      window.innerHeight || 0,
+      window.visualViewport?.height || 0,
+      document.documentElement?.clientHeight || 0,
+    ),
+  );
+}
+
+function getVisibleViewportHeight() {
+  if (typeof window === "undefined") return 0;
+  return Math.round(
+    window.visualViewport?.height ||
+      window.innerHeight ||
+      document.documentElement?.clientHeight ||
+      0,
+  );
 }
 
 export default function ScrollGalleryShowcase({
@@ -45,6 +62,10 @@ export default function ScrollGalleryShowcase({
   const [modalIndex, setModalIndex] = useState(0);
   const [modalOrigin, setModalOrigin] = useState(null);
   const [isButtonLaunching, setIsButtonLaunching] = useState(false);
+  const [showScrollHint, setShowScrollHint] = useState(false);
+  const [mobileIndex, setMobileIndex] = useState(0);
+  const [isMobileTransitioning, setIsMobileTransitioning] = useState(false);
+  const [mobileTransitionMs, setMobileTransitionMs] = useState(420);
 
   const sectionRef = useRef(null);
   const galleryViewportRef = useRef(null);
@@ -62,6 +83,7 @@ export default function ScrollGalleryShowcase({
   const viewportSizeRef = useRef({ width: 0, height: 0 });
   const stRef = useRef(null);
   const roRef = useRef(null);
+  const refreshRafRef = useRef(0);
   const decodedImagesRef = useRef(new Set());
 
   const prefersReducedMotion = useMemo(() => {
@@ -94,10 +116,34 @@ export default function ScrollGalleryShowcase({
     const bgImgB = bgImgRefB.current;
     const viewport = galleryViewportRef.current;
     const titleEl = titleRef.current;
-    const isDesktop = window.matchMedia?.("(min-width: 768px)")?.matches ?? false;
-    const viewportHeight = getStableViewportHeight();
+    const isDesktop =
+      window.matchMedia?.("(min-width: 768px)")?.matches ?? false;
+    const viewportHeight = isDesktop
+      ? getStableViewportHeight()
+      : getVisibleViewportHeight();
 
     if (!bgA || !bgB || !bgImgA || !bgImgB || !viewport) return;
+
+    if (!isDesktop) {
+      const setMobileHeight = () => {
+        sectionRef.current?.style.setProperty(
+          "--mio-showcase-height",
+          `${getVisibleViewportHeight()}px`,
+        );
+      };
+
+      setMobileHeight();
+      setShowScrollHint(false);
+      window.addEventListener("resize", setMobileHeight, { passive: true });
+      window.visualViewport?.addEventListener("resize", setMobileHeight, {
+        passive: true,
+      });
+
+      return () => {
+        window.removeEventListener("resize", setMobileHeight);
+        window.visualViewport?.removeEventListener("resize", setMobileHeight);
+      };
+    }
 
     const getTitleByIndex = (nextIndex) =>
       defaultTitles[nextIndex] ?? title ?? DEFAULT_TITLES[nextIndex] ?? "";
@@ -122,7 +168,11 @@ export default function ScrollGalleryShowcase({
       const tl = gsap.timeline({
         defaults: { ease: "power2.out", overwrite: "auto" },
       });
-      tl.to(titleEl, { autoAlpha: 0, y: direction < 0 ? 8 : -8, duration: 0.18 })
+      tl.to(titleEl, {
+        autoAlpha: 0,
+        y: direction < 0 ? 8 : -8,
+        duration: 0.18,
+      })
         .add(() => {
           titleEl.textContent = nextTitle;
         })
@@ -170,7 +220,8 @@ export default function ScrollGalleryShowcase({
       nextActiveIndex,
       { immediate, direction = 1 } = {},
     ) => {
-      const duration = prefersReducedMotion || immediate ? 0 : isDesktop ? 0.62 : 0.28;
+      const duration =
+        prefersReducedMotion || immediate ? 0 : isDesktop ? 0.62 : 0.28;
       const ease = "power3.out";
       const n = count;
       const step = stepPxRef.current;
@@ -344,6 +395,32 @@ export default function ScrollGalleryShowcase({
     computeAxis();
     measureStep();
     applyGalleryState(0, { immediate: true });
+    sectionRef.current?.style.setProperty(
+      "--mio-showcase-height",
+      `${viewportHeight}px`,
+    );
+
+    const updateVisibleViewportHeight = () => {
+      const nextVisibleHeight = getVisibleViewportHeight();
+      sectionRef.current?.style.setProperty(
+        "--mio-showcase-visible-height",
+        `${nextVisibleHeight}px`,
+      );
+      if (!isDesktop) {
+        sectionRef.current?.style.setProperty(
+          "--mio-showcase-height",
+          `${nextVisibleHeight}px`,
+        );
+        if (!refreshRafRef.current) {
+          refreshRafRef.current = window.requestAnimationFrame(() => {
+            refreshRafRef.current = 0;
+            stRef.current?.refresh?.();
+          });
+        }
+      }
+    };
+
+    updateVisibleViewportHeight();
     viewportSizeRef.current = {
       width: window.innerWidth,
       height: viewportHeight,
@@ -351,7 +428,10 @@ export default function ScrollGalleryShowcase({
 
     const onResize = () => {
       const nextWidth = window.innerWidth;
-      const nextHeight = getStableViewportHeight();
+      const nextHeight = isDesktop
+        ? getStableViewportHeight()
+        : getVisibleViewportHeight();
+      updateVisibleViewportHeight();
       const prevViewport = viewportSizeRef.current;
       const widthChanged = Math.abs(nextWidth - prevViewport.width) > 1;
       const heightChanged =
@@ -365,6 +445,10 @@ export default function ScrollGalleryShowcase({
         width: nextWidth,
         height: nextHeight,
       };
+      sectionRef.current?.style.setProperty(
+        "--mio-showcase-height",
+        `${nextHeight}px`,
+      );
       computeAxis();
       measureStep();
       applyGalleryState(activeIndexRef.current, { immediate: true });
@@ -372,10 +456,32 @@ export default function ScrollGalleryShowcase({
     };
 
     window.addEventListener("resize", onResize, { passive: true });
+    window.visualViewport?.addEventListener(
+      "resize",
+      updateVisibleViewportHeight,
+      {
+        passive: true,
+      },
+    );
     roRef.current = new ResizeObserver(onResize);
     roRef.current.observe(viewport);
 
     const itemsForCleanup = itemsRef.current.slice();
+    let hintTimer = 0;
+    const hideScrollHint = () => {
+      if (hintTimer) {
+        window.clearTimeout(hintTimer);
+        hintTimer = 0;
+      }
+      setShowScrollHint(false);
+    };
+    const queueScrollHint = () => {
+      hideScrollHint();
+      hintTimer = window.setTimeout(() => {
+        setShowScrollHint(true);
+        hintTimer = 0;
+      }, 3000);
+    };
 
     const scrollSteps = Math.max(1, count);
     stRef.current = ScrollTrigger.create({
@@ -384,7 +490,7 @@ export default function ScrollGalleryShowcase({
       end: () =>
         `+=${Math.round(
           scrollSteps *
-            viewportHeight *
+            getStableViewportHeight() *
             (isDesktop ? SCROLL_STEP_VIEWPORT_RATIO : 0.42),
         )}`,
       pin: true,
@@ -392,22 +498,49 @@ export default function ScrollGalleryShowcase({
       anticipatePin: isDesktop ? 1 : 0,
       scrub: prefersReducedMotion ? false : isDesktop ? 0.38 : 0.08,
       invalidateOnRefresh: isDesktop,
+      onEnter: queueScrollHint,
+      onEnterBack: queueScrollHint,
+      onLeave: hideScrollHint,
+      onLeaveBack: hideScrollHint,
       onUpdate: (self) => {
         if (count <= 1) return;
+        if (self.progress > 0.015 && self.progress < 0.985) {
+          hideScrollHint();
+          queueScrollHint();
+        }
         const idx = clampInt(self.progress * count, 0, count - 1);
         if (idx !== activeIndexRef.current) {
           setActiveIndexInternal(idx, { direction: self.direction });
         }
       },
     });
+    if (stRef.current.isActive) {
+      queueScrollHint();
+    }
 
     return () => {
+      window.clearTimeout(hintTimer);
       window.removeEventListener("resize", onResize);
+      window.visualViewport?.removeEventListener(
+        "resize",
+        updateVisibleViewportHeight,
+      );
+      if (refreshRafRef.current) {
+        window.cancelAnimationFrame(refreshRafRef.current);
+        refreshRafRef.current = 0;
+      }
       roRef.current?.disconnect?.();
       roRef.current = null;
       stRef.current?.kill?.();
       stRef.current = null;
-      gsap.killTweensOf([bgA, bgB, ...itemsForCleanup]);
+      gsap.killTweensOf([
+        bgA,
+        bgB,
+        bgImgA,
+        bgImgB,
+        titleEl,
+        ...itemsForCleanup,
+      ]);
     };
   }, [count, defaultTitles, prefersReducedMotion, safeImages, title]);
 
@@ -424,7 +557,7 @@ export default function ScrollGalleryShowcase({
         height: rect.height,
       });
     }
-    setModalIndex(mod(activeIndexRef.current, n));
+    setModalIndex(mod(activeIndexRef.current || mobileIndex, n));
     setIsButtonLaunching(true);
     setIsModalOpen(true);
     window.setTimeout(() => {
@@ -432,18 +565,40 @@ export default function ScrollGalleryShowcase({
     }, 280);
   };
 
+  const setMobileImageIndex = (nextIndex, isWrapJump = false) => {
+    const duration = isWrapJump ? 180 : 420;
+    setMobileTransitionMs(duration);
+    setIsMobileTransitioning(true);
+    setMobileIndex(mod(nextIndex, count));
+    window.setTimeout(() => {
+      setIsMobileTransitioning(false);
+    }, duration);
+  };
+
+  const goToPreviousMobileImage = () => {
+    setMobileImageIndex(mobileIndex - 1, mobileIndex === 0);
+  };
+
+  const goToNextMobileImage = () => {
+    setMobileImageIndex(mobileIndex + 1, mobileIndex === count - 1);
+  };
+
   return (
     <section
       ref={sectionRef}
-      className="relative h-[100dvh] min-h-[100svh] w-full overflow-hidden md:h-screen"
+      className={[
+        "relative h-[var(--mio-showcase-height,100dvh)] min-h-[var(--mio-showcase-height,100svh)] w-full overflow-hidden md:h-screen md:min-h-screen",
+        isMobileTransitioning ? "mio-showcase-mobile-switching" : "",
+      ].join(" ")}
+      style={{ "--mio-showcase-mobile-transition-ms": `${mobileTransitionMs}ms` }}
     >
-      <div className="absolute inset-0">
+      <div className="absolute inset-x-0 -top-12 -bottom-16 md:inset-0">
         <div ref={bgLayerRefA} className="absolute inset-0">
           <img
             ref={bgImgRefA}
-            src={safeImages[0]?.src}
-            alt={safeImages[0]?.alt || ""}
-            className="h-full w-full object-cover will-change-transform"
+            src={safeImages[mobileIndex]?.src}
+            alt={safeImages[mobileIndex]?.alt || ""}
+            className="h-full w-full object-cover object-[73%_center] transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform md:object-center md:transition-none"
             draggable="false"
             loading="eager"
             decoding="async"
@@ -453,9 +608,9 @@ export default function ScrollGalleryShowcase({
         <div ref={bgLayerRefB} className="absolute inset-0">
           <img
             ref={bgImgRefB}
-            src={safeImages[0]?.src}
-            alt={safeImages[0]?.alt || ""}
-            className="h-full w-full object-cover will-change-transform"
+            src={safeImages[mobileIndex]?.src}
+            alt={safeImages[mobileIndex]?.alt || ""}
+            className="h-full w-full object-cover object-[73%_center] transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform md:object-center md:transition-none"
             draggable="false"
             loading="eager"
             decoding="async"
@@ -463,8 +618,12 @@ export default function ScrollGalleryShowcase({
         </div>
       </div>
 
-      <div className="relative z-10 flex h-full w-full items-end px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-10 md:items-center md:pb-0 lg:px-20">
-        <div className="absolute bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-1/2 z-20 w-[calc(100%-3rem)] max-w-94 -translate-x-1/2 md:bottom-15 md:left-20 md:w-auto md:max-w-none md:translate-x-0">
+      <div className="relative z-10 flex h-full w-full items-end px-6 pb-[max(0.25rem,env(safe-area-inset-bottom))] pt-12 sm:px-10 md:items-center md:pb-0 md:pt-0 lg:px-20">
+        <div className="absolute right-6 top-[max(1.25rem,env(safe-area-inset-top))] z-30 rounded-full bg-white/82 px-3.5 py-2 text-[13px] font-semibold leading-none text-[#131314] shadow-[0_10px_24px_rgba(15,15,15,0.12)] backdrop-blur-md md:hidden">
+          {mobileIndex + 1}/{count}
+        </div>
+
+        <div className="absolute bottom-15 left-20 z-20 hidden w-auto max-w-none md:block">
           <a
             href={buttonHref || "#"}
             onClick={(e) => {
@@ -498,19 +657,91 @@ export default function ScrollGalleryShowcase({
             </svg>
           </a>
         </div>
-        <div className="grid w-full grid-cols-1 items-end gap-6 pb-24 md:grid-cols-12 md:items-center md:gap-10 md:pb-0">
-          <div className="md:col-span-5 md:max-w-130">
-            <p className="font-normal leading-5 text-white">{buttonText}</p>
+        <div
+          className={[
+            "pointer-events-none absolute left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2 text-[#131314]",
+            "hidden bottom-[max(1rem,env(safe-area-inset-bottom))] md:flex md:bottom-8",
+            "transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+            showScrollHint
+              ? "translate-y-0 opacity-100"
+              : "translate-y-3 opacity-0",
+          ].join(" ")}
+          aria-hidden="true"
+        >
+          <span className="rounded-full bg-white/70 px-4 py-2 text-[12px] font-medium leading-none shadow-[0_10px_30px_rgba(0,0,0,0.12)] backdrop-blur-md md:text-[13px]">
+            {t("showcase.scrollHint")}
+          </span>
+          <span className="relative h-9 w-5 rounded-full border border-[#131314]/70">
+            <span className="absolute left-1/2 top-2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#131314] motion-safe:animate-bounce" />
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={goToPreviousMobileImage}
+          className="absolute left-5 top-1/2 z-30 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full border border-[#e8e8e8] bg-white/90 text-[#1d1d1f] shadow-[0_10px_24px_rgba(15,15,15,0.12)] backdrop-blur-md transition-transform active:scale-95 md:hidden"
+          aria-label="Previous showcase image"
+        >
+          <ChevronLeft size={21} strokeWidth={2.2} />
+        </button>
+        <button
+          type="button"
+          onClick={goToNextMobileImage}
+          className="absolute right-5 top-1/2 z-30 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full border border-[#e8e8e8] bg-white/90 text-[#1d1d1f] shadow-[0_10px_24px_rgba(15,15,15,0.12)] backdrop-blur-md transition-transform active:scale-95 md:hidden"
+          aria-label="Next showcase image"
+        >
+          <ChevronRight size={21} strokeWidth={2.2} />
+        </button>
+        <div className="grid w-full translate-y-9 grid-cols-1 items-end gap-6 pb-18 md:translate-y-0 md:grid-cols-12 md:items-center md:gap-10 md:pb-0">
+          <div className="rounded-[22px] bg-black/34 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.18)] backdrop-blur-md md:col-span-5 md:max-w-130 md:bg-transparent md:p-0 md:shadow-none md:backdrop-blur-0">
+            <p className="font-normal leading-5 text-white md:text-[#131314]">
+              {buttonText}
+            </p>
 
             <h2
               ref={titleRef}
-              className="pt-4 text-[32px] font-medium leading-[120%] text-white will-change-transform"
+              key={`showcase-mobile-title-${mobileIndex}`}
+              className="pt-4 pb-2 text-[32px] font-medium leading-[120%] text-white will-change-transform animate-[mioShowcaseMobileTitle_480ms_cubic-bezier(0.22,1,0.36,1)] md:animate-none md:text-[#131314]"
             >
-              {defaultTitles[0] ?? title ?? DEFAULT_TITLES[0]}
+              {defaultTitles[mobileIndex] ??
+                title ??
+                DEFAULT_TITLES[mobileIndex] ??
+                DEFAULT_TITLES[0]}
             </h2>
+
+            <button
+              type="button"
+              onClick={(e) => {
+                openModal(e.currentTarget);
+              }}
+              className="mt-10 flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-[14px] font-semibold leading-none text-black shadow-[0_16px_38px_rgba(0,0,0,0.14)] transition-transform active:scale-[0.98] md:hidden"
+              aria-label={t("showcase.modalButtonText")}
+            >
+              {t("showcase.modalButtonText")}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                className={[
+                  "transition-transform duration-250 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                  isButtonLaunching
+                    ? "translate-x-[7px] -translate-y-[7px] opacity-0"
+                    : "",
+                ].join(" ")}
+              >
+                <path
+                  d="M3.75 16.25L16.25 3.75M16.25 3.75H6.875M16.25 3.75V13.125"
+                  stroke="#131314"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
           </div>
 
-          <div className="md:col-span-7">
+          <div className="hidden md:col-span-7 md:block">
             <div className="flex w-full items-center justify-center md:justify-end">
               <div
                 ref={galleryViewportRef}

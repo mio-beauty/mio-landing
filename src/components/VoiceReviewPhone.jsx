@@ -16,7 +16,7 @@ function formatTime(seconds) {
 function buildWaveBars(progress) {
   return Array.from({ length: 34 }, (_, index) => {
     const base = 12 + ((index * 7) % 18);
-    const isActive = index / 33 <= progress;
+    const isActive = progress > 0 && index / 34 < progress;
     return { height: base, isActive };
   });
 }
@@ -49,6 +49,13 @@ export default function VoiceReviewPhone({
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return undefined;
+
+    audio.pause();
+    audio.currentTime = 0;
+    audio.load();
+    setIsPlaying(false);
+    setCurrentTime(0);
+    setDuration(0);
 
     const syncDuration = () => {
       if (Number.isFinite(audio.duration)) {
@@ -131,6 +138,11 @@ export default function VoiceReviewPhone({
       <div className="voice-review-phone__screen">
         <audio ref={audioRef} src={audioUrl} preload="metadata" />
 
+        <div className="voice-review-phone__statusbar" aria-hidden="true">
+          <span>18:51</span>
+          <span className="voice-review-phone__status-icons">••• ◒ 12%</span>
+        </div>
+
         <div className="voice-review-phone__telegram">
           <div className="voice-review-phone__telegram-header">
             <div className="voice-review-phone__header-left">
@@ -140,12 +152,13 @@ export default function VoiceReviewPhone({
               >
                 <ArrowLeft size={19} />
               </button>
-              <span className="voice-review-phone__back-label">{t("reviews.voice.back")}</span>
             </div>
 
             <div className="voice-review-phone__contact voice-review-phone__contact--center">
               <p className="voice-review-phone__contact-name">{customerName}</p>
-              <p className="voice-review-phone__contact-status">{t("reviews.voice.status")}</p>
+              <p className="voice-review-phone__contact-status">
+                {t("reviews.voice.status")}
+              </p>
             </div>
 
             <div className="voice-review-phone__avatar">
@@ -154,7 +167,9 @@ export default function VoiceReviewPhone({
           </div>
 
           <div className="voice-review-phone__chat">
-            <div className="voice-review-phone__day-pill">{t("reviews.voice.day")}</div>
+            <div className="voice-review-phone__day-pill">
+              {t("reviews.voice.day")}
+            </div>
 
             <div className="voice-review-phone__incoming">
               <div className="voice-review-phone__message voice-review-phone__message--media voice-review-phone__message--incoming">
@@ -177,7 +192,11 @@ export default function VoiceReviewPhone({
                     type="button"
                     className="voice-review-phone__play-button"
                     onClick={handleTogglePlayback}
-                    aria-label={isPlaying ? t("reviews.voice.pause") : t("reviews.voice.play")}
+                    aria-label={
+                      isPlaying
+                        ? t("reviews.voice.pause")
+                        : t("reviews.voice.play")
+                    }
                   >
                     {isPlaying ? (
                       <Pause size={20} strokeWidth={2.8} />
@@ -227,7 +246,10 @@ export default function VoiceReviewPhone({
           </div>
 
           <div className="voice-review-phone__composer">
-            <button type="button" className="voice-review-phone__composer-attach">
+            <button
+              type="button"
+              className="voice-review-phone__composer-attach"
+            >
               <Paperclip size={18} />
             </button>
             <div className="voice-review-phone__composer-field">
@@ -239,7 +261,10 @@ export default function VoiceReviewPhone({
           </div>
         </div>
 
-        <div className="voice-review-phone__home-indicator" aria-hidden="true" />
+        <div
+          className="voice-review-phone__home-indicator"
+          aria-hidden="true"
+        />
       </div>
     </div>
   );

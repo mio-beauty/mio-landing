@@ -10,6 +10,7 @@ import QuestionSection from "../sections/QuestionSection.jsx";
 import ResultSection from "../sections/ResultSection.jsx";
 import ReviewSection from "../sections/ReviewSection.jsx";
 import TrustSection from "../sections/TrustSection.jsx";
+import LoadingIntro from "../components/LoadingIntro.jsx";
 
 export default function LandingPage() {
   useLayoutEffect(() => {
@@ -40,12 +41,13 @@ export default function LandingPage() {
 
   return (
     <>
+      <LoadingIntro />
       <HomeSection />
       <TrustSection />
       <ProblemSection />
       <CompositionSection />
       <ProductsSection />
-      <ResultSection />
+      {/* <ResultSection /> */}
       <ReviewSection />
       <QuestionSection />
       <ConsultationSection />

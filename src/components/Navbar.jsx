@@ -10,7 +10,7 @@ import { useI18n } from "../i18n/I18nProvider.jsx";
 
 const LANGUAGES = ["uz", "ru", "en"];
 
-export default function Navbar({ textColor = "white" }) {
+export default function Navbar({ textColor = "white", reveal = true }) {
   const { language, setLanguage, t, get } = useI18n();
   const [openLang, setOpenLang] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
@@ -80,6 +80,14 @@ export default function Navbar({ textColor = "white" }) {
         className="h-[24px] w-auto max-w-[158px] object-contain lg:h-[40px] lg:max-w-[210px]"
         src={logoImg}
         alt="MIO BEAUTY"
+        style={{
+          opacity: reveal ? 1 : 0,
+          transform: reveal
+            ? "translate3d(0, 0, 0)"
+            : "translate3d(0, -10px, 0)",
+          transition:
+            "opacity 960ms cubic-bezier(0.22,1,0.36,1), transform 960ms cubic-bezier(0.22,1,0.36,1)",
+        }}
       />
 
       <ul
@@ -93,6 +101,15 @@ export default function Navbar({ textColor = "white" }) {
             <li
               key={item.href}
               className="group relative"
+              style={{
+                opacity: reveal ? 1 : 0,
+                transform: reveal
+                  ? "translate3d(0, 0, 0)"
+                  : "translate3d(0, -10px, 0)",
+                transition:
+                  "opacity 960ms cubic-bezier(0.22,1,0.36,1), transform 960ms cubic-bezier(0.22,1,0.36,1)",
+                transitionDelay: reveal ? `${90 + index * 45}ms` : "0ms",
+              }}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={resetNavHover}
               onMouseMove={(event) => handleNavMove(index, event)}
@@ -127,6 +144,15 @@ export default function Navbar({ textColor = "white" }) {
           <button
             type="button"
             className="relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-full"
+            style={{
+              opacity: reveal ? 1 : 0,
+              transform: reveal
+                ? "translate3d(0, 0, 0)"
+                : "translate3d(0, -10px, 0)",
+              transition:
+                "opacity 960ms cubic-bezier(0.22,1,0.36,1), transform 960ms cubic-bezier(0.22,1,0.36,1)",
+              transitionDelay: reveal ? `${90 + navItems.length * 45}ms` : "0ms",
+            }}
             onClick={() => setOpenLang((prev) => !prev)}
             aria-expanded={openLang}
             aria-label={t("navbar.selectLanguage")}
@@ -183,6 +209,15 @@ export default function Navbar({ textColor = "white" }) {
       <button
         type="button"
         className="block cursor-pointer lg:hidden"
+        style={{
+          opacity: reveal ? 1 : 0,
+          transform: reveal
+            ? "translate3d(0, 0, 0)"
+            : "translate3d(0, -10px, 0)",
+          transition:
+            "opacity 960ms cubic-bezier(0.22,1,0.36,1), transform 960ms cubic-bezier(0.22,1,0.36,1)",
+          transitionDelay: reveal ? "120ms" : "0ms",
+        }}
         onClick={() => setOpenMenu(true)}
         aria-label={t("navbar.openMenu")}
       >
