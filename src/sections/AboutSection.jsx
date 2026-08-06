@@ -6,7 +6,7 @@ import consultationImage from "../assets/img/Consultation.png";
 import consultationWideImage from "../assets/img/Consultation2.png";
 import certificateImage from "../assets/img/certifikat.png";
 import creamImage from "../assets/img/cream.png";
-import heroImage from "../assets/img/hero-img.png";
+import heroImage from "../assets/img/banner.jpg";
 import spfImage from "../assets/img/spf.png";
 
 const ABOUT_STEPS = [
@@ -127,7 +127,9 @@ export default function AboutSection() {
         }
       });
 
-      setActiveIndex((current) => (current === nextIndex ? current : nextIndex));
+      setActiveIndex((current) =>
+        current === nextIndex ? current : nextIndex,
+      );
     };
 
     handleScroll();
@@ -306,7 +308,9 @@ export default function AboutSection() {
 
               <div
                 className="relative transition-transform duration-500 ease-out"
-                style={{ transform: `translateY(calc(90px - 22px - ${mobileYearsOffset}px))` }}
+                style={{
+                  transform: `translateY(calc(90px - 22px - ${mobileYearsOffset}px))`,
+                }}
               >
                 {ABOUT_STEPS.map((step, index) => {
                   const isActive = index === activeIndex;
@@ -335,45 +339,45 @@ export default function AboutSection() {
 
           <div className="space-y-5">
             {ABOUT_STEPS.map((step, index) => (
-            <article
-              key={step.year}
-              ref={(node) => {
-                mobileCardRefs.current[index] = node;
-              }}
-              className={[
-                "relative overflow-hidden rounded-[30px] border bg-white px-4 pb-5 pt-4 transition-all duration-300",
-                index === activeIndex
-                  ? "border-[#D8B7A0] shadow-[0_18px_42px_rgba(84,56,34,0.12)]"
-                  : "border-[#E9D7C8] shadow-[0_12px_30px_rgba(84,56,34,0.07)]",
-              ].join(" ")}
-            >
-              <div className="relative">
-                <div className="relative overflow-hidden rounded-[24px] bg-[#F3E5D9]">
-                  <img
-                    src={step.primaryImage}
-                    alt={step.title}
-                    className="aspect-[0.98] w-full object-cover"
-                  />
-
-                  <div className="absolute bottom-3 right-3 h-22 w-22 overflow-hidden rounded-[18px] border border-white/70 bg-[#FAEEE4] shadow-[0_12px_24px_rgba(53,36,24,0.16)]">
+              <article
+                key={step.year}
+                ref={(node) => {
+                  mobileCardRefs.current[index] = node;
+                }}
+                className={[
+                  "relative overflow-hidden rounded-[30px] border bg-white px-4 pb-5 pt-4 transition-all duration-300",
+                  index === activeIndex
+                    ? "border-[#D8B7A0] shadow-[0_18px_42px_rgba(84,56,34,0.12)]"
+                    : "border-[#E9D7C8] shadow-[0_12px_30px_rgba(84,56,34,0.07)]",
+                ].join(" ")}
+              >
+                <div className="relative">
+                  <div className="relative overflow-hidden rounded-[24px] bg-[#F3E5D9]">
                     <img
-                      src={step.secondaryImage}
-                      alt={`${step.year} detail`}
-                      className="h-full w-full object-cover"
+                      src={step.primaryImage}
+                      alt={step.title}
+                      className="aspect-[0.98] w-full object-cover"
                     />
+
+                    <div className="absolute bottom-3 right-3 h-22 w-22 overflow-hidden rounded-[18px] border border-white/70 bg-[#FAEEE4] shadow-[0_12px_24px_rgba(53,36,24,0.16)]">
+                      <img
+                        src={step.secondaryImage}
+                        alt={`${step.year} detail`}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mt-4">
+                    <h3 className="text-[26px] leading-[1.02] font-semibold tracking-[-0.04em] text-[#111111]">
+                      {step.title}
+                    </h3>
+                    <p className="mt-3 text-[15px] leading-6 text-[#4A413B]">
+                      {step.description}
+                    </p>
                   </div>
                 </div>
-
-                <div className="mt-4">
-                  <h3 className="text-[26px] leading-[1.02] font-semibold tracking-[-0.04em] text-[#111111]">
-                    {step.title}
-                  </h3>
-                  <p className="mt-3 text-[15px] leading-6 text-[#4A413B]">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            </article>
+              </article>
             ))}
           </div>
         </div>

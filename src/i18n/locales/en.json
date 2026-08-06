@@ -44,25 +44,23 @@
     "featured": [
       {
         "id": 1,
-        "title": "Moisturizing cream",
+        "title": "Cleansing foam",
         "subtitle": "Bestseller",
-        "description": "Hydrates the skin, softens it and works well for daily care",
-        "price": "$24.00"
+        "description": "A product used to cleanse the face"
       },
       {
         "id": 2,
-        "title": "Moisturizing milk toner",
+        "title": "SPF",
         "subtitle": "Bestseller",
-        "description": "Lightly hydrates the skin and prepares it for the next step",
-        "price": "$24.00"
+        "description": "A product that protects the skin from the sun"
       }
     ],
     "cards": [
-      { "id": 1, "title": "Hydrophilic oil", "description": "Gently cleanses and does not dry the skin", "price": "$24.00" },
-      { "id": 2, "title": "Moisturizing toner", "description": "Soothes the skin and helps retain moisture", "price": "$24.00" },
-      { "id": 3, "title": "Hand cream", "description": "Reduces dryness and leaves skin softer", "price": "$24.00" },
-      { "id": 4, "title": "Cleansing foam", "description": "A gentle daily cleansing solution", "price": "$24.00" },
-      { "id": 5, "title": "Hand cream", "description": "Absorbs quickly and feels comfortable", "price": "$24.00" }
+      { "id": 1, "title": "Whitening cream", "description": "Skin whitening agent" },
+      { "id": 2, "title": "Micellar water", "description": "Makeup remover" },
+      { "id": 3, "title": "Moisturizing cream", "description": "Skin moisturizer" },
+      { "id": 4, "title": "Face mask", "description": "Deep skin care" },
+      { "id": 5, "title": "Sparkling oil", "description": "Anti ageing agent" }
     ],
     "buyNow": "Buy now",
     "buy": "Buy",

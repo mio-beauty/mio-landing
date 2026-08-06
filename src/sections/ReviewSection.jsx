@@ -1,7 +1,8 @@
-﻿import {
+import {
   useCallback,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -9,6 +10,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import VoiceReviewPhone from "../components/VoiceReviewPhone";
+import { useI18n } from "../i18n/I18nProvider.jsx";
 import iphoneMockupImg from "../assets/imags/iphone_mockup_1x1.svg";
 import productImg from "../assets/img/cream.png";
 import phoneShotImg from "../assets/img/screenshoot.jpg";
@@ -19,18 +21,10 @@ function clamp(value, min, max) {
 
 const VOICE_REVIEW_AUDIO_URL = "/audio/voice-review-demo.wav";
 
-const REVIEW_STEPS = [
+const REVIEW_STEP_VISUALS = [
   {
     id: "review-1",
     order: "01",
-    tags: ["Акне", "Чувствительная кожа", "Результат через 1 месяц"],
-    concernTitle: "С чем обратилась",
-    concernText: "Высыпания, чувствительность и неровный тон кожи",
-    resultTitle: "Что получила",
-    resultText: "Более спокойную кожу и понятный ежедневный уход",
-    productTitle: "Увлажняющий крем",
-    productDescription:
-      "Глубоко питает кожу, помогает удерживать влагу и делает её мягкой",
     screenImage: phoneShotImg,
     voiceReview: {
       audioUrl: VOICE_REVIEW_AUDIO_URL,
@@ -41,14 +35,6 @@ const REVIEW_STEPS = [
   {
     id: "review-2",
     order: "02",
-    tags: ["Сухость", "Стянутость", "Ежедневный уход"],
-    concernTitle: "С чем обратилась",
-    concernText: "Сухость после умывания, стянутость и ощущение уставшей кожи",
-    resultTitle: "Что получила",
-    resultText: "Комфорт после очищения и более мягкую, спокойную кожу",
-    productTitle: "Очищающая пенка",
-    productDescription:
-      "Бережно очищает, не пересушивает и поддерживает комфорт кожи",
     screenImage: phoneShotImg,
     voiceReview: {
       audioUrl: VOICE_REVIEW_AUDIO_URL,
@@ -59,14 +45,6 @@ const REVIEW_STEPS = [
   {
     id: "review-3",
     order: "03",
-    tags: ["Покраснение", "Чувствительность", "Восстановление"],
-    concernTitle: "С чем обратилась",
-    concernText: "Покраснение, реактивность кожи и дискомфорт после ухода",
-    resultTitle: "Что получила",
-    resultText: "Более ровный тон и снижение чувствительности кожи",
-    productTitle: "Успокаивающая сыворотка",
-    productDescription:
-      "Снижает чувствительность и помогает коже быстрее восстановиться",
     screenImage: phoneShotImg,
     voiceReview: {
       audioUrl: VOICE_REVIEW_AUDIO_URL,
@@ -77,14 +55,6 @@ const REVIEW_STEPS = [
   {
     id: "review-4",
     order: "04",
-    tags: ["Тусклый тон", "Неровность", "Сияние"],
-    concernTitle: "С чем обратилась",
-    concernText: "Тусклый цвет лица, неровный тон и ощущение уставшей кожи",
-    resultTitle: "Что получила",
-    resultText: "Более свежий вид и визуально более ровный тон",
-    productTitle: "Крем для восстановления",
-    productDescription:
-      "Поддерживает защитный барьер и делает тон кожи более ровным",
     screenImage: phoneShotImg,
     voiceReview: {
       audioUrl: VOICE_REVIEW_AUDIO_URL,
@@ -117,7 +87,17 @@ function ReviewInfo({ title, text }) {
 }
 
 export default function ReviewSection() {
-  const totalSteps = REVIEW_STEPS.length;
+  const { get, t } = useI18n();
+  const reviewLocaleSteps = get("reviews.steps", []);
+  const reviewSteps = useMemo(
+    () =>
+      reviewLocaleSteps.map((step, index) => ({
+        ...REVIEW_STEP_VISUALS[index],
+        ...step,
+      })),
+    [reviewLocaleSteps],
+  );
+  const totalSteps = reviewSteps.length;
 
   const sectionRef = useRef(null);
   const pinRef = useRef(null);
@@ -129,43 +109,47 @@ export default function ReviewSection() {
 
   const [activeStep, setActiveStep] = useState(0);
   const [reviewMode, setReviewMode] = useState("text");
-  const [visibleProducts, setVisibleProducts] = useState(() => [
-    { ...REVIEW_STEPS[0], phase: "entered" },
-  ]);
-  const step = REVIEW_STEPS[activeStep];
+  const [visibleProducts, setVisibleProducts] = useState(() =>
+    REVIEW_STEP_VISUALS[0] ? [{ ...REVIEW_STEP_VISUALS[0], phase: "entered" }] : [],
+  );
+  const step = reviewSteps[activeStep] ?? reviewSteps[0] ?? null;
 
-  const syncVisibleProducts = useCallback((nextStepIndex) => {
-    const desiredIds = REVIEW_STEPS.slice(0, nextStepIndex + 1)
-      .map((item) => item.id)
-      .reverse();
+  const syncVisibleProducts = useCallback(
+    (nextStepIndex) => {
+      const desiredIds = reviewSteps
+        .slice(0, nextStepIndex + 1)
+        .map((item) => item.id)
+        .reverse();
 
-    setVisibleProducts((prev) => {
-      const prevMap = new Map(prev.map((item) => [item.id, item]));
-      const entering = desiredIds
-        .filter((id) => !prevMap.has(id))
-        .map((id) => {
-          const source = REVIEW_STEPS.find((item) => item.id === id);
-          return source ? { ...source, phase: "entering" } : null;
-        })
-        .filter(Boolean);
+      setVisibleProducts((prev) => {
+        const prevMap = new Map(prev.map((item) => [item.id, item]));
+        const entering = desiredIds
+          .filter((id) => !prevMap.has(id))
+          .map((id) => {
+            const source = reviewSteps.find((item) => item.id === id);
+            return source ? { ...source, phase: "entering" } : null;
+          })
+          .filter(Boolean);
 
-      const persisted = prev.map((item) => {
-        if (desiredIds.includes(item.id)) {
+        const persisted = prev.map((item) => {
+          if (desiredIds.includes(item.id)) {
+            return {
+              ...item,
+              phase: item.phase === "exiting" ? "entered" : item.phase,
+            };
+          }
+
           return {
             ...item,
-            phase: item.phase === "exiting" ? "entered" : item.phase,
+            phase: "exiting",
           };
-        }
+        });
 
-        return {
-          ...item,
-          phase: "exiting",
-        };
+        return [...entering, ...persisted];
       });
-
-      return [...entering, ...persisted];
-    });
-  }, []);
+    },
+    [reviewSteps],
+  );
 
   const updateStep = useCallback(
     (nextStepIndex) => {
@@ -174,6 +158,23 @@ export default function ReviewSection() {
     },
     [syncVisibleProducts],
   );
+
+  useEffect(() => {
+    if (!reviewSteps.length) return;
+
+    setVisibleProducts((prev) => {
+      if (!prev.length) {
+        return [{ ...reviewSteps[0], phase: "entered" }];
+      }
+
+      return prev
+        .map((item) => {
+          const source = reviewSteps.find((stepItem) => stepItem.id === item.id);
+          return source ? { ...source, phase: item.phase } : null;
+        })
+        .filter(Boolean);
+    });
+  }, [reviewSteps]);
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -333,6 +334,8 @@ export default function ReviewSection() {
     };
   }, [visibleProducts]);
 
+  if (!step) return null;
+
   return (
     <section
       id="reviews"
@@ -347,10 +350,10 @@ export default function ReviewSection() {
           <div className="lg:col-start-2 lg:row-start-1">
             <div ref={headerRef} className="mx-auto text-center">
               <h2 className="pb-2 text-[28px] font-semibold leading-none text-[#161616] sm:text-[34px]">
-                Отзывы клиентов
+                {t("reviews.title")}
               </h2>
               <p className="mt-3 pb-5 text-[14px] leading-[1.25] text-[#969696] sm:mt-4 sm:pb-6 sm:text-[18px]">
-                Скриншоты из мессенджеров и соцсетей
+                {t("reviews.description")}
               </p>
 
               <div className="hidden rounded-full bg-[#f3f3f3] p-1 sm:inline-flex">
@@ -364,7 +367,7 @@ export default function ReviewSection() {
                       : "text-[#212121]",
                   ].join(" ")}
                 >
-                  Текст
+                  {t("reviews.modes.text")}
                 </button>
                 <button
                   type="button"
@@ -376,7 +379,7 @@ export default function ReviewSection() {
                       : "text-[#212121]",
                   ].join(" ")}
                 >
-                  Голосовые
+                  {t("reviews.modes.voice")}
                 </button>
               </div>
             </div>
@@ -393,7 +396,7 @@ export default function ReviewSection() {
                       transitionDuration: `${MOTION_MS}ms`,
                     }}
                   >
-                    {REVIEW_STEPS.map((item) => (
+                    {reviewSteps.map((item) => (
                       <div
                         key={item.id}
                         className="flex h-[150px] items-start text-[120px] font-normal leading-[0.92] tracking-[-0.075em] lg:h-[166px] lg:text-[142px]"
@@ -421,7 +424,7 @@ export default function ReviewSection() {
                   ))}
                 </div>
 
-                <div className=" h-px w-full max-w-[520px] bg-[#e8e8e8]" />
+                <div className="h-px w-full max-w-[520px] bg-[#e8e8e8]" />
 
                 <div className="hidden sm:flex sm:flex-col sm:gap-6 sm:pt-4">
                   <ReviewInfo
@@ -450,7 +453,7 @@ export default function ReviewSection() {
                       : "text-[#212121]",
                   ].join(" ")}
                 >
-                  Текст
+                  {t("reviews.modes.text")}
                 </button>
                 <button
                   type="button"
@@ -462,12 +465,12 @@ export default function ReviewSection() {
                       : "text-[#212121]",
                   ].join(" ")}
                 >
-                  Голосовые
+                  {t("reviews.modes.voice")}
                 </button>
               </div>
             </div>
 
-            <div className="mx-auto pt-4 flex justify-center lg:mt-0 lg:w-[360px] xl:w-[380px]">
+            <div className="mx-auto flex justify-center pt-4 lg:mt-0 lg:w-[360px] xl:w-[380px]">
               {reviewMode === "text" ? (
                 <div className="relative w-[min(300px,82vw)] sm:w-[min(324px,79vw)] xl:w-[344px]">
                   <div className="relative mx-auto aspect-[1014/2048] w-full">
@@ -480,7 +483,7 @@ export default function ReviewSection() {
                             transitionDuration: `${MOTION_MS}ms`,
                           }}
                         >
-                          {REVIEW_STEPS.map((item) => (
+                          {reviewSteps.map((item) => (
                             <img
                               key={item.id}
                               src={item.screenImage}
@@ -552,7 +555,7 @@ export default function ReviewSection() {
                     >
                       <article
                         className={[
-                          "inline-flex rounded-[16px] border border-[#e8e8e8] bg-white pr-3 py-3",
+                          "inline-flex rounded-[16px] border border-[#e8e8e8] bg-white py-3 pr-3",
                           "transform-gpu transition-all ease-[cubic-bezier(.16,1,.3,1)] will-change-transform",
                           product.phase === "entered"
                             ? "translate-x-0 translate-y-0 scale-100 opacity-100"

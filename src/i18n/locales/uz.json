@@ -44,25 +44,23 @@
     "featured": [
       {
         "id": 1,
-        "title": "Namlik beruvchi krem",
+        "title": "Tozalovchi ko'pik",
         "subtitle": "Bestseller",
-        "description": "Terni namlaydi, yumshatadi va kundalik parvarishda qulay his beradi",
-        "price": "$24.00"
+        "description": "Yuzni tozalash uchun ishlatiluvchi vosita"
       },
       {
         "id": 2,
-        "title": "Namlik beruvchi milk toner",
+        "title": "SPF",
         "subtitle": "Bestseller",
-        "description": "Terni yengil namlaydi va keyingi parvarish bosqichiga tayyorlaydi",
-        "price": "$24.00"
+        "description": "Terini quyoshdan himoya qiluvchi vosita"
       }
     ],
     "cards": [
-      { "id": 1, "title": "Gidrofil moy", "description": "Yumshoq tozalaydi va terini quritmaydi", "price": "$24.00" },
-      { "id": 2, "title": "Namlik beruvchi toner", "description": "Terni tinchlantiradi va namlikni ushlab turadi", "price": "$24.00" },
-      { "id": 3, "title": "Qo'l kremi", "description": "Quruqlikni kamaytiradi va terini yumshatadi", "price": "$24.00" },
-      { "id": 4, "title": "Tozalovchi ko'pik", "description": "Nozik tozalash uchun kundalik yechim", "price": "$24.00" },
-      { "id": 5, "title": "Qo'l kremi", "description": "Tez singadi va qulaylik hissini beradi", "price": "$24.00" }
+      { "id": 1, "title": "Oqartiruvchi krem", "description": "Terini oqartiruvchi vosita" },
+      { "id": 2, "title": "Mitselyar suv", "description": "Makiyajni tozalash vositasi" },
+      { "id": 3, "title": "Namlantiruvchi krem", "description": "Terini namlantiruvchi vosita" },
+      { "id": 4, "title": "Yuz niqobi", "description": "Teri uchun chuqur parvarish" },
+      { "id": 5, "title": "Tomchi moyli zardoba", "description": "Ajinlarga qarshi vosita" }
     ],
     "buyNow": "Hozir sotib olish",
     "buy": "Sotib olish",

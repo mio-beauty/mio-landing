@@ -1,5 +1,6 @@
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { useI18n } from "../i18n/I18nProvider.jsx";
 
 export default function ConsultationModal({
   isOpen,
@@ -8,7 +9,10 @@ export default function ConsultationModal({
   prefersReducedMotion = false,
   originRect = null,
 }) {
+  const { t } = useI18n();
+  const [phone, setPhone] = useState("+998 ");
   const firstFieldRef = useRef(null);
+  const phoneFieldRef = useRef(null);
   const backdropRef = useRef(null);
   const panelRef = useRef(null);
   const imageWrapRef = useRef(null);
@@ -18,6 +22,31 @@ export default function ConsultationModal({
   const titleRef = useRef(null);
   const formRef = useRef(null);
   const tlRef = useRef(null);
+
+  const formatPhone = (value) => {
+    let numbers = value.replace(/\D/g, "");
+    if (numbers.startsWith("998")) numbers = numbers.slice(3);
+    numbers = numbers.slice(0, 9);
+
+    let formatted = "+998";
+    if (numbers.length > 0) formatted += " " + numbers.slice(0, 2);
+    if (numbers.length > 2) formatted += " " + numbers.slice(2, 5);
+    if (numbers.length > 5) formatted += " " + numbers.slice(5, 7);
+    if (numbers.length > 7) formatted += " " + numbers.slice(7, 9);
+
+    return formatted + (numbers.length === 0 ? " " : "");
+  };
+
+  const handlePhoneChange = (e) => {
+    setPhone(formatPhone(e.target.value));
+  };
+
+  const handlePhoneFocus = () => {
+    window.requestAnimationFrame(() => {
+      const input = phoneFieldRef.current;
+      input?.setSelectionRange?.(input.value.length, input.value.length);
+    });
+  };
 
   useEffect(() => {
     if (typeof document === "undefined") return undefined;
@@ -31,21 +60,19 @@ export default function ConsultationModal({
     };
     window.addEventListener("keydown", onKeyDown);
 
-    const t = window.setTimeout(() => {
+    const timeoutId = window.setTimeout(() => {
       firstFieldRef.current?.focus?.();
     }, 180);
 
     return () => {
-      window.clearTimeout(t);
+      window.clearTimeout(timeoutId);
       window.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = previousOverflow;
     };
   }, [isOpen, onClose]);
 
-  const viewportWidth =
-    typeof window !== "undefined" ? window.innerWidth : 0;
-  const viewportHeight =
-    typeof window !== "undefined" ? window.innerHeight : 0;
+  const viewportWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+  const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 0;
   const originCenterX = originRect
     ? originRect.left + originRect.width / 2
     : viewportWidth / 2;
@@ -134,7 +161,7 @@ export default function ConsultationModal({
             duration: 0.58,
             ease: "expo.out",
           },
-          0
+          0,
         )
         .to(
           closeButton,
@@ -145,7 +172,7 @@ export default function ConsultationModal({
             duration: 0.28,
             ease: "power3.out",
           },
-          0.18
+          0.18,
         )
         .to(
           body,
@@ -155,7 +182,7 @@ export default function ConsultationModal({
             duration: 0.34,
             ease: "power3.out",
           },
-          0.16
+          0.16,
         )
         .to(
           title,
@@ -165,7 +192,7 @@ export default function ConsultationModal({
             duration: 0.32,
             ease: "power3.out",
           },
-          0.2
+          0.2,
         )
         .to(
           form,
@@ -175,7 +202,7 @@ export default function ConsultationModal({
             duration: 0.36,
             ease: "power3.out",
           },
-          0.24
+          0.24,
         );
 
       if (imageWrap && image) {
@@ -188,7 +215,7 @@ export default function ConsultationModal({
             duration: 0.42,
             ease: "power3.out",
           },
-          0.08
+          0.08,
         ).to(
           image,
           {
@@ -196,7 +223,7 @@ export default function ConsultationModal({
             duration: 0.58,
             ease: "power2.out",
           },
-          0.08
+          0.08,
         );
       }
 
@@ -237,7 +264,7 @@ export default function ConsultationModal({
             duration: 0.2,
             ease: "power2.in",
           },
-          0.02
+          0.02,
         )
         .to(
           closeButton,
@@ -248,7 +275,7 @@ export default function ConsultationModal({
             duration: 0.18,
             ease: "power2.in",
           },
-          0
+          0,
         )
         .to(
           imageWrap ?? [],
@@ -258,7 +285,7 @@ export default function ConsultationModal({
             duration: 0.16,
             ease: "power2.inOut",
           },
-          0.02
+          0.02,
         )
         .to(
           image ?? [],
@@ -267,7 +294,7 @@ export default function ConsultationModal({
             duration: 0.16,
             ease: "power2.inOut",
           },
-          0
+          0,
         )
         .to(
           panel,
@@ -281,7 +308,7 @@ export default function ConsultationModal({
             duration: 0.38,
             ease: "expo.inOut",
           },
-          0.06
+          0.06,
         )
         .to(
           backdrop,
@@ -290,7 +317,7 @@ export default function ConsultationModal({
             duration: 0.18,
             ease: "power2.out",
           },
-          0.14
+          0.14,
         );
 
       tlRef.current = tl;
@@ -309,8 +336,8 @@ export default function ConsultationModal({
         "fixed inset-0 z-50 flex items-center justify-center p-6 md:p-10",
         "bg-[rgba(15,12,10,0.46)] backdrop-blur-[10px]",
         isOpen
-          ? "opacity-100 pointer-events-auto"
-          : "opacity-0 pointer-events-none",
+          ? "pointer-events-auto opacity-100"
+          : "pointer-events-none opacity-0",
       ].join(" ")}
       onClick={() => onClose?.()}
     >
@@ -321,8 +348,8 @@ export default function ConsultationModal({
         <button
           ref={closeButtonRef}
           type="button"
-          aria-label="Close"
-          className="absolute -top-17 right-0 z-10 grid h-12 w-12 place-items-center rounded-full bg-white/92 shadow-[0_18px_48px_rgba(18,12,8,0.16)] backdrop-blur-md cursor-pointer"
+          aria-label={t("modal.close")}
+          className="absolute -top-17 right-0 z-10 grid h-12 w-12 cursor-pointer place-items-center rounded-full bg-white/92 shadow-[0_18px_48px_rgba(18,12,8,0.16)] backdrop-blur-md"
           onClick={(e) => {
             e.stopPropagation();
             onClose?.();
@@ -351,7 +378,10 @@ export default function ConsultationModal({
           className="relative w-full overflow-hidden bg-[#F7F2EC] shadow-[0_38px_120px_rgba(19,14,11,0.22)]"
         >
           <div className="grid h-full grid-cols-1 md:grid-cols-2">
-            <div ref={imageWrapRef} className="relative hidden md:block md:h-full">
+            <div
+              ref={imageWrapRef}
+              className="relative hidden md:block md:h-full"
+            >
               <img
                 ref={imageRef}
                 src={imageSrc}
@@ -370,27 +400,34 @@ export default function ConsultationModal({
                 ref={titleRef}
                 className="mb-6 text-[26px] font-semibold leading-[120%] text-black md:text-[32px]"
               >
-                Оставьте свои контактные данные для консультации.
+                {t("modal.title")}
               </h3>
 
-              <form ref={formRef} className="w-full flex flex-col gap-6">
+              <form ref={formRef} className="flex w-full flex-col gap-6">
                 <div className="flex flex-col gap-4">
                   <label className="block">
-                    <span className="text-sm font-medium text-black">Имя</span>
+                    <span className="text-sm font-medium text-black">
+                      {t("modal.name")}
+                    </span>
                     <input
                       ref={firstFieldRef}
                       type="text"
-                      placeholder="Ваше имя"
+                      placeholder={t("modal.namePlaceholder")}
                       className="mt-2 h-9 w-full rounded-lg border border-[#CCCCCC] bg-white/86 px-4 text-black outline-none focus:border-black/30"
                     />
                   </label>
-                  <label className="block mb-5">
+                  <label className="mb-5 block">
                     <span className="text-sm font-medium text-black">
-                      Телефон номер
+                      {t("modal.phone")}
                     </span>
                     <input
+                      ref={phoneFieldRef}
                       type="tel"
-                      placeholder="+998"
+                      inputMode="tel"
+                      placeholder={t("modal.phonePlaceholder")}
+                      value={phone}
+                      onChange={handlePhoneChange}
+                      onFocus={handlePhoneFocus}
                       className="mt-2 h-9 w-full rounded-lg border border-[#CCCCCC] bg-white/86 px-4 text-black outline-none focus:border-black/30"
                     />
                   </label>
@@ -398,9 +435,9 @@ export default function ConsultationModal({
 
                 <button
                   type="button"
-                  className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-[#1D1B19] px-6 font-normal text-white cursor-pointer"
+                  className="inline-flex h-11 w-full cursor-pointer items-center justify-center rounded-lg bg-[#1D1B19] px-6 font-normal text-white"
                 >
-                  Получить консультацию
+                  {t("modal.cta")}
                 </button>
               </form>
             </div>

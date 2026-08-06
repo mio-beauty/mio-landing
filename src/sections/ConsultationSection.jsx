@@ -6,12 +6,15 @@ import consultationAltImg from "../assets/img/Consultation3.png";
 import checkFilledIconImg from "../assets/img/ic_check_filled.svg";
 import closeFilledIconImg from "../assets/img/ic_close_filled.svg";
 import errorIconImg from "../assets/img/ic_error.svg";
+import { useI18n } from "../i18n/I18nProvider.jsx";
 
 export default function ConsultationSection() {
+  const { get, t } = useI18n();
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState("idle");
   const [form, setForm] = useState({ name: "", phone: "", problem: "" });
   const [errors, setErrors] = useState({ name: false, phone: false });
+  const options = get("consultation.options", []);
 
   useEffect(() => {
     if (status === "success" || status === "error" || status === "failed") {
@@ -21,8 +24,6 @@ export default function ConsultationSection() {
       return () => clearTimeout(timer);
     }
   }, [status]);
-
-  const options = ["Акне", "Пигментация", "Сухость"];
 
   const formatPhone = (value) => {
     let numbers = value.replace(/\D/g, "");
@@ -50,8 +51,9 @@ export default function ConsultationSection() {
   };
 
   const handlePhoneBlur = () => {
-    if (form.phone === "+998 " || form.phone === "+998")
+    if (form.phone === "+998 " || form.phone === "+998") {
       setForm((prev) => ({ ...prev, phone: "" }));
+    }
   };
 
   const handleNameChange = (e) => {
@@ -89,91 +91,87 @@ export default function ConsultationSection() {
 
   return (
     <section id="contacts" className="scroll-mt-28 bg-[#F8F8F8]">
-      <div className="relative px-4 py-8 lg:px-33.5 lg:py-36 flex flex-col justify-center">
-        {/* TITLE */}
+      <div className="relative flex flex-col justify-center px-4 py-8 lg:px-33.5 lg:py-36">
         <div className="flex flex-col gap-3 text-center">
-          <h2 className="text-[#0B0B0B] text-2xl lg:text-5xl font-medium leading-tight">
+          <h2 className="text-2xl font-medium leading-tight text-[#0B0B0B] lg:text-5xl">
             <span>
-              Не знаете, с чего начать?
+              {t("consultation.titleStart")}
               <img
-                className="hidden lg:inline-block px-3 align-middle"
+                className="hidden px-3 align-middle lg:inline-block"
                 src={consultationWideImg}
                 alt=""
               />
-              Получите
+              {t("consultation.titleMiddle")}
             </span>
-            <span className="block mt-2">
+            <span className="mt-2 block">
               <img
-                className="hidden lg:inline-block px-3 align-middle"
+                className="hidden px-3 align-middle lg:inline-block"
                 src={consultationImg}
                 alt=""
               />
-              бесплатную консультацию косметолога
+              {t("consultation.titleEnd")}
               <img
-                className="hidden lg:inline-block px-3 align-middle"
+                className="hidden px-3 align-middle lg:inline-block"
                 src={consultationAltImg}
                 alt=""
               />
             </span>
           </h2>
-          <p className="text-[#0000007c] text-sm pt-3 lg:text-[20px]">
-            Ответим на вопросы о коже, подберём уход, расскажем, как
-            использовать продукты
+          <p className="pt-3 text-sm text-[#0000007c] lg:text-[20px]">
+            {t("consultation.description")}
           </p>
         </div>
 
-        {/* FORM */}
-        <div className="flex flex-col gap-6 py-6 lg:pt-28 lg:px-96 text-[#757575]">
-          {/* ISM */}
-          <div className="relative px-3 py-2.5 border-b border-[#CCCCCC]">
+        <div className="flex flex-col gap-6 py-6 text-[#757575] lg:px-96 lg:pt-28">
+          <div className="relative border-b border-[#CCCCCC] px-3 py-2.5">
             <input
-              className="border-none outline-none text-sm text-[#0B0B0B] w-full bg-transparent"
+              className="w-full border-none bg-transparent text-sm text-[#0B0B0B] outline-none"
               type="text"
-              placeholder={!errors.name ? "Ваше имя" : ""}
+              placeholder={!errors.name ? t("consultation.namePlaceholder") : ""}
               value={form.name}
               onChange={handleNameChange}
             />
             {errors.name && !form.name && (
-              <span className="absolute left-3 top-2.5 text-sm pointer-events-none text-[#9CA3AF]">
-                Ваше имя <span className="text-red-500">*</span>
+              <span className="pointer-events-none absolute left-3 top-2.5 text-sm text-[#9CA3AF]">
+                {t("consultation.nameLabel")}{" "}
+                <span className="text-red-500">*</span>
               </span>
             )}
           </div>
 
-          {/* TELEFON */}
-          <div className="relative px-3 py-2.5 border-b border-[#CCCCCC]">
+          <div className="relative border-b border-[#CCCCCC] px-3 py-2.5">
             <input
-              className="border-none outline-none text-sm text-[#0B0B0B] w-full bg-transparent"
+              className="w-full border-none bg-transparent text-sm text-[#0B0B0B] outline-none"
               type="text"
               inputMode="tel"
-              placeholder={!errors.phone ? "Ваш телефон номер" : ""}
+              placeholder={!errors.phone ? t("consultation.phonePlaceholder") : ""}
               value={form.phone}
               onChange={handlePhoneChange}
               onFocus={handlePhoneFocus}
               onBlur={handlePhoneBlur}
             />
             {errors.phone && !form.phone && (
-              <span className="absolute left-3 top-2.5 text-sm pointer-events-none text-[#9CA3AF]">
-                Ваш телефон номер <span className="text-red-500">*</span>
+              <span className="pointer-events-none absolute left-3 top-2.5 text-sm text-[#9CA3AF]">
+                {t("consultation.phoneLabel")}{" "}
+                <span className="text-red-500">*</span>
               </span>
             )}
           </div>
 
-          {/* CUSTOM SELECT */}
           <div className="relative">
-            <div className="px-3 py-2.5 border-b border-[#CCCCCC] text-sm">
+            <div className="border-b border-[#CCCCCC] px-3 py-2.5 text-sm">
               <div
-                className="flex justify-between items-center cursor-pointer"
+                className="flex cursor-pointer items-center justify-between"
                 onClick={() => setOpen(!open)}
               >
                 <span
                   className={form.problem ? "text-[#0B0B0B]" : "text-[#757575]"}
                 >
-                  {form.problem || "Акне, пигментация, сухость и т.д."}
+                  {form.problem || t("consultation.problemPlaceholder")}
                 </span>
                 <ChevronDown
                   size={20}
-                  className={`transition-transform duration-300 text-[#757575] ${
+                  className={`text-[#757575] transition-transform duration-300 ${
                     open ? "rotate-180" : ""
                   }`}
                 />
@@ -181,21 +179,21 @@ export default function ConsultationSection() {
             </div>
 
             <div
-              className={`absolute left-0 top-full mt-1 w-full z-50 transition-all duration-300 origin-top ${
+              className={`absolute left-0 top-full z-50 mt-1 w-full origin-top transition-all duration-300 ${
                 open
-                  ? "opacity-100 scale-y-100 pointer-events-auto"
-                  : "opacity-0 scale-y-0 pointer-events-none"
+                  ? "pointer-events-auto scale-y-100 opacity-100"
+                  : "pointer-events-none scale-y-0 opacity-0"
               }`}
             >
-              <ul className="bg-white shadow-[0_0_24px_rgba(41,42,53,0.1)] rounded-xl overflow-hidden">
-                {options.map((item, index) => (
+              <ul className="overflow-hidden rounded-xl bg-white shadow-[0_0_24px_rgba(41,42,53,0.1)]">
+                {options.map((item) => (
                   <li
-                    key={index}
+                    key={item}
                     onClick={() => {
                       setForm((prev) => ({ ...prev, problem: item }));
                       setOpen(false);
                     }}
-                    className="px-3 py-2 cursor-pointer transition-colors hover:bg-gray-100"
+                    className="cursor-pointer px-3 py-2 transition-colors hover:bg-gray-100"
                   >
                     {item}
                   </li>
@@ -204,84 +202,82 @@ export default function ConsultationSection() {
             </div>
           </div>
 
-          <div className="flex flex-col lg:flex-row-reverse lg:items-center lg:justify-between gap-3.5 pt-8">
+          <div className="flex flex-col gap-3.5 pt-8 lg:flex-row-reverse lg:items-center lg:justify-between">
             <button
               onClick={handleClick}
               disabled={status === "loading"}
-              className="flex items-center justify-center gap-2 text-[16px] w-full lg:w-[30%] text-white bg-[#1D1D1D] p-2.5 lg:py-3 rounded-lg cursor-pointer hover:bg-[#1d1d1de1] duration-300"
+              className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#1D1D1D] p-2.5 text-[16px] text-white duration-300 hover:bg-[#1d1d1de1] lg:w-[30%] lg:py-3"
             >
-              {status === "idle" && "Получить консультацию"}
+              {status === "idle" && t("consultation.cta")}
               {status === "loading" && (
                 <LoaderCircle className="animate-spin" />
               )}
               {status === "success" && <Check />}
-              {status === "error" && "Получить консультацию"}
-              {status === "failed" && "Получить консультацию"}
+              {status === "error" && t("consultation.cta")}
+              {status === "failed" && t("consultation.cta")}
             </button>
 
-            <p className="text-sm text-[#757575] text-center">
-              Консультация бесплатная. На связи 24/7
+            <p className="text-center text-sm text-[#757575]">
+              {t("consultation.helper")}
             </p>
           </div>
         </div>
 
-        {/* NOTIFICATIONS */}
         <div className="flex flex-col items-center lg:px-96">
-          <div className="absolute bottom-0 translate-y-1/2 w-full flex flex-col items-center gap-3 z-50 px-4 lg:px-108">
+          <div className="absolute bottom-0 z-50 flex w-full translate-y-1/2 flex-col items-center gap-3 px-4 lg:px-108">
             {status === "error" && (
-              <div className="flex flex-col lg:flex-row items-center justify-between gap-2 bg-[#000000D9] border border-[#757575] py-2.5 px-3 rounded-xl">
-                <div className="flex lg:items-start items-center gap-2">
+              <div className="flex flex-col items-center justify-between gap-2 rounded-xl border border-[#757575] bg-[#000000D9] px-3 py-2.5 lg:flex-row">
+                <div className="flex items-center gap-2 lg:items-start">
                   <img src={errorIconImg} alt="" />
-                  <p className="text-[#FFFFFF] text-[16px]">
-                    Вы достигли лимита на отправку сообщений, пожалуйста,
-                    попробуйте позже
+                  <p className="text-[16px] text-[#FFFFFF]">
+                    {t("consultation.notifications.error")}
                   </p>
                 </div>
-                <div className="hidden lg:flex justify-between items-center gap-2">
-                  <button className="bg-[#FFFFFF4D] text-[#FFFFFF] font-medium text-sm rounded-md py-2 px-3">
-                    Инфо
+                <div className="hidden items-center justify-between gap-2 lg:flex">
+                  <button className="rounded-md bg-[#FFFFFF4D] px-3 py-2 text-sm font-medium text-[#FFFFFF]">
+                    {t("consultation.notifications.info")}
                   </button>
-                  <div className="border-[#FFFFFF4D] h-5 border"></div>
+                  <div className="h-5 border border-[#FFFFFF4D]"></div>
                   <button
                     onClick={() => setStatus("idle")}
-                    className="bg-[#FFFFFF] text-[#0B0B0B] font-medium text-sm rounded-md py-2 px-3"
+                    className="rounded-md bg-[#FFFFFF] px-3 py-2 text-sm font-medium text-[#0B0B0B]"
                   >
-                    закрыть
+                    {t("consultation.notifications.close")}
                   </button>
                 </div>
               </div>
             )}
 
             {status === "success" && (
-              <div className="flex items-center justify-between bg-[#000000D9] border border-[#757575] py-2.5 px-3 rounded-xl lg:w-[60%] w-full">
+              <div className="flex w-full items-center justify-between rounded-xl border border-[#757575] bg-[#000000D9] px-3 py-2.5 lg:w-[60%]">
                 <div className="flex items-center gap-2">
                   <img src={checkFilledIconImg} alt="" />
-                  <p className="text-[#FFFFFF] text-[16px]">
-                    Ваше сообщение отправлено
+                  <p className="text-[16px] text-[#FFFFFF]">
+                    {t("consultation.notifications.success")}
                   </p>
                 </div>
                 <button
                   onClick={() => setStatus("idle")}
-                  className="hidden lg:block bg-[#FFFFFF] text-[#0B0B0B] font-medium text-sm rounded-md py-2 px-3"
+                  className="hidden rounded-md bg-[#FFFFFF] px-3 py-2 text-sm font-medium text-[#0B0B0B] lg:block"
                 >
-                  закрыть
+                  {t("consultation.notifications.close")}
                 </button>
               </div>
             )}
 
             {status === "failed" && (
-              <div className="flex items-center justify-between bg-[#000000D9] border border-[#757575] py-2.5 px-3 rounded-xl lg:w-[60%] w-full">
+              <div className="flex w-full items-center justify-between rounded-xl border border-[#757575] bg-[#000000D9] px-3 py-2.5 lg:w-[60%]">
                 <div className="flex items-center gap-2">
                   <img src={closeFilledIconImg} alt="" />
-                  <p className="text-[#FFFFFF] text-[16px]">
-                    Ваше сообщение не отправлено
+                  <p className="text-[16px] text-[#FFFFFF]">
+                    {t("consultation.notifications.failed")}
                   </p>
                 </div>
                 <button
                   onClick={() => setStatus("idle")}
-                  className="hidden lg:block bg-[#FFFFFF] text-[#0B0B0B] font-medium text-sm rounded-md py-2 px-3"
+                  className="hidden rounded-md bg-[#FFFFFF] px-3 py-2 text-sm font-medium text-[#0B0B0B] lg:block"
                 >
-                  закрыть
+                  {t("consultation.notifications.close")}
                 </button>
               </div>
             )}

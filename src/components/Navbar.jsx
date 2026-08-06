@@ -5,7 +5,7 @@ import closeIconImg from "../assets/img/ic_X_mark.svg";
 import burgerIconImg from "../assets/img/ic_burger2.svg";
 import checkIconImg from "../assets/img/ic_check.svg";
 import languageIconImg from "../assets/img/ic_language.svg";
-import logoImg from "../assets/img/Logo.svg";
+import logoImg from "../assets/img/logoo.PNG";
 import { useI18n } from "../i18n/I18nProvider.jsx";
 
 const LANGUAGES = ["uz", "ru", "en"];
@@ -77,7 +77,7 @@ export default function Navbar({ textColor = "white" }) {
   return (
     <div className="relative z-[200] flex items-center justify-between bg-transparent px-4 pt-4 lg:px-0 lg:pt-12">
       <img
-        className="h-[24px] w-[149px] lg:h-auto lg:w-auto"
+        className="h-[24px] w-auto max-w-[158px] object-contain lg:h-[40px] lg:max-w-[210px]"
         src={logoImg}
         alt="MIO BEAUTY"
       />
@@ -139,7 +139,7 @@ export default function Navbar({ textColor = "white" }) {
           </button>
 
           <div
-            className={`absolute right-0 top-full z-50 mt-3 w-44 origin-top-right overflow-hidden rounded-[20px] bg-white/95 p-2 shadow-[0_18px_44px_rgba(18,18,18,0.16)] ring-1 ring-black/5 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            className={`absolute right-0 top-full z-50 mt-3 w-44 origin-top-right overflow-hidden rounded-[20px] bg-white/95 p-1 shadow-[0_18px_44px_rgba(18,18,18,0.16)]  backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
               openLang
                 ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
                 : "pointer-events-none -translate-y-3 scale-[0.78] opacity-0"
@@ -156,7 +156,7 @@ export default function Navbar({ textColor = "white" }) {
                   key={lang}
                   type="button"
                   onClick={() => handleSelectLanguage(lang)}
-                  className={`flex w-full items-center justify-between rounded-2xl px-3 py-2.5 text-left text-sm transition-colors duration-200 ${
+                  className={`flex w-full items-center justify-between rounded-full px-3 py-2.5 text-left text-sm transition-colors duration-200 ${
                     isActive
                       ? "bg-black/[0.04] text-[#0B0B0B]"
                       : "text-[#0B0B0B] hover:bg-black/[0.03]"

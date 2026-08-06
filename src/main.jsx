@@ -2,9 +2,13 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
 import 'lenis/dist/lenis.css'
 import App from './App.jsx'
+
+gsap.registerPlugin(ScrollTrigger)
 
 function shouldUseLenis() {
   if (typeof window === 'undefined') return false
@@ -17,6 +21,10 @@ function shouldUseLenis() {
 
 function syncLenisInstance() {
   if (!shouldUseLenis()) {
+    if (globalThis.__mioLenisTicker) {
+      gsap.ticker.remove(globalThis.__mioLenisTicker)
+      delete globalThis.__mioLenisTicker
+    }
     globalThis.__mioLenis?.destroy?.()
     delete globalThis.__mioLenis
     return
@@ -24,9 +32,21 @@ function syncLenisInstance() {
 
   if (!globalThis.__mioLenis) {
     globalThis.__mioLenis = new Lenis({
-      autoRaf: true,
+      autoRaf: false,
       anchors: true,
+      lerp: 0.08,
+      wheelMultiplier: 0.85,
     })
+
+    globalThis.__mioLenis.on('scroll', ScrollTrigger.update)
+  }
+
+  if (!globalThis.__mioLenisTicker) {
+    globalThis.__mioLenisTicker = (time) => {
+      globalThis.__mioLenis?.raf(time * 1000)
+    }
+    gsap.ticker.add(globalThis.__mioLenisTicker)
+    gsap.ticker.lagSmoothing(0)
   }
 }
 

@@ -14,11 +14,11 @@ function mod(n, m) {
 }
 
 const DEFAULT_TITLES = [
-  "Пигментация",
-  "Чувствительность",
-  "Сухость",
-  "Акне и воспаления",
-  "Тусклый тон",
+  "Problem 1",
+  "Problem 2",
+  "Problem 3",
+  "Problem 4",
+  "Problem 5",
 ];
 
 const MODAL_IMAGES = DEFAULT_TITLES.map(() => modalPng);
@@ -62,6 +62,7 @@ export default function ScrollGalleryShowcase({
   const viewportSizeRef = useRef({ width: 0, height: 0 });
   const stRef = useRef(null);
   const roRef = useRef(null);
+  const decodedImagesRef = useRef(new Set());
 
   const prefersReducedMotion = useMemo(() => {
     if (typeof window === "undefined") return false;
@@ -81,6 +82,10 @@ export default function ScrollGalleryShowcase({
       if (!img?.src) return;
       const pre = new Image();
       pre.src = img.src;
+      pre.decode?.().then(
+        () => decodedImagesRef.current.add(img.src),
+        () => decodedImagesRef.current.add(img.src),
+      );
     });
 
     const bgA = bgLayerRefA.current;
@@ -94,15 +99,17 @@ export default function ScrollGalleryShowcase({
 
     if (!bgA || !bgB || !bgImgA || !bgImgB || !viewport) return;
 
+    const getTitleByIndex = (nextIndex) =>
+      defaultTitles[nextIndex] ?? title ?? DEFAULT_TITLES[nextIndex] ?? "";
+
     const setTitleInstant = (nextIndex) => {
       if (!titleEl) return;
-      const nextTitle = defaultTitles[nextIndex] ?? title ?? "";
-      titleEl.textContent = nextTitle;
+      titleEl.textContent = getTitleByIndex(nextIndex);
     };
 
     const swapTitleTo = (nextIndex, direction = 1) => {
       if (!titleEl) return;
-      const nextTitle = defaultTitles[nextIndex] ?? title ?? "";
+      const nextTitle = getTitleByIndex(nextIndex);
       if (titleEl.textContent === nextTitle) return;
 
       if (prefersReducedMotion) {
@@ -161,9 +168,9 @@ export default function ScrollGalleryShowcase({
 
     const applyGalleryState = (
       nextActiveIndex,
-      { immediate, direction = 1 } = {}
+      { immediate, direction = 1 } = {},
     ) => {
-      const duration = prefersReducedMotion || immediate ? 0 : 0.85;
+      const duration = prefersReducedMotion || immediate ? 0 : isDesktop ? 0.62 : 0.28;
       const ease = "power3.out";
       const n = count;
       const step = stepPxRef.current;
@@ -251,13 +258,13 @@ export default function ScrollGalleryShowcase({
         });
 
         el.style.zIndex = String(
-          slot >= 0 && slot < VISIBLE_COUNT ? VISIBLE_COUNT - slot : 0
+          slot >= 0 && slot < VISIBLE_COUNT ? VISIBLE_COUNT - slot : 0,
         );
       });
     };
 
-    const crossfadeBackgroundTo = (nextIndex) => {
-      const duration = prefersReducedMotion ? 0 : 0.85;
+    const crossfadeBackgroundTo = (nextIndex, immediate = false) => {
+      const duration = prefersReducedMotion ? 0 : isDesktop ? 0.5 : 0.18;
       const ease = "power2.out";
 
       const next = safeImages[nextIndex];
@@ -268,6 +275,17 @@ export default function ScrollGalleryShowcase({
       const outLayer = showingA ? bgA : bgB;
       const inImg = showingA ? bgImgB : bgImgA;
       const outImg = showingA ? bgImgA : bgImgB;
+
+      if (!decodedImagesRef.current.has(next.src) && !immediate) {
+        bgImgA.src = next.src;
+        bgImgA.alt = next.alt || "";
+        bgImgB.src = next.src;
+        bgImgB.alt = next.alt || "";
+        gsap.set(bgA, { autoAlpha: 1 });
+        gsap.set(bgB, { autoAlpha: 0 });
+        activeBgLayerRef.current = 0;
+        return;
+      }
 
       inImg.src = next.src;
       inImg.alt = next.alt || "";
@@ -295,7 +313,7 @@ export default function ScrollGalleryShowcase({
 
     const setActiveIndexInternal = (
       nextIndex,
-      { immediate, direction } = {}
+      { immediate, direction } = {},
     ) => {
       if (nextIndex === activeIndexRef.current) return;
       const prevIndex = activeIndexRef.current;
@@ -304,7 +322,7 @@ export default function ScrollGalleryShowcase({
         direction ??
         (nextIndex > prevIndex ? 1 : nextIndex < prevIndex ? -1 : 1);
       activeIndexRef.current = nextIndex;
-      crossfadeBackgroundTo(nextIndex);
+      crossfadeBackgroundTo(nextIndex, immediate);
       applyGalleryState(nextIndex, {
         immediate: immediate || jump > 1,
         direction: resolvedDir,
@@ -336,7 +354,8 @@ export default function ScrollGalleryShowcase({
       const nextHeight = getStableViewportHeight();
       const prevViewport = viewportSizeRef.current;
       const widthChanged = Math.abs(nextWidth - prevViewport.width) > 1;
-      const heightChanged = isDesktop && Math.abs(nextHeight - prevViewport.height) > 120;
+      const heightChanged =
+        isDesktop && Math.abs(nextHeight - prevViewport.height) > 120;
 
       if (!widthChanged && !heightChanged) {
         return;
@@ -364,12 +383,14 @@ export default function ScrollGalleryShowcase({
       start: "top top",
       end: () =>
         `+=${Math.round(
-          scrollSteps * viewportHeight * (isDesktop ? SCROLL_STEP_VIEWPORT_RATIO : 0.42)
+          scrollSteps *
+            viewportHeight *
+            (isDesktop ? SCROLL_STEP_VIEWPORT_RATIO : 0.42),
         )}`,
       pin: true,
       refreshPriority: 30,
       anticipatePin: isDesktop ? 1 : 0,
-      scrub: prefersReducedMotion ? false : isDesktop ? 0.65 : 0.18,
+      scrub: prefersReducedMotion ? false : isDesktop ? 0.38 : 0.08,
       invalidateOnRefresh: isDesktop,
       onUpdate: (self) => {
         if (count <= 1) return;
@@ -388,12 +409,12 @@ export default function ScrollGalleryShowcase({
       stRef.current = null;
       gsap.killTweensOf([bgA, bgB, ...itemsForCleanup]);
     };
-  }, [count, prefersReducedMotion, safeImages, title]);
+  }, [count, defaultTitles, prefersReducedMotion, safeImages, title]);
 
   if (count === 0) return null;
 
   const openModal = (triggerEl) => {
-    const n = defaultTitles.length || 1;
+    const n = defaultTitles.length || DEFAULT_TITLES.length || 1;
     if (triggerEl) {
       const rect = triggerEl.getBoundingClientRect();
       setModalOrigin({
@@ -424,7 +445,9 @@ export default function ScrollGalleryShowcase({
             alt={safeImages[0]?.alt || ""}
             className="h-full w-full object-cover will-change-transform"
             draggable="false"
+            loading="eager"
             decoding="async"
+            fetchPriority="high"
           />
         </div>
         <div ref={bgLayerRefB} className="absolute inset-0">
@@ -434,12 +457,13 @@ export default function ScrollGalleryShowcase({
             alt={safeImages[0]?.alt || ""}
             className="h-full w-full object-cover will-change-transform"
             draggable="false"
+            loading="eager"
             decoding="async"
           />
         </div>
       </div>
 
-      <div className="relative z-10 flex h-full w-full items-end px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-10 lg:px-20 md:items-center md:pb-0">
+      <div className="relative z-10 flex h-full w-full items-end px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-10 md:items-center md:pb-0 lg:px-20">
         <div className="absolute bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-1/2 z-20 w-[calc(100%-3rem)] max-w-94 -translate-x-1/2 md:bottom-15 md:left-20 md:w-auto md:max-w-none md:translate-x-0">
           <a
             href={buttonHref || "#"}
@@ -447,9 +471,9 @@ export default function ScrollGalleryShowcase({
               e.preventDefault();
               openModal(e.currentTarget);
             }}
-            className="group inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 font-semibold leading-5 text-black cursor-pointer md:w-auto"
+            className="group inline-flex w-full cursor-pointer items-center justify-center rounded-full bg-white px-6 py-3 font-semibold leading-5 text-black md:w-auto"
           >
-            Посмотреть решения
+            {t("showcase.modalButtonText")}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -476,13 +500,13 @@ export default function ScrollGalleryShowcase({
         </div>
         <div className="grid w-full grid-cols-1 items-end gap-6 pb-24 md:grid-cols-12 md:items-center md:gap-10 md:pb-0">
           <div className="md:col-span-5 md:max-w-130">
-            <p className="text-white leading-5 font-normal">{buttonText}</p>
+            <p className="font-normal leading-5 text-white">{buttonText}</p>
 
             <h2
               ref={titleRef}
               className="pt-4 text-[32px] font-medium leading-[120%] text-white will-change-transform"
             >
-              {DEFAULT_TITLES[0] ?? title}
+              {defaultTitles[0] ?? title ?? DEFAULT_TITLES[0]}
             </h2>
           </div>
 
