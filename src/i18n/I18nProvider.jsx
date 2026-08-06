@@ -20,16 +20,14 @@ function getNestedValue(source, path) {
 }
 
 export function I18nProvider({ children }) {
-  const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+  const [language, setLanguage] = useState(() => {
+    if (typeof window === "undefined") return DEFAULT_LANGUAGE;
 
     const storedLanguage = window.localStorage.getItem(STORAGE_KEY);
-    if (SUPPORTED_LANGUAGES.includes(storedLanguage)) {
-      setLanguage(storedLanguage);
-    }
-  }, []);
+    return SUPPORTED_LANGUAGES.includes(storedLanguage)
+      ? storedLanguage
+      : DEFAULT_LANGUAGE;
+  });
 
   useEffect(() => {
     if (typeof window === "undefined") return;

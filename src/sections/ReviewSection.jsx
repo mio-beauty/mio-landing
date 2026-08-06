@@ -74,11 +74,6 @@ const MOTION_MS = 760;
 const MOTION_SEC = 0.76;
 const PRODUCT_EXIT_MS = 760;
 
-function getStableViewportHeight() {
-  if (typeof window === "undefined") return 0;
-  return Math.round(window.visualViewport?.height || window.innerHeight || 0);
-}
-
 function ReviewInfo({ title, text }) {
   return (
     <div>

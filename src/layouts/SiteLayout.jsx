@@ -150,7 +150,7 @@ export default function SiteLayout() {
     return () => {
       ctx.revert()
     }
-  }, [location.pathname])
+  }, [isLandingPage, location.pathname])
 
   return (
     <div

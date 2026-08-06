@@ -62,7 +62,7 @@ const scrollToContactSection = () => {
   if (typeof document === "undefined") return;
 
   const contactSection =
-    document.getElementById("cantact") || document.getElementById("contacts");
+    document.getElementById("contact") || document.getElementById("contacts");
 
   if (contactSection) {
     contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
