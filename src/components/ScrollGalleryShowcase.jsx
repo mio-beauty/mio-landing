@@ -125,24 +125,8 @@ export default function ScrollGalleryShowcase({
     if (!bgA || !bgB || !bgImgA || !bgImgB || !viewport) return;
 
     if (!isDesktop) {
-      const setMobileHeight = () => {
-        sectionRef.current?.style.setProperty(
-          "--mio-showcase-height",
-          `${getVisibleViewportHeight()}px`,
-        );
-      };
-
-      setMobileHeight();
       setShowScrollHint(false);
-      window.addEventListener("resize", setMobileHeight, { passive: true });
-      window.visualViewport?.addEventListener("resize", setMobileHeight, {
-        passive: true,
-      });
-
-      return () => {
-        window.removeEventListener("resize", setMobileHeight);
-        window.visualViewport?.removeEventListener("resize", setMobileHeight);
-      };
+      return undefined;
     }
 
     const getTitleByIndex = (nextIndex) =>
@@ -587,7 +571,7 @@ export default function ScrollGalleryShowcase({
     <section
       ref={sectionRef}
       className={[
-        "relative h-[var(--mio-showcase-height,100dvh)] min-h-[var(--mio-showcase-height,100svh)] w-full overflow-hidden md:h-screen md:min-h-screen",
+        "relative h-[720px] min-h-[720px] max-h-[720px] w-full overflow-hidden sm:h-[760px] sm:min-h-[760px] sm:max-h-[760px] md:h-screen md:min-h-screen md:max-h-none",
         isMobileTransitioning ? "mio-showcase-mobile-switching" : "",
       ].join(" ")}
       style={{ "--mio-showcase-mobile-transition-ms": `${mobileTransitionMs}ms` }}

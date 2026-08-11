@@ -13,7 +13,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import VoiceReviewPhone from "../components/VoiceReviewPhone";
 import { useI18n } from "../i18n/I18nProvider.jsx";
 import iphoneMockupImg from "../assets/imags/iphone_mockup_1x1.svg";
-import productImg from "../assets/img/cream.png";
+import productImg2 from "../assets/img/pro1.png";
+import productImg3 from "../assets/img/pro2.png";
+import productImg1 from "../assets/img/pro3.png";
+import productImg4 from "../assets/img/pro4.png";
 import phoneShotImg1 from "../assets/img/ph1.jpg";
 import phoneShotImg2 from "../assets/img/ph2.jpg";
 import phoneShotImg3 from "../assets/img/ph3.jpg";
@@ -32,8 +35,10 @@ const REVIEW_STEP_VISUALS = [
     id: "review-1",
     order: "01",
     screenImage: phoneShotImg1,
+    productImage: productImg1,
     voiceReview: {
       audioUrl: voiceReviewAudio1,
+
       customerName: "Munisa",
       city: "Andijon",
     },
@@ -42,6 +47,7 @@ const REVIEW_STEP_VISUALS = [
     id: "review-2",
     order: "02",
     screenImage: phoneShotImg2,
+    productImage: productImg4,
     voiceReview: {
       audioUrl: voiceReviewAudio2,
       customerName: "Malika",
@@ -52,16 +58,20 @@ const REVIEW_STEP_VISUALS = [
     id: "review-3",
     order: "03",
     screenImage: phoneShotImg3,
+    productImage: productImg3,
+
     voiceReview: {
       audioUrl: voiceReviewAudio3,
-      customerName: "Shaxnoza",
-      city: "Namangan",
+
+      customerName: "Munisa",
+      city: "Andijon",
     },
   },
   {
     id: "review-4",
     order: "04",
     screenImage: phoneShotImg4,
+    productImage: productImg2,
     voiceReview: {
       audioUrl: voiceReviewAudio4,
       customerName: "Nilufar",
@@ -400,9 +410,7 @@ export default function ReviewSection() {
             </div>
           </div>
 
-          <div
-            className="relative order-1 z-10 self-start lg:col-start-2 lg:row-start-2 lg:justify-self-center lg:self-start lg:pt-2"
-          >
+          <div className="relative order-1 z-10 self-start lg:col-start-2 lg:row-start-2 lg:justify-self-center lg:self-start lg:pt-2">
             <div className="absolute right-2 top-[68px] z-40 flex items-center rounded-full bg-white/88 px-3 py-2 text-[13px] font-semibold leading-none text-[#101010] shadow-[0_10px_24px_rgba(15,15,15,0.12)] backdrop-blur-md sm:right-4 sm:top-20 lg:hidden">
               <div className="relative h-4 min-w-2.5 overflow-hidden">
                 <div
@@ -462,61 +470,61 @@ export default function ReviewSection() {
               </button>
 
               <div className="flex justify-center">
-              {reviewMode === "text" ? (
-                <div className="relative w-[min(330px,90vw)] sm:w-[min(344px,82vw)] xl:w-[344px]">
-                  <div className="relative mx-auto aspect-[1014/2048] w-full">
-                    <div className="absolute bottom-[1.55%] left-[4.05%] right-[4.05%] top-[1.55%] overflow-hidden rounded-[38px] bg-white">
-                      <div className="absolute inset-0">
-                        <div
-                          className="flex h-full w-full transition-transform ease-[cubic-bezier(.16,1,.3,1)]"
-                          style={{
-                            transform: `translateX(-${activeStep * 100}%)`,
-                            transitionDuration: `${reviewTransitionMs}ms`,
-                          }}
-                        >
-                          {reviewSteps.map((item) => (
-                            <img
-                              key={item.id}
-                              src={item.screenImage}
-                              alt=""
-                              draggable="false"
-                              className="h-full w-full flex-none object-cover object-top"
-                            />
-                          ))}
+                {reviewMode === "text" ? (
+                  <div className="relative w-[min(330px,90vw)] sm:w-[min(344px,82vw)] xl:w-[344px]">
+                    <div className="relative mx-auto aspect-[1014/2048] w-full">
+                      <div className="absolute bottom-[1.55%] left-[4.05%] right-[4.05%] top-[1.55%] overflow-hidden rounded-[38px] bg-white">
+                        <div className="absolute inset-0">
+                          <div
+                            className="flex h-full w-full transition-transform ease-[cubic-bezier(.16,1,.3,1)]"
+                            style={{
+                              transform: `translateX(-${activeStep * 100}%)`,
+                              transitionDuration: `${reviewTransitionMs}ms`,
+                            }}
+                          >
+                            {reviewSteps.map((item) => (
+                              <img
+                                key={item.id}
+                                src={item.screenImage}
+                                alt=""
+                                draggable="false"
+                                className="h-[99.5%] w-full flex-none  object-top object-bottom"
+                              />
+                            ))}
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <img
-                      src={iphoneMockupImg}
-                      alt=""
-                      draggable="false"
-                      className="pointer-events-none absolute inset-0 h-full w-full select-none"
-                    />
-                  </div>
-                </div>
-              ) : (
-                <div className="relative w-[min(330px,90vw)] sm:w-[min(344px,82vw)] xl:w-[344px]">
-                  <div className="relative mx-auto aspect-[1014/2048] w-full">
-                    <div className="absolute bottom-[1.55%] left-[4.05%] right-[4.05%] top-[1.55%] overflow-hidden rounded-[38px] bg-white">
-                      <VoiceReviewPhone
-                        key={step.id}
-                        audioUrl={step.voiceReview.audioUrl}
-                        customerName={step.voiceReview.customerName}
-                        city={step.voiceReview.city}
-                        productImage={productImg}
+                      <img
+                        src={iphoneMockupImg}
+                        alt=""
+                        draggable="false"
+                        className="pointer-events-none absolute inset-0 h-full w-full select-none"
                       />
                     </div>
-
-                    <img
-                      src={iphoneMockupImg}
-                      alt=""
-                      draggable="false"
-                      className="pointer-events-none absolute inset-0 h-full w-full select-none"
-                    />
                   </div>
-                </div>
-              )}
+                ) : (
+                  <div className="relative w-[min(330px,90vw)] sm:w-[min(344px,82vw)] xl:w-[344px]">
+                    <div className="relative mx-auto aspect-[1014/2048] w-full">
+                      <div className="absolute bottom-[1.55%] left-[4.05%] right-[4.05%] top-[1.55%] overflow-hidden rounded-[38px] bg-white">
+                        <VoiceReviewPhone
+                          key={step.id}
+                          audioUrl={step.voiceReview.audioUrl}
+                          customerName={step.voiceReview.customerName}
+                          city={step.voiceReview.city}
+                          productImage={step.productImage}
+                        />
+                      </div>
+
+                      <img
+                        src={iphoneMockupImg}
+                        alt=""
+                        draggable="false"
+                        className="pointer-events-none absolute inset-0 h-full w-full select-none"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
               <button
@@ -556,7 +564,7 @@ export default function ReviewSection() {
                     >
                       <article
                         className={[
-                          "inline-flex rounded-[16px] border border-[#e8e8e8] bg-white py-3 pr-3",
+                          "inline-flex rounded-[16px] border border-[#e8e8e8] bg-white py-3 pr-3 w-full",
                           "transform-gpu transition-all ease-[cubic-bezier(.16,1,.3,1)] will-change-transform",
                           product.phase === "entered"
                             ? "translate-x-0 translate-y-0 scale-100 opacity-100"
@@ -575,7 +583,7 @@ export default function ReviewSection() {
                         <div className="flex items-center gap-2">
                           <div className="grid h-20 w-20 shrink-0 place-items-center overflow-hidden">
                             <img
-                              src={productImg}
+                              src={product.productImage}
                               alt=""
                               draggable="false"
                               loading="lazy"

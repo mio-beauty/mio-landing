@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-const INTRO_DURATION_MS = 1900;
+const INTRO_DURATION_MS = 1650;
 const LETTERS = [
   { value: "M", delay: "0ms" },
   { value: "I", delay: "70ms" },

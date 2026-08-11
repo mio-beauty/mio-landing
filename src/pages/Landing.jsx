@@ -46,7 +46,6 @@ export default function LandingPage() {
       <ProblemSection />
       <CompositionSection />
       <ProductsSection />
-      {/* <ResultSection /> */}
       <ReviewSection />
       <QuestionSection />
       <ConsultationSection />

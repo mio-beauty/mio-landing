@@ -1,8 +1,8 @@
-{
+﻿{
   "common": {
     "languages": {
       "uz": "O'zbek",
-      "ru": "Русский",
+      "ru": "Ð ÑƒÑÑÐºÐ¸Ð¹",
       "en": "English"
     }
   },
@@ -24,11 +24,11 @@
     "stats": [
       { "value": 100000, "suffix": "+", "text": "Customers chose MIO Beauty" },
       { "value": 92, "suffix": "%", "text": "Our customers choose us again" },
-      { "value": 300, "suffix": "+", "text": "orders — delivered on time every day" }
+      { "value": 300, "suffix": "+", "text": "orders â€” delivered on time every day" }
     ],
-    "titleLead": "Skincare and skin care - that's us. MIO turns your dream skin into reality.",
+    "titleLead": "Skincare and skin care - that's us.",
     "titleRest": "MIO - BEAUTY",
-    "subtitleTop": "Not sure where to start?",
+    "subtitleTop": "MIO turns your dream skin into reality.",
     "subtitleBottom": "We will suggest products that fit your skin",
     "cta": "Find matching products"
   },
@@ -114,46 +114,46 @@
       {
         "id": "review-1",
         "order": "01",
-        "tags": ["Acne", "Sensitive skin", "Results in 1 month"],
+        "tags": ["Wrinkles", "Sagging", "Dryness"],
         "concernTitle": "Initial concern",
-        "concernText": "Breakouts, sensitivity and uneven skin tone",
+        "concernText": "The wrinkles on her face became deeper and the skin started sagging",
         "resultTitle": "What she got",
-        "resultText": "Calmer skin and a clear daily routine",
-        "productTitle": "Moisturizing cream",
-        "productDescription": "Deeply nourishes the skin, helps retain moisture and leaves it soft"
+        "resultText": "The sagging tightened and the wrinkles reduced",
+        "productTitle": "Gold cream",
+        "productDescription": "Removes wrinkles and nourishes the face from within"
       },
       {
         "id": "review-2",
         "order": "02",
-        "tags": ["Dryness", "Tightness", "Daily care"],
+        "tags": ["Sensitivity", "Breakouts", "Dryness"],
         "concernTitle": "Initial concern",
-        "concernText": "Dryness after cleansing, tightness and tired-looking skin",
+        "concernText": "Her skin became dry, sensitive, and breakouts increased",
         "resultTitle": "What she got",
-        "resultText": "Comfort after cleansing and softer, calmer skin",
-        "productTitle": "Cleansing foam",
-        "productDescription": "Gently cleanses without overdrying and supports skin comfort"
+        "resultText": "Sensitivity went down, the skin was hydrated, and breakouts cleared",
+        "productTitle": "Nourishing cream",
+        "productDescription": "Nourishes facial skin and helps against inflammation"
       },
       {
         "id": "review-3",
         "order": "03",
-        "tags": ["Redness", "Sensitivity", "Recovery"],
+        "tags": ["Spots", "Dryness", "Fast result"],
         "concernTitle": "Initial concern",
-        "concernText": "Redness, reactive skin and discomfort after skincare",
+        "concernText": "The spots left after childbirth had darkened",
         "resultTitle": "What she got",
-        "resultText": "More even tone and reduced sensitivity",
-        "productTitle": "Soothing serum",
-        "productDescription": "Reduces sensitivity and helps skin recover faster"
+        "resultText": "The spots lightened and the facial skin became hydrated",
+        "productTitle": "Vitamin C",
+        "productDescription": "Quickly and effectively brightens spots and gives the skin a healthy glow"
       },
       {
         "id": "review-4",
         "order": "04",
-        "tags": ["Dull tone", "Unevenness", "Glow"],
+        "tags": ["Acne", "Breakouts", "5-day result"],
         "concernTitle": "Initial concern",
-        "concernText": "Dull complexion, uneven tone and tired-looking skin",
+        "concernText": "Acne and breakouts started appearing more often",
         "resultTitle": "What she got",
-        "resultText": "A fresher look and visually more even skin tone",
-        "productTitle": "Recovery cream",
-        "productDescription": "Supports the skin barrier and helps even out the tone"
+        "resultText": "Acne disappeared without a trace and the number of breakouts decreased",
+        "productTitle": "Anti acne",
+        "productDescription": "Treats acne and clears breakouts"
       }
     ],
     "voice": {
@@ -207,7 +207,7 @@
     "privacy": "Privacy policy",
     "terms": "User agreement",
     "certificates": "Certificates",
-    "copyright": "© 2025 MIOBEAUTY, All rights reserved"
+    "copyright": "Â© 2025 MIOBEAUTY, All rights reserved"
   },
   "modal": {
     "title": "Leave your contact details for a consultation.",
@@ -253,3 +253,4 @@
     ]
   }
 }
+

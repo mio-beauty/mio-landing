@@ -26,9 +26,9 @@
       { "value": 92, "suffix": "%", "text": "Mijozlarimiz yana bizni tanlaydi" },
       { "value": 300, "suffix": "+", "text": "buyurtma — har kuni o'z vaqtida yetkaziladi" }
     ],
-    "titleLead": "Parvarishlash va teri g'amxo'rligi - bu Biz. MIO yuzingiz orzusini xaqiqatga aylantiradi.",
+    "titleLead": "Parvarishlash va teri g'amxo'rligi - bu Biz. ",
     "titleRest": "MIO - GO'ZALLIK",
-    "subtitleTop": "Qayerdan boshlashni bilmayapsizmi?",
+    "subtitleTop": "MIO yuzingiz orzusini xaqiqatga aylantiradi.",
     "subtitleBottom": "Aynan teringizga mos vositalarni tavsiya qilamiz",
     "cta": "Mos mahsulotlarni topish"
   },
@@ -114,46 +114,46 @@
       {
         "id": "review-1",
         "order": "01",
-        "tags": ["Akne", "Sezgir teri", "1 oyda natija"],
+        "tags": ["Ajin", "Osilish", "Quruqlik"],
         "concernTitle": "Murojaat sababi",
-        "concernText": "Toshmalar, sezgirlik va notekis teri toni",
+        "concernText": "Yuzdagi ajinlar chuqurlashib ketgan va osilib qolgan",
         "resultTitle": "Olingan natija",
-        "resultText": "Tinchlangan teri va tushunarli kundalik parvarish",
-        "productTitle": "Namlik beruvchi krem",
-        "productDescription": "Terni chuqur oziqlantiradi, namlikni ushlab turadi va yumshoq qiladi"
+        "resultText": "Osilishlar tortilgan va ajinlar kamaygan",
+        "productTitle": "Gold cream",
+        "productDescription": "Ajinlarni yo'qotib beradi va yuzni ichki tarafidan oziqlantiradi"
       },
       {
         "id": "review-2",
         "order": "02",
-        "tags": ["Quruqlik", "Tortishish", "Kundalik parvarish"],
+        "tags": ["Sezgirlik", "Toshmalar", "Quruqlik"],
         "concernTitle": "Murojaat sababi",
-        "concernText": "Yuvilgandan keyingi quruqlik, tortishish va charchagan teri hissi",
+        "concernText": "Ter quruqlashib sezgir bo'lib qolgan va yalig'lanishlar ko'paygan",
         "resultTitle": "Olingan natija",
-        "resultText": "Tozalashdan keyingi qulaylik va sokinroq, yumshoqroq teri",
-        "productTitle": "Tozalovchi ko'pik",
-        "productDescription": "Nozik tozalaydi, quritmaydi va teri qulayligini saqlaydi"
+        "resultText": "Sezgirlik kamaygan, yuz teri namlangan va toshmalar ketgan",
+        "productTitle": "Oziqlantiruvchi",
+        "productDescription": "Yuz terini oziqlantirib, yalig'lanishlarga qarshi"
       },
       {
         "id": "review-3",
         "order": "03",
-        "tags": ["Qizarish", "Sezgirlik", "Tiklanish"],
+        "tags": ["Dog'lar", "Quruqlik", "tez natija"],
         "concernTitle": "Murojaat sababi",
-        "concernText": "Qizarish, reaktiv teri va parvarishdan keyingi noqulaylik",
+        "concernText": "Tug'ruqdan qolgan do'lar to'qargan",
         "resultTitle": "Olingan natija",
-        "resultText": "Teri toni tekisroq va sezgirlik kamaygan",
-        "productTitle": "Tinchlantiruvchi serum",
-        "productDescription": "Sezgirlikni kamaytiradi va terining tiklanishiga yordam beradi"
+        "resultText": "Dog'lar ochargan va yuz teri namlangan",
+        "productTitle": "Vitamin C",
+        "productDescription": "Dog'larni tez va samarali ochartirib beradi va terga sog'lom yaltirash baxsh etadi"
       },
       {
         "id": "review-4",
         "order": "04",
-        "tags": ["Xira tus", "Notekislik", "Yorqinlik"],
+        "tags": ["Acne", "Toshmalar", "5 kunda natija"],
         "concernTitle": "Murojaat sababi",
-        "concernText": "Xira yuz rangi, notekis tus va charchagan teri hissi",
+        "concernText": "Acnelar va toshmalar ko'paygan",
         "resultTitle": "Olingan natija",
-        "resultText": "Yangi ko'rinish va vizual ravishda tekisroq teri tusi",
-        "productTitle": "Tiklovchi krem",
-        "productDescription": "Himoya to'sig'ini qo'llab-quvvatlaydi va teri tonini tekislaydi"
+        "resultText": "Acnelar izsiz yo'qolgan va soni kamaygan",
+        "productTitle": "Anti acne",
+        "productDescription": "Acnelarni davolaydi va toshmalarni ketkazadi"
       }
     ],
     "voice": {
