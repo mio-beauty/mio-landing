@@ -262,6 +262,7 @@ export default function TrustSection() {
   return (
     <section
       ref={sectionRef}
+      id="results"
       className="relative isolate z-20 overflow-hidden bg-[#FBF9F6] pb-0 pt-8 lg:overflow-visible lg:px-36 lg:py-18"
       onPointerLeave={hidePreview}
     >

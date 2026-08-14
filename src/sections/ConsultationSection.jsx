@@ -61,7 +61,7 @@ export default function ConsultationSection() {
     if (errors.name) setErrors((prev) => ({ ...prev, name: false }));
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const phoneNumbers = form.phone.replace(/\D/g, "");
 
     const newErrors = {
@@ -82,11 +82,21 @@ export default function ConsultationSection() {
 
     setStatus("loading");
 
-    setTimeout(() => {
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!response.ok) throw new Error("Contact form request failed");
+
       setStatus("success");
       setForm({ name: "", phone: "", problem: "" });
       setOpen(false);
-    }, 1000);
+    } catch {
+      setStatus("failed");
+    }
   };
 
   return (
@@ -225,7 +235,7 @@ export default function ConsultationSection() {
         </div>
 
         <div className="flex flex-col items-center lg:px-96">
-          <div className="absolute bottom-0 z-50 flex w-full translate-y-1/2 flex-col items-center gap-3 px-4 lg:px-108">
+          <div className="absolute bottom-6 z-50 flex w-full translate-y-0 flex-col items-center gap-3 px-4 lg:px-108">
             {status === "error" && (
               <div className="flex flex-col items-center justify-between gap-2 rounded-xl border border-[#757575] bg-[#000000D9] px-3 py-2.5 lg:flex-row">
                 <div className="flex items-center gap-2 lg:items-start">

@@ -185,7 +185,15 @@
     "phoneLabel": "Your phone number",
     "phonePlaceholder": "Your phone number",
     "problemPlaceholder": "Acne, pigmentation, dryness, etc.",
-    "options": ["Acne", "Pigmentation", "Dryness"],
+    "options": [
+      "Acne & Breakouts",
+      "Pigmentation & Post-Acne",
+      "Blackheads & Enlarged Pores",
+      "Dryness & Dehydration",
+      "Dull & Uneven Skin Tone",
+      "Sensitive Skin",
+      "Wrinkles & Loss of Firmness"
+    ],
     "cta": "Get consultation",
     "helper": "Consultation is free. We are available 24/7",
     "notifications": {
@@ -198,7 +206,7 @@
   },
   "footer": {
     "infoTitle": "Info",
-    "infoLinks": ["Results", "Certificates", "Ingredients", "Reviews"],
+    "infoLinks": ["Results", "Ingredients", "Reviews"],
     "contactsTitle": "Contacts",
     "contactHeading": "Contact us for more information",
     "phoneLabel": "Phone",
@@ -207,7 +215,7 @@
     "privacy": "Privacy policy",
     "terms": "User agreement",
     "certificates": "Certificates",
-    "copyright": "Â© 2025 MIOBEAUTY, All rights reserved"
+    "copyright": "Â© 2026 MIOBEAUTY, All rights reserved"
   },
   "modal": {
     "title": "Leave your contact details for a consultation.",
@@ -216,36 +224,39 @@
     "phone": "Phone number",
     "phonePlaceholder": "+998",
     "cta": "Get consultation",
+    "validationError": "Enter your name and a valid phone number",
+    "submitError": "Message was not sent. Please try again",
+    "success": "Your message has been sent",
     "close": "Close"
   },
   "about": {
     "steps": [
       {
-        "year": "2021",
+        "year": "2022",
         "title": "MIO started with a small but very clear idea.",
         "titleLines": ["MIO started", "with a small", "but clear idea."],
         "description": "At the first stage we studied skin concerns and built care systems around real customer needs. The focus was not only on packaging, but on visible results."
       },
       {
-        "year": "2022",
+        "year": "2023",
         "title": "The brand launched, and the first customers quickly noticed the results.",
         "titleLines": ["The brand launched,", "and the first", "customers quickly", "noticed the results."],
         "description": "The products were adapted for everyday use, and consultation became an important part of the service. A loyal audience started forming around MIO."
       },
       {
-        "year": "2023",
+        "year": "2024",
         "title": "The range expanded and the results became even more systematic.",
         "titleLines": ["The range expanded,", "and the results", "became even", "more systematic."],
         "description": "Separate solutions appeared for different skin needs. Customers began choosing us not only for the products, but also for the right care direction."
       },
       {
-        "year": "2024",
+        "year": "2025",
         "title": "Quality, service and trust came together in one place.",
         "titleLines": ["Quality, service", "and trust", "came together", "in one place."],
         "description": "We raised our quality standards and made the user journey simpler. At every step, we aimed to make the process clear and convenient."
       },
       {
-        "year": "2025",
+        "year": "2026",
         "title": "Today MIO makes skincare simple, aesthetic and effective.",
         "titleLines": ["Today MIO", "makes skincare", "simple, aesthetic", "and effective."],
         "description": "Our goal has not changed: helping each person find the right path for their skin. The brand is growing, but the person and their results are still at the center."
@@ -253,4 +264,3 @@
     ]
   }
 }
-

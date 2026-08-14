@@ -10,6 +10,7 @@ export default function Footer() {
   const [focused, setFocused] = useState(false);
   const [error, setError] = useState(false);
   const infoLinks = get("footer.infoLinks", []);
+  const infoLinkTargets = ["#results", "#composition", "#reviews"];
 
   const formatPhone = (value) => {
     let numbers = value.replace(/\D/g, "");
@@ -53,6 +54,11 @@ export default function Footer() {
 
     setPhone("");
     setError(false);
+
+    const telegramText = encodeURIComponent(
+      `Assalomu alaykum, konsultatsiya uchun raqamim: ${phone}`,
+    );
+    window.open(`https://t.me/miobeauty?text=${telegramText}`, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -70,27 +76,28 @@ export default function Footer() {
           <div className="flex gap-12 py-7 pb-0 text-sm lg:order-2 lg:text-2xl">
             <ul className="flex flex-col gap-3">
               <li className="font-semibold">{t("footer.infoTitle")}</li>
-              {infoLinks.map((item) => (
-                <li key={item}>{item}</li>
+              {infoLinks.map((item, index) => (
+                <li key={item}>
+                  <a href={infoLinkTargets[index] ?? "#"}>{item}</a>
+                </li>
               ))}
             </ul>
 
             <ul className="flex flex-col gap-3 text-sm">
               <li className="font-semibold">{t("footer.contactsTitle")}</li>
               <li className="flex">
-                <a href="#">Telegram</a>
+                <a href="https://t.me/miobeauty" target="_blank" rel="noreferrer">Telegram</a>
                 <ArrowUpRight size={16} />
               </li>
               <li className="flex">
-                <a href="#">Instagram</a>
+                <a href="https://www.instagram.com/miobeautyuz/" target="_blank" rel="noreferrer">Instagram</a>
                 <ArrowUpRight size={16} />
               </li>
               <li className="flex">
-                <a href="#">Facebook</a>
+                <a href="https://www.facebook.com/miobeautyuz/" target="_blank" rel="noreferrer">Facebook</a>
                 <ArrowUpRight size={16} />
               </li>
               <li>+998 90 001 04 44</li>
-              <li>support@miobeauty.uz</li>
             </ul>
           </div>
 
@@ -138,20 +145,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="items-center justify-between px-4 pb-10 text-lg text-[#757575] lg:flex lg:px-0 lg:pt-8">
-          <div className="flex flex-col gap-3 py-2.5 text-sm font-medium lg:order-2 lg:flex-row lg:gap-[18px]">
-            <a href="#" className="w-fit border-b border-[#757575]">
-              {t("footer.privacy")}
-            </a>
-            <a href="#" className="w-fit border-b border-[#757575]">
-              {t("footer.terms")}
-            </a>
-            <a href="#" className="w-fit border-b border-[#757575]">
-              {t("footer.certificates")}
-            </a>
-          </div>
-
-          <p className="mt-4 text-sm lg:order-1">{t("footer.copyright")}</p>
+        <div className="px-4 pb-10 pt-8 text-lg text-[#757575] lg:px-0">
+          <p className="text-sm">{t("footer.copyright")}</p>
         </div>
       </div>
     </section>

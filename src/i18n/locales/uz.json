@@ -185,7 +185,15 @@
     "phoneLabel": "Telefon raqamingiz",
     "phonePlaceholder": "Telefon raqamingiz",
     "problemPlaceholder": "Akne, pigmentatsiya, quruqlik va hokazo",
-    "options": ["Akne", "Pigmentatsiya", "Quruqlik"],
+    "options": [
+      "Husnbuzar va toshmalar",
+      "Pigment dog‘lari va postakne",
+      "Qora nuqtalar va kengaygan poralar",
+      "Quruqlik va suvsizlanish",
+      "Xira va notekis teri rangi",
+      "Sezgir teri",
+      "Ajinlar va teri tarangligining pasayishi"
+    ],
     "cta": "Konsultatsiya olish",
     "helper": "Konsultatsiya bepul. 24/7 aloqadamiz",
     "notifications": {
@@ -198,7 +206,7 @@
   },
   "footer": {
     "infoTitle": "Ma'lumot",
-    "infoLinks": ["Natijalar", "Sertifikatlar", "Tarkib", "Sharhlar"],
+    "infoLinks": ["Natijalar", "Tarkib", "Sharhlar"],
     "contactsTitle": "Kontaktlar",
     "contactHeading": "Qo'shimcha ma'lumot olish uchun biz bilan bog'laning",
     "phoneLabel": "Telefon",
@@ -207,7 +215,7 @@
     "privacy": "Maxfiylik siyosati",
     "terms": "Foydalanuvchi kelishuvi",
     "certificates": "Sertifikatlar",
-    "copyright": "© 2025 MIOBEAUTY, Barcha huquqlar himoyalangan"
+    "copyright": "© 2026 MIOBEAUTY, Barcha huquqlar himoyalangan"
   },
   "modal": {
     "title": "Bepul konsultatsiya uchun raqamingizni qoldiring.",
@@ -216,36 +224,39 @@
     "phone": "Telefon raqami",
     "phonePlaceholder": "+998",
     "cta": "Konsultatsiya olish",
+    "validationError": "Ism va to‘g‘ri telefon raqamini kiriting",
+    "submitError": "Xabar yuborilmadi. Iltimos, qayta urinib ko‘ring",
+    "success": "Xabaringiz yuborildi",
     "close": "Yopish"
   },
   "about": {
     "steps": [
       {
-        "year": "2021",
+        "year": "2022",
         "title": "MIO yo'li kichik, lekin aniq g'oya bilan boshlandi.",
         "titleLines": ["MIO yo'li kichik,", "lekin aniq g'oya", "bilan boshlandi."],
         "description": "Birinchi bosqichda biz teri muammolarini o'rganib, mijozlarga mos parvarish tizimini shakllantirdik. E'tibor faqat chiroyli qadoqqa emas, real natijaga qaratildi."
       },
       {
-        "year": "2022",
+        "year": "2023",
         "title": "Brend ishga tushdi va ilk mijozlar natijani darhol sezishni boshladi.",
         "titleLines": ["Brend ishga tushdi", "va ilk mijozlar", "natijani darhol", "sezishni boshladi."],
         "description": "Mahsulotlar kundalik foydalanishga moslandi, maslahat berish jarayoni esa xizmatning muhim qismiga aylandi. Shu yilda MIO atrofida ishonchli auditoriya shakllandi."
       },
       {
-        "year": "2023",
+        "year": "2024",
         "title": "Assortiment kengaydi, natijalar esa yanada tizimli bo'ldi.",
         "titleLines": ["Assortiment kengaydi,", "natijalar esa yanada", "tizimli bo'ldi."],
         "description": "Turli teri ehtiyojlari uchun alohida yechimlar paydo bo'ldi. Mijozlar bizni faqat mahsulot uchun emas, to'g'ri yo'nalish beradigan yondashuv uchun ham tanlay boshlashdi."
       },
       {
-        "year": "2024",
+        "year": "2025",
         "title": "Sifat, servis va ishonch bir nuqtada birlashdi.",
         "titleLines": ["Sifat, servis va", "ishonch bir", "nuqtada birlashdi."],
         "description": "Mahsulot sifati bo'yicha talablar kuchaytirildi, foydalanuvchi tajribasi esa yanada soddalashtirildi. Har bir bosqichda mijozga tushunarli va qulay jarayon yaratildi."
       },
       {
-        "year": "2025",
+        "year": "2026",
         "title": "Bugun MIO parvarishni oson, estetik va natijador qiladi.",
         "titleLines": ["Bugun MIO", "parvarishni oson,", "estetik va", "natijador qiladi."],
         "description": "Bizning maqsad o'zgarmadi: har bir odamga o'z terisi uchun to'g'ri yo'lni topishga yordam berish. Brend o'smoqda, lekin markazda hamon odam va uning natijasi turibdi."

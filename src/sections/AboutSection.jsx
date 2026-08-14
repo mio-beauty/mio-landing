@@ -11,7 +11,7 @@ import spfImage from "../assets/img/spf.png";
 
 const ABOUT_STEPS = [
   {
-    year: "2021",
+    year: "2022",
     title: "MIO yo'li kichik, lekin aniq g'oya bilan boshlandi.",
     titleLines: ["MIO yo'li kichik,", "lekin aniq g'oya", "bilan boshlandi."],
     description:
@@ -20,7 +20,7 @@ const ABOUT_STEPS = [
     secondaryImage: creamImage,
   },
   {
-    year: "2022",
+    year: "2023",
     title:
       "Brend ishga tushdi va ilk mijozlar natijani darhol sezishni boshladi.",
     titleLines: [
@@ -35,7 +35,7 @@ const ABOUT_STEPS = [
     secondaryImage: spfImage,
   },
   {
-    year: "2023",
+    year: "2024",
     title: "Assortiment kengaydi, natijalar esa yanada tizimli bo'ldi.",
     titleLines: [
       "Assortiment kengaydi,",
@@ -48,7 +48,7 @@ const ABOUT_STEPS = [
     secondaryImage: creamImage,
   },
   {
-    year: "2024",
+    year: "2025",
     title: "Sifat, servis va ishonch bir nuqtada birlashdi.",
     titleLines: ["Sifat, servis va", "ishonch bir", "nuqtada birlashdi."],
     description:
@@ -57,7 +57,7 @@ const ABOUT_STEPS = [
     secondaryImage: consultationImage,
   },
   {
-    year: "2025",
+    year: "2026",
     title: "Bugun MIO parvarishni oson, estetik va natijador qiladi.",
     titleLines: [
       "Bugun MIO",
@@ -109,23 +109,18 @@ export default function AboutSection() {
         return;
       }
 
-      const cards = mobileCardRefs.current.filter(Boolean);
-      if (!cards.length) return;
+      if (!mobileSectionRef.current) return;
 
-      const viewportCenter = window.innerHeight * 0.42;
-      let nextIndex = 0;
-      let smallestDistance = Number.POSITIVE_INFINITY;
-
-      cards.forEach((card, index) => {
-        const rect = card.getBoundingClientRect();
-        const cardCenter = rect.top + rect.height / 2;
-        const distance = Math.abs(cardCenter - viewportCenter);
-
-        if (distance < smallestDistance) {
-          smallestDistance = distance;
-          nextIndex = index;
-        }
-      });
+      const rect = mobileSectionRef.current.getBoundingClientRect();
+      const totalScrollable = Math.max(
+        mobileSectionRef.current.offsetHeight - window.innerHeight,
+        1,
+      );
+      const progress = clamp(-rect.top / totalScrollable, 0, 1);
+      const nextIndex = Math.min(
+        ABOUT_STEPS.length - 1,
+        Math.round(progress * (ABOUT_STEPS.length - 1)),
+      );
 
       setActiveIndex((current) =>
         current === nextIndex ? current : nextIndex,
@@ -229,8 +224,6 @@ export default function AboutSection() {
       </span>
     ));
 
-  const mobileYearsOffset = activeIndex * 56;
-
   return (
     <section id="about" className="scroll-mt-28 bg-white pt-30">
       <div
@@ -297,44 +290,33 @@ export default function AboutSection() {
 
       <div
         ref={mobileSectionRef}
-        className="hidden relative overflow-hidden bg-[#FCF7F1] px-4 py-8 lg:hidden"
+        className="relative bg-white px-4 pb-8 pt-1 lg:hidden"
       >
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top,rgba(233,215,200,0.7),transparent_72%)]" />
-        <div className="relative grid grid-cols-[72px_minmax(0,1fr)] gap-4">
-          <div className="sticky top-5 h-fit">
-            <div className="relative h-[180px] overflow-hidden rounded-[24px] border border-[#E9D7C8] bg-white/88 py-5 shadow-[0_12px_32px_rgba(84,56,34,0.08)] backdrop-blur-sm">
-              <div className="absolute bottom-5 left-1/2 top-5 w-px -translate-x-1/2 bg-[#E8D8CB]" />
-              <div className="absolute left-1/2 top-1/2 z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FE946E] shadow-[0_8px_22px_rgba(254,148,110,0.45)]" />
-
-              <div
-                className="relative transition-transform duration-500 ease-out"
-                style={{
-                  transform: `translateY(calc(90px - 22px - ${mobileYearsOffset}px))`,
-                }}
-              >
-                {ABOUT_STEPS.map((step, index) => {
-                  const isActive = index === activeIndex;
-                  const isPassed = index < activeIndex;
-
-                  return (
-                    <div
-                      key={step.year}
-                      className={[
-                        "flex h-14 items-center justify-center text-center font-semibold tracking-[-0.04em] transition-all duration-500",
-                        isActive
-                          ? "scale-100 text-[24px] text-[#111111]"
-                          : isPassed
-                            ? "scale-90 text-[16px] text-[#8E857E]"
-                            : "scale-90 text-[16px] text-[#B8AEA6]",
-                      ].join(" ")}
-                      style={{ fontVariantNumeric: "tabular-nums" }}
-                    >
-                      {step.year}
-                    </div>
-                  );
-                })}
-              </div>
+        <div className="relative">
+          <div className="sticky top-0 z-30 mb-8 bg-white py-3">
+            <h2 className="mb-0 pb-[15px] text-[32px] leading-none font-semibold tracking-[-0.06em] text-[#111111]">Bizning yo'l</h2>
+            <div className="relative flex items-center justify-between px-1">
+              <div className="absolute inset-x-4 top-1/2 h-px -translate-y-1/2 bg-[#E8D8CB]" />
+              {ABOUT_STEPS.map((step, index) => <div key={step.year} className={`relative z-10 flex h-8 min-w-8 items-center justify-center rounded-full px-1 text-[11px] font-semibold tracking-[-0.04em] transition-all duration-500 ${index === activeIndex ? "scale-110 bg-[#FE946E] text-[#111111] shadow-[0_5px_14px_rgba(254,148,110,0.28)]" : index < activeIndex ? "bg-[#E8D8CB] text-[#8E857E]" : "bg-[#F7EEE7] text-[#B8AEA6]"}`} style={{ fontVariantNumeric: "tabular-nums" }}>{step.year}</div>)}
             </div>
+          </div>
+
+          <div className="sticky top-[132px] z-10 mb-8">
+            <article
+              key={activeStep.year}
+              className="about-mobile-reveal relative min-h-[680px] overflow-hidden rounded-[24px] bg-white px-1 pb-8 pt-1"
+            >
+              <div className="relative h-[370px] overflow-hidden rounded-[22px] bg-[#F3E5D9]">
+                <img src={activeStep.primaryImage} alt={activeStep.title} className="absolute inset-0 h-full w-full object-cover" />
+                <div className="absolute bottom-4 left-4 h-[148px] w-[124px] overflow-hidden rounded-[18px] border-4 border-white bg-[#FAEEE4] shadow-[0_10px_24px_rgba(53,36,24,0.16)]">
+                  <img src={activeStep.secondaryImage} alt={`${activeStep.year} detail`} className="h-full w-full object-cover" />
+                </div>
+              </div>
+              <div className="mt-9 px-1">
+                <h3 className="text-[27px] leading-[1.1] font-semibold tracking-[-0.045em] text-[#111111]">{activeStep.title}</h3>
+                <p className="mt-7 max-w-[34rem] text-[15px] leading-7 text-[#4A413B]">{activeStep.description}</p>
+              </div>
+            </article>
           </div>
 
           <div className="space-y-5">
@@ -345,7 +327,7 @@ export default function AboutSection() {
                   mobileCardRefs.current[index] = node;
                 }}
                 className={[
-                  "relative overflow-hidden rounded-[30px] border bg-white px-4 pb-5 pt-4 transition-all duration-300",
+                  "relative h-[54vh] min-h-[300px] overflow-hidden rounded-[30px] border bg-white px-4 pb-5 pt-4 opacity-0",
                   index === activeIndex
                     ? "border-[#D8B7A0] shadow-[0_18px_42px_rgba(84,56,34,0.12)]"
                     : "border-[#E9D7C8] shadow-[0_12px_30px_rgba(84,56,34,0.07)]",

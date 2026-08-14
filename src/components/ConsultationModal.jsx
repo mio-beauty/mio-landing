@@ -1,6 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useI18n } from "../i18n/I18nProvider.jsx";
+import checkFilledIconImg from "../assets/img/ic_check_filled.svg";
+import closeFilledIconImg from "../assets/img/ic_close_filled.svg";
 
 export default function ConsultationModal({
   isOpen,
@@ -10,7 +12,9 @@ export default function ConsultationModal({
   originRect = null,
 }) {
   const { t } = useI18n();
+  const [name, setName] = useState("");
   const [phone, setPhone] = useState("+998 ");
+  const [submitStatus, setSubmitStatus] = useState("idle");
   const firstFieldRef = useRef(null);
   const phoneFieldRef = useRef(null);
   const backdropRef = useRef(null);
@@ -39,6 +43,7 @@ export default function ConsultationModal({
 
   const handlePhoneChange = (e) => {
     setPhone(formatPhone(e.target.value));
+    if (submitStatus === "error") setSubmitStatus("idle");
   };
 
   const handlePhoneFocus = () => {
@@ -48,12 +53,42 @@ export default function ConsultationModal({
     });
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!name.trim() || phone.replace(/\D/g, "").length < 12) {
+      setSubmitStatus("error");
+      return;
+    }
+
+    setSubmitStatus("loading");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone }),
+      });
+
+      if (!response.ok) throw new Error("Contact form request failed");
+
+      setName("");
+      setPhone("+998 ");
+      setSubmitStatus("success");
+    } catch {
+      setSubmitStatus("failed");
+    }
+  };
+
   useEffect(() => {
     if (typeof document === "undefined") return undefined;
     if (!isOpen) return undefined;
 
     const previousOverflow = document.body.style.overflow;
+    const previousOverscrollBehavior = document.body.style.overscrollBehavior;
     document.body.style.overflow = "hidden";
+    document.body.style.overscrollBehavior = "none";
+    globalThis.__mioLenis?.stop?.();
 
     const onKeyDown = (e) => {
       if (e.key === "Escape") onClose?.();
@@ -68,8 +103,22 @@ export default function ConsultationModal({
       window.clearTimeout(timeoutId);
       window.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = previousOverflow;
+      document.body.style.overscrollBehavior = previousOverscrollBehavior;
+      globalThis.__mioLenis?.start?.();
     };
   }, [isOpen, onClose]);
+
+  useEffect(() => {
+    if (submitStatus !== "success" && submitStatus !== "failed") {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setSubmitStatus("idle");
+    }, 3000);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [submitStatus]);
 
   const viewportWidth = typeof window !== "undefined" ? window.innerWidth : 0;
   const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 0;
@@ -329,7 +378,8 @@ export default function ConsultationModal({
   }, [closedScale, isOpen, prefersReducedMotion, translateX, translateY]);
 
   return (
-    <div
+    <>
+      <div
       ref={backdropRef}
       aria-hidden={!isOpen}
       className={[
@@ -403,7 +453,7 @@ export default function ConsultationModal({
                 {t("modal.title")}
               </h3>
 
-              <form ref={formRef} className="flex w-full flex-col gap-6">
+              <form ref={formRef} className="flex w-full flex-col gap-6" onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-4">
                   <label className="block">
                     <span className="text-sm font-medium text-black">
@@ -413,6 +463,11 @@ export default function ConsultationModal({
                       ref={firstFieldRef}
                       type="text"
                       placeholder={t("modal.namePlaceholder")}
+                      value={name}
+                      onChange={(event) => {
+                        setName(event.target.value);
+                        if (submitStatus === "error") setSubmitStatus("idle");
+                      }}
                       className="mt-2 h-9 w-full rounded-lg border border-[#CCCCCC] bg-white/86 px-4 text-black outline-none focus:border-black/30"
                     />
                   </label>
@@ -434,16 +489,44 @@ export default function ConsultationModal({
                 </div>
 
                 <button
-                  type="button"
-                  className="inline-flex h-11 w-full cursor-pointer items-center justify-center rounded-lg bg-[#1D1B19] px-6 font-normal text-white"
+                  type="submit"
+                  disabled={submitStatus === "loading"}
+                  className="inline-flex h-11 w-full cursor-pointer items-center justify-center rounded-lg bg-[#1D1B19] px-6 font-normal text-white disabled:cursor-wait disabled:opacity-70"
                 >
-                  {t("modal.cta")}
+                  {submitStatus === "loading" ? "..." : t("modal.cta")}
                 </button>
+                {submitStatus === "error" && (
+                  <p className="-mt-3 text-sm text-red-600">{t("modal.validationError")}</p>
+                )}
               </form>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      </div>
+
+      {(submitStatus === "success" || submitStatus === "failed") && (
+        <div
+          role="status"
+          className="fixed bottom-6 left-1/2 z-[100] flex w-[calc(100%-32px)] max-w-xl -translate-x-1/2 items-center gap-2 rounded-xl border border-[#757575] bg-[#000000D9] px-3 py-2.5 shadow-[0_18px_48px_rgba(18,12,8,0.2)] backdrop-blur-md"
+        >
+          <img
+            src={
+              submitStatus === "success"
+                ? checkFilledIconImg
+                : closeFilledIconImg
+            }
+            alt=""
+          />
+          <p className="text-[16px] text-white">
+            {t(
+              submitStatus === "success"
+                ? "modal.success"
+                : "modal.submitError",
+            )}
+          </p>
+        </div>
+      )}
+    </>
   );
 }
