@@ -7,3 +7,9 @@ body,
   background: #1D1D1E;
 }
 
+.product-card-shell {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 430px;
+}
+
+

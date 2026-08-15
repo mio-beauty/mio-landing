@@ -1,61 +1,11 @@
-import { useMemo } from "react";
+import { useMemo, useRef, useState } from "react";
 import SectionShell from "./SectionShell.jsx";
 import { useI18n } from "../i18n/I18nProvider.jsx";
-import p1 from "../assets/img/p1.jpg";
-import p2 from "../assets/img/p2.jpg";
-import p3 from "../assets/img/p3.jpg";
-import p4 from "../assets/img/p4.jpg";
-import p5 from "../assets/img/p5.jpg";
-import p6 from "../assets/img/p6.jpg";
-import p7 from "../assets/img/p7.jpg";
+import products from "../data/products.js";
 
-const featuredProductVisuals = [
-  {
-    id: 1,
-    image: p2,
-    imageClassName: "object-cover object-center scale-[1.03]",
-    accentClassName:
-      "from-[#FFF2EC] via-[#FFE4DA] to-[#FFD0C1] before:bg-[radial-gradient(circle_at_center,_rgba(255,132,104,0.82),_rgba(255,132,104,0)_68%)]",
-    buttonClassName:
-      "bg-[#1D1D1D] text-white md:hover:bg-[#2B2B2B] focus-visible:ring-[#1D1D1D]/20",
-  },
-  {
-    id: 2,
-    image: p1,
-    imageClassName: "object-cover object-center scale-[1.02]",
-    accentClassName:
-      "from-[#F4F4F3] via-[#EEF2F6] to-[#DFE8F3] before:bg-[radial-gradient(circle_at_center,_rgba(255,173,120,0.56),_rgba(255,173,120,0)_70%)]",
-    buttonClassName:
-      "bg-[#1D1D1D] text-white md:hover:bg-[#2B2B2B] focus-visible:ring-[#1D1D1D]/20",
-  },
-];
-
-const productCardVisuals = [
-  {
-    id: 1,
-    image: p3,
-    imageClassName: "object-cover object-center",
-  },
-  {
-    id: 2,
-    image: p4,
-    imageClassName: "object-cover object-center",
-  },
-  {
-    id: 3,
-    image: p5,
-    imageClassName: "object-cover object-center",
-  },
-  {
-    id: 4,
-    image: p6,
-    imageClassName: "object-cover object-center",
-  },
-  {
-    id: 5,
-    image: p7,
-    imageClassName: "object-cover object-center",
-  },
+const featuredVisuals = [
+  "from-[#FFF2EC] via-[#FFE4DA] to-[#FFD0C1]",
+  "from-[#F4F4F3] via-[#EEF2F6] to-[#DFE8F3]",
 ];
 
 const scrollToContactSection = () => {
@@ -126,16 +76,18 @@ function ProductCard({ title, description, image, imageClassName, buyLabel }) {
         <img
           src={image}
           alt={title}
+          loading="lazy"
+          decoding="async"
           className={`aspect-[0.93] w-full rounded-4 transition-transform duration-500 md:group-hover:scale-[1.04] ${imageClassName}`}
         />
       </div>
 
       <div className="flex flex-1 flex-col pt-3 sm:pt-4">
-        <div>
-          <h3 className="text-[18px] leading-[1.15] font-medium text-[#111111] sm:text-[20px]">
+        <div className="h-[88px] sm:h-[82px]">
+          <h3 className="line-clamp-2 text-[18px] leading-[1.15] font-medium text-[#111111] sm:text-[20px]">
             {title}
           </h3>
-          <p className="pt-2 text-[13px] leading-[1.35] text-[#8A8A8D] sm:text-[14px]">
+          <p className="line-clamp-2 pt-2 text-[13px] leading-[1.35] text-[#8A8A8D] sm:text-[14px]">
             {description}
           </p>
         </div>
@@ -154,26 +106,46 @@ function ProductCard({ title, description, image, imageClassName, buyLabel }) {
 }
 
 export default function ProductsSection() {
-  const { get, t } = useI18n();
-  const featuredLocaleProducts = get("products.featured", []);
-  const productLocaleCards = get("products.cards", []);
+  const { language, t } = useI18n();
+  const [showAllProducts, setShowAllProducts] = useState(false);
+  const productScrollerRef = useRef(null);
+
+  const scrollProducts = (direction) => {
+    productScrollerRef.current?.scrollBy({
+      left: direction * Math.max(productScrollerRef.current.clientWidth * 0.8, 280),
+      behavior: "smooth",
+    });
+  };
+  const localizedProducts = useMemo(
+    () => products.map((product) => ({
+      id: product.id,
+      image: product.image,
+      title: product[language]?.[0] ?? product.en[0],
+      description: product[language]?.[1] ?? product.en[1],
+    })),
+    [language],
+  );
   const featuredProducts = useMemo(
     () =>
-      featuredLocaleProducts.map((product, index) => ({
+      localizedProducts.slice(0, 2).map((product, index) => ({
         ...product,
-        ...featuredProductVisuals[index],
+        imageClassName: "object-cover object-center scale-[1.03]",
+        accentClassName: `${featuredVisuals[index]} before:bg-[radial-gradient(circle_at_center,_rgba(255,132,104,0.5),_rgba(255,132,104,0)_68%)]`,
+        buttonClassName:
+          "bg-[#1D1D1D] text-white md:hover:bg-[#2B2B2B] focus-visible:ring-[#1D1D1D]/20",
+        subtitle: index === 0 ? "Bestseller" : "MIO Beauty",
         buyNowLabel: t("products.buyNow"),
       })),
-    [featuredLocaleProducts, t],
+    [localizedProducts, t],
   );
   const productCards = useMemo(
     () =>
-      productLocaleCards.map((product, index) => ({
+      localizedProducts.slice(2).map((product) => ({
         ...product,
-        ...productCardVisuals[index],
+        imageClassName: "object-cover object-center",
         buyLabel: t("products.buy"),
       })),
-    [productLocaleCards, t],
+    [localizedProducts, t],
   );
 
   return (
@@ -187,25 +159,66 @@ export default function ProductsSection() {
             ))}
           </div>
 
-          <div className="bg-white py-10 pl-4 pr-0 sm:px-5 sm:py-12 lg:rounded-[32px] lg:px-4 lg:py-15">
-            <div className="mx-auto pb-6 text-left sm:text-center">
+          <div
+            className={`bg-white py-10 sm:px-5 sm:py-12 lg:rounded-[32px] lg:px-4 lg:py-15 ${showAllProducts ? "px-4" : "pl-4 pr-0"}`}
+          >
+            <div className="mx-auto flex items-end justify-between gap-4 pb-6 text-left sm:text-center">
               <h2 className="text-[30px] leading-[1.02] font-medium text-[#111111] sm:text-[42px] sm:leading-[1.05] lg:text-[50px]">
                 {t("products.allTitle")}
               </h2>
+              {!showAllProducts && (
+                <div className="hidden shrink-0 gap-2 lg:flex">
+                  <button
+                    type="button"
+                    aria-label="Previous products"
+                    onClick={() => scrollProducts(-1)}
+                    className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-[#1D1D1D] text-xl text-[#1D1D1D] transition-colors hover:bg-[#1D1D1D] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1D1D1D]/20"
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Next products"
+                    onClick={() => scrollProducts(1)}
+                    className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-[#1D1D1D] text-xl text-[#1D1D1D] transition-colors hover:bg-[#1D1D1D] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1D1D1D]/20"
+                  >
+                    →
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="mt-6 sm:mt-8">
-              <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain pb-2 pr-0 scrollbar-hide sm:grid sm:snap-none sm:grid-cols-2 sm:gap-x-3 sm:gap-y-6 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3 xl:grid-cols-5">
+              <div
+                ref={productScrollerRef}
+                className={showAllProducts
+                  ? "grid grid-cols-2 gap-x-3 gap-y-6 lg:grid-cols-3 xl:grid-cols-5"
+                  : "flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain pb-2 pr-0 scrollbar-hide"}
+              >
                 {productCards.map((product) => (
                   <div
                     key={product.id}
-                    className="w-[calc(100vw-60px)] max-w-[280px] shrink-0 snap-start first:pl-0 last:pr-4 sm:w-auto sm:max-w-none sm:shrink sm:last:pr-0"
+                    className={showAllProducts
+                      ? "h-full min-w-0"
+                      : "product-card-shell h-full w-[280px] max-w-[calc(100vw-60px)] shrink-0 snap-start last:pr-4"}
                   >
                     <ProductCard {...product} />
                   </div>
                 ))}
               </div>
             </div>
+
+            {!showAllProducts && (
+              <div className="mt-8 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setShowAllProducts(true)}
+                  className="cursor-pointer rounded-full bg-[#1D1D1D] px-7 py-3 text-[13px] font-medium text-white transition-colors duration-200 hover:bg-[#2B2B2B] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1D1D1D]/20"
+                >
+                  {t("products.allTitle")}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

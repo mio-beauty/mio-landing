@@ -5,7 +5,6 @@ import { getAboutTimelineState } from "../components/aboutTimelineState.js";
 import consultationImage from "../assets/img/Consultation.png";
 import consultationWideImage from "../assets/img/Consultation2.png";
 import certificateImage from "../assets/img/certifikat.png";
-import creamImage from "../assets/img/cream.png";
 import heroImage from "../assets/img/banner.jpg";
 import spfImage from "../assets/img/spf.png";
 
@@ -17,7 +16,7 @@ const ABOUT_STEPS = [
     description:
       "Birinchi bosqichda biz teri muammolarini o'rganib, mijozlarga mos parvarish tizimini shakllantirdik. E'tibor faqat chiroyli qadoqqa emas, real natijaga qaratildi.",
     primaryImage: consultationImage,
-    secondaryImage: creamImage,
+    secondaryImage: consultationImage,
   },
   {
     year: "2023",
@@ -45,7 +44,7 @@ const ABOUT_STEPS = [
     description:
       "Turli teri ehtiyojlari uchun alohida yechimlar paydo bo'ldi. Mijozlar bizni faqat mahsulot uchun emas, to'g'ri yo'nalish beradigan yondashuv uchun ham tanlay boshlashdi.",
     primaryImage: consultationWideImage,
-    secondaryImage: creamImage,
+    secondaryImage: consultationImage,
   },
   {
     year: "2025",

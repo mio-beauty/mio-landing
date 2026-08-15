@@ -1,8 +1,8 @@
 ﻿{
   "common": {
     "languages": {
-      "uz": "O'zbek",
-      "ru": "Ð ÑƒÑÑÐºÐ¸Ð¹",
+      "uz": "O'zbekcha",
+      "ru": "Русский",
       "en": "English"
     }
   },
@@ -24,7 +24,7 @@
     "stats": [
       { "value": 100000, "suffix": "+", "text": "Customers chose MIO Beauty" },
       { "value": 92, "suffix": "%", "text": "Our customers choose us again" },
-      { "value": 300, "suffix": "+", "text": "orders â€” delivered on time every day" }
+      { "value": 300, "suffix": "+", "text": "Orders - delivered on time every day" }
     ],
     "titleLead": "Skincare and skin care - that's us.",
     "titleRest": "MIO - BEAUTY",
