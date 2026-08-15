@@ -1,4 +1,6 @@
-import { useMemo, useRef, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import SectionShell from "./SectionShell.jsx";
 import { useI18n } from "../i18n/I18nProvider.jsx";
 import products from "../data/products.js";
@@ -95,6 +97,7 @@ function ProductCard({ title, description, image, imageClassName, buyLabel }) {
         <div className="mt-auto pt-6">
           <button
             type="button"
+            onClick={scrollToContactSection}
             className="w-full cursor-pointer rounded-full bg-[#1D1D1D] px-5 py-2.5 text-[12px] leading-none font-medium text-white transition-colors duration-200 md:hover:bg-[#2B2B2B] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1D1D1D]/20"
           >
             {buyLabel}
@@ -109,6 +112,19 @@ export default function ProductsSection() {
   const { language, t } = useI18n();
   const [showAllProducts, setShowAllProducts] = useState(false);
   const productScrollerRef = useRef(null);
+
+  // Expanding the catalog changes the height of this section. Refresh the
+  // review pin after the new grid has been laid out so its scroll trigger
+  // starts at the real section position instead of the old one.
+  useLayoutEffect(() => {
+    if (!showAllProducts || typeof window === "undefined") return undefined;
+
+    const frameId = window.requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [showAllProducts]);
 
   const scrollProducts = (direction) => {
     productScrollerRef.current?.scrollBy({
@@ -172,16 +188,18 @@ export default function ProductsSection() {
                     type="button"
                     aria-label="Previous products"
                     onClick={() => scrollProducts(-1)}
-                    className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-[#1D1D1D] text-xl text-[#1D1D1D] transition-colors hover:bg-[#1D1D1D] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1D1D1D]/20"
+                    className="group flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-[#1D1D1D] text-[0px] text-[#1D1D1D] transition-all duration-200 hover:bg-[#1D1D1D] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1D1D1D]/20 active:scale-95"
                   >
+                    <ArrowLeft aria-hidden="true" size={19} strokeWidth={1.6} className="transition-transform duration-200 group-hover:-translate-x-0.5" />
                     ←
                   </button>
                   <button
                     type="button"
                     aria-label="Next products"
                     onClick={() => scrollProducts(1)}
-                    className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-[#1D1D1D] text-xl text-[#1D1D1D] transition-colors hover:bg-[#1D1D1D] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1D1D1D]/20"
+                    className="group flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-[#1D1D1D] text-[0px] text-[#1D1D1D] transition-all duration-200 hover:bg-[#1D1D1D] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1D1D1D]/20 active:scale-95"
                   >
+                    <ArrowRight aria-hidden="true" size={19} strokeWidth={1.6} className="transition-transform duration-200 group-hover:translate-x-0.5" />
                     →
                   </button>
                 </div>

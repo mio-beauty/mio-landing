@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, Mic, Paperclip, Pause, Play } from "lucide-react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import gsap from "gsap";
+import { Pause, Play, TextAlignStart } from "lucide-react";
 import { useI18n } from "../i18n/I18nProvider.jsx";
-import "./VoiceReviewPhone.scss";
 
 function formatTime(seconds) {
   if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
@@ -25,13 +25,47 @@ export default function VoiceReviewPhone({
   audioUrl,
   customerName,
   city,
-  productImage,
+  isActive = true,
 }) {
   const { t, language } = useI18n();
   const audioRef = useRef(null);
+  const cardRef = useRef(null);
+  const detailsRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+
+  useLayoutEffect(() => {
+    const card = cardRef.current;
+    const details = detailsRef.current;
+    if (!card || !details) return undefined;
+
+    gsap.killTweensOf([card, details]);
+    gsap.to(card, {
+      height: isExpanded ? 158 : 92,
+      duration: 0.5,
+      ease: "power3.out",
+      overwrite: true,
+    });
+    gsap.to(details, {
+      maxHeight: isExpanded ? 48 : 0,
+      marginTop: isExpanded ? 8 : 0,
+      opacity: isExpanded ? 1 : 0,
+      y: isExpanded ? 0 : -6,
+      duration: 0.28,
+      ease: "power2.out",
+      overwrite: true,
+    });
+
+    return () => {
+      gsap.killTweensOf([card, details]);
+    };
+  }, [isExpanded]);
+
+  useEffect(() => {
+    if (!isActive) setIsExpanded(false);
+  }, [isActive]);
 
   const messageClock = useMemo(() => {
     const now = new Date();
@@ -134,138 +168,82 @@ export default function VoiceReviewPhone({
   const waveBars = useMemo(() => buildWaveBars(progress), [progress]);
 
   return (
-    <div className="voice-review-phone">
-      <div className="voice-review-phone__screen">
-        <audio ref={audioRef} src={audioUrl} preload="metadata" />
-
-        <div className="voice-review-phone__statusbar" aria-hidden="true">
-          <span>18:51</span>
-          <span className="voice-review-phone__status-icons">••• ◒ 12%</span>
+    <article
+      ref={cardRef}
+      className="relative flex h-[92px] w-[303px] min-w-[303px] max-w-[303px] shrink-0 flex-col overflow-hidden rounded-[12px] bg-[#FBFBFB] p-2 font-sans text-[#171717]"
+      aria-label={`${customerName} voice review`}
+    >
+      <audio ref={audioRef} src={audioUrl} preload="metadata" />
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <p className="m-0 text-[14px] font-medium leading-[1.1]">
+            {customerName}
+          </p>
+          <p className="m-0 mt-0.5 text-[12px] leading-none text-[#929292]">
+            {city}
+          </p>
         </div>
-
-        <div className="voice-review-phone__telegram">
-          <div className="voice-review-phone__telegram-header">
-            <div className="voice-review-phone__header-left">
-              <button
-                type="button"
-                className="voice-review-phone__icon-button voice-review-phone__icon-button--back"
-              >
-                <ArrowLeft size={19} />
-              </button>
-            </div>
-
-            <div className="voice-review-phone__contact voice-review-phone__contact--center">
-              <p className="voice-review-phone__contact-name">{customerName}</p>
-              <p className="voice-review-phone__contact-status">
-                {t("reviews.voice.status")}
-              </p>
-            </div>
-
-            <div className="voice-review-phone__avatar">
-              {customerName.slice(0, 1)}
-            </div>
-          </div>
-
-          <div className="voice-review-phone__chat">
-            <div className="voice-review-phone__day-pill">
-              {t("reviews.voice.day")}
-            </div>
-
-            <div className="voice-review-phone__incoming">
-              <div className="voice-review-phone__message voice-review-phone__message--media voice-review-phone__message--incoming">
-                <div className="voice-review-phone__product-panel">
-                  <img
-                    src={productImage}
-                    alt={city || customerName}
-                    className="voice-review-phone__product-image"
-                    draggable="false"
-                  />
-                </div>
-                <span className="voice-review-phone__message-time">
-                  {messageClock}
-                </span>
-              </div>
-
-              <div className="voice-review-phone__message voice-review-phone__message--voice voice-review-phone__message--incoming">
-                <div className="voice-review-phone__voice-top">
-                  <button
-                    type="button"
-                    className="voice-review-phone__play-button"
-                    onClick={handleTogglePlayback}
-                    aria-label={
-                      isPlaying
-                        ? t("reviews.voice.pause")
-                        : t("reviews.voice.play")
-                    }
-                  >
-                    {isPlaying ? (
-                      <Pause size={20} strokeWidth={2.8} />
-                    ) : (
-                      <Play size={19} strokeWidth={2.8} fill="currentColor" />
-                    )}
-                  </button>
-
-                  <div className="voice-review-phone__wave-wrap">
-                    <div className="voice-review-phone__wave">
-                      {waveBars.map((bar, index) => (
-                        <span
-                          key={index}
-                          className={bar.isActive ? "is-active" : ""}
-                          style={{ height: `${bar.height}px` }}
-                        />
-                      ))}
-                    </div>
-
-                    <input
-                      type="range"
-                      min="0"
-                      max={duration || 1}
-                      step="0.1"
-                      value={duration > 0 ? currentTime : 0}
-                      onChange={handleSeek}
-                      disabled={duration <= 0}
-                      className="voice-review-phone__seek"
-                      aria-label={t("reviews.voice.seek")}
-                    />
-                  </div>
-                </div>
-
-                <div className="voice-review-phone__voice-footer">
-                  <div className="voice-review-phone__voice-meta">
-                    <span>{formatTime(currentTime)}</span>
-                    <span className="voice-review-phone__voice-dot" />
-                    <span>{formatTime(duration)}</span>
-                  </div>
-                </div>
-
-                <span className="voice-review-phone__message-time">
-                  {messageClock}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="voice-review-phone__composer">
-            <button
-              type="button"
-              className="voice-review-phone__composer-attach"
-            >
-              <Paperclip size={18} />
-            </button>
-            <div className="voice-review-phone__composer-field">
-              <span>{t("reviews.voice.message")}</span>
-            </div>
-            <button type="button" className="voice-review-phone__composer-send">
-              <Mic size={19} strokeWidth={2.3} />
-            </button>
-          </div>
-        </div>
-
-        <div
-          className="voice-review-phone__home-indicator"
-          aria-hidden="true"
-        />
       </div>
-    </div>
+
+      <div className="pt-2 flex items-center gap-2">
+        <button
+          type="button"
+          className="grid h-10 w-10 flex-none cursor-pointer place-items-center rounded-full border-0 bg-[#111] pl-px text-white"
+          onClick={handleTogglePlayback}
+          aria-label={
+            isPlaying ? t("reviews.voice.pause") : t("reviews.voice.play")
+          }
+        >
+          {isPlaying ? (
+            <Pause size={18} strokeWidth={2.8} />
+          ) : (
+            <Play size={17} strokeWidth={2.8} fill="currentColor" />
+          )}
+        </button>
+        <div className="relative h-5 min-w-0 flex-1 -translate-y-2">
+          <div className="flex h-5 items-center justify-between overflow-hidden">
+            {waveBars.map((bar, index) => (
+              <span
+                key={index}
+                className={`w-0.5 min-h-[2px] rounded-full transition-colors duration-200 ${bar.isActive ? "bg-[#aaa]" : "bg-[#d2d2d2]"}`}
+                style={{ height: `${bar.height}px` }}
+              />
+            ))}
+          </div>
+          <input
+            type="range"
+            min="0"
+            max={duration || 1}
+            step="0.1"
+            value={duration > 0 ? currentTime : 0}
+            onChange={handleSeek}
+            disabled={duration <= 0}
+            className="absolute inset-0 h-full w-full cursor-pointer appearance-none opacity-0"
+            aria-label={t("reviews.voice.seek")}
+          />
+        </div>
+        <button
+          type="button"
+          className="grid h-6 w-[24px] flex-none -translate-y-2 cursor-pointer place-items-center border-0 bg-transparent text-[#333]"
+          onClick={() => setIsExpanded((value) => !value)}
+          aria-expanded={isExpanded}
+          aria-label="More options"
+        >
+          <TextAlignStart size={20} strokeWidth={2} />
+        </button>
+      </div>
+
+      <div className="flex -translate-y-3 items-center justify-between pl-12 text-[12px] leading-none text-[#8e8e8e]">
+        <span>{formatTime(duration)}</span>
+        <span>{messageClock}</span>
+      </div>
+
+      <div
+        ref={detailsRef}
+        className="origin-top max-h-0 overflow-hidden text-[12px] leading-[1.35] text-[#8e8e8e] opacity-0"
+      >
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </div>
+    </article>
   );
 }

@@ -63,7 +63,7 @@ const REVIEW_STEP_VISUALS = [
     voiceReview: {
       audioUrl: voiceReviewAudio3,
 
-      customerName: "Munisa",
+      customerName: "Ruxshona",
       city: "Andijon",
     },
   },
@@ -410,26 +410,14 @@ export default function ReviewSection() {
             </div>
           </div>
 
-          <div className="relative order-1 z-10 self-start lg:col-start-2 lg:row-start-2 lg:justify-self-center lg:self-start lg:pt-2">
-            <div className="absolute right-2 top-[68px] z-40 flex items-center rounded-full bg-white/88 px-3 py-2 text-[13px] font-semibold leading-none text-[#101010] shadow-[0_10px_24px_rgba(15,15,15,0.12)] backdrop-blur-md sm:right-4 sm:top-20 lg:hidden">
-              <div className="relative h-4 min-w-2.5 overflow-hidden">
-                <div
-                  className="transition-transform ease-[cubic-bezier(.16,1,.3,1)] will-change-transform"
-                  style={{
-                    transform: `translateY(-${activeStep * 16}px)`,
-                    transitionDuration: `${reviewTransitionMs}ms`,
-                  }}
-                >
-                  {reviewSteps.map((item) => (
-                    <div key={item.id} className="h-4 leading-4">
-                      {Number(item.order)}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <span className="ml-0.5 text-[#767676]">/{totalSteps}</span>
-            </div>
-
+          <div
+            className={[
+              "relative order-1 z-10 lg:col-start-2 lg:row-start-2 lg:justify-self-center",
+              reviewMode === "voice"
+                ? "self-start lg:self-center lg:-translate-y-40 lg:pt-0"
+                : "self-start lg:self-start lg:pt-2",
+            ].join(" ")}
+          >
             <div className="mb-4 flex justify-center sm:hidden ">
               <div className="inline-flex rounded-full bg-[#f3f3f3] p-1">
                 <button
@@ -459,7 +447,12 @@ export default function ReviewSection() {
               </div>
             </div>
 
-            <div className="mx-auto grid grid-cols-[30px_minmax(0,1fr)_30px] items-center gap-0 pt-4 sm:grid-cols-[38px_minmax(0,1fr)_38px] lg:flex lg:w-[360px] lg:justify-center xl:w-[380px]">
+            <div
+              className={[
+                "mx-auto grid min-h-[112px] grid-cols-[30px_minmax(0,1fr)_30px] items-center gap-0 sm:grid-cols-[38px_minmax(0,1fr)_38px] lg:min-h-0 lg:flex lg:w-[360px] lg:justify-center xl:w-[380px]",
+                reviewMode === "voice" ? "pt-10" : "pt-4",
+              ].join(" ")}
+            >
               <button
                 type="button"
                 onClick={goToPreviousStep}
@@ -504,25 +497,39 @@ export default function ReviewSection() {
                     </div>
                   </div>
                 ) : (
-                  <div className="relative w-[min(330px,90vw)] sm:w-[min(344px,82vw)] xl:w-[344px]">
-                    <div className="relative mx-auto aspect-[1014/2048] w-full">
-                      <div className="absolute bottom-[1.55%] left-[4.05%] right-[4.05%] top-[1.55%] overflow-hidden rounded-[38px] bg-white">
-                        <VoiceReviewPhone
-                          key={step.id}
-                          audioUrl={step.voiceReview.audioUrl}
-                          customerName={step.voiceReview.customerName}
-                          city={step.voiceReview.city}
-                          productImage={step.productImage}
-                        />
-                      </div>
+                  <div className="relative h-[92px] w-[303px] min-w-[303px] max-w-[303px]">
+                    {reviewSteps.map((voiceStep, index) => {
+                      const stackIndex = index - activeStep;
+                      const isActive = stackIndex === 0;
+                      const distance = Math.abs(stackIndex);
+                      const isInStack = distance <= 2;
 
-                      <img
-                        src={iphoneMockupImg}
-                        alt=""
-                        draggable="false"
-                        className="pointer-events-none absolute inset-0 h-full w-full select-none"
-                      />
-                    </div>
+                      return (
+                        <div
+                          key={voiceStep.id}
+                          className="absolute inset-0 transition-[transform,opacity] duration-700 ease-[cubic-bezier(.16,1,.3,1)]"
+                          style={{
+                            zIndex:
+                              isInStack ? 10 - distance : 0,
+                            transform: !isInStack
+                              ? "translateY(0) scale(.96)"
+                              : stackIndex < 0
+                                ? `translateY(-${distance * 16}px) scale(${1 - distance * 0.02})`
+                                : `translateY(${distance * 16}px) scale(${1 - distance * 0.02})`,
+                            opacity: isInStack ? 1 : 0,
+                            pointerEvents: isActive ? "auto" : "none",
+                          }}
+                          aria-hidden={!isActive}
+                        >
+                          <VoiceReviewPhone
+                            audioUrl={voiceStep.voiceReview.audioUrl}
+                            customerName={voiceStep.voiceReview.customerName}
+                            city={voiceStep.voiceReview.city}
+                            isActive={isActive}
+                          />
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -536,76 +543,90 @@ export default function ReviewSection() {
                 <ChevronRight size={20} strokeWidth={2.2} />
               </button>
             </div>
+
+            <div
+              className="pt-5 flex items-center justify-center gap-3 sm:hidden"
+              aria-label="Review progress"
+            >
+              {reviewSteps.map((item, index) => (
+                <span
+                  key={item.id}
+                  className={
+                    index === activeStep
+                      ? "h-3 w-16 rounded-full bg-[#222222] transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)]"
+                      : "h-3 w-3 rounded-full bg-[#ededed] transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)]"
+                  }
+                />
+              ))}
+            </div>
           </div>
 
           <div className="order-3 hidden lg:col-start-3 lg:row-start-2 lg:block lg:self-start lg:pt-10">
-            {reviewMode === "text" ? (
-              <div ref={rightRef} className="mx-auto w-fit lg:mx-0">
-                <div className="flex flex-col">
-                  {visibleProducts.map((product) => (
-                    <div
-                      key={product.id}
+            <div ref={rightRef} className="mx-auto w-fit lg:mx-0">
+              <div className="flex flex-col">
+                {visibleProducts.map((product) => (
+                  <div
+                    key={product.id}
+                    className={[
+                      "overflow-hidden transition-[max-height,opacity,transform,padding] ease-[cubic-bezier(.16,1,.3,1)] will-change-transform",
+                      product.phase === "entered"
+                        ? "max-h-40 pb-2 opacity-100"
+                        : "",
+                      product.phase === "entered" ? "translate-y-0" : "",
+                      product.phase === "entering"
+                        ? "max-h-0 pb-0 -translate-y-3 opacity-0"
+                        : "",
+                      product.phase === "exiting"
+                        ? "max-h-0 pb-0 -translate-y-3 opacity-0"
+                        : "",
+                    ].join(" ")}
+                    style={{
+                      transitionDuration: `${reviewTransitionMs}ms`,
+                    }}
+                  >
+                    <article
                       className={[
-                        "overflow-hidden transition-[max-height,opacity,transform,padding] ease-[cubic-bezier(.16,1,.3,1)] will-change-transform",
+                        "inline-flex rounded-[16px] border border-[#e8e8e8] bg-white py-3 pr-3 w-full",
+                        "transform-gpu transition-all ease-[cubic-bezier(.16,1,.3,1)] will-change-transform",
                         product.phase === "entered"
-                          ? "max-h-40 pb-2 opacity-100"
+                          ? "translate-x-0 translate-y-0 scale-100 opacity-100"
                           : "",
-                        product.phase === "entered" ? "translate-y-0" : "",
                         product.phase === "entering"
-                          ? "max-h-0 pb-0 -translate-y-3 opacity-0"
+                          ? "translate-x-6 -translate-y-3 scale-[0.985] opacity-0"
                           : "",
                         product.phase === "exiting"
-                          ? "max-h-0 pb-0 -translate-y-3 opacity-0"
+                          ? "translate-x-6 -translate-y-3 scale-[0.985] opacity-0"
                           : "",
                       ].join(" ")}
                       style={{
                         transitionDuration: `${reviewTransitionMs}ms`,
                       }}
                     >
-                      <article
-                        className={[
-                          "inline-flex rounded-[16px] border border-[#e8e8e8] bg-white py-3 pr-3 w-full",
-                          "transform-gpu transition-all ease-[cubic-bezier(.16,1,.3,1)] will-change-transform",
-                          product.phase === "entered"
-                            ? "translate-x-0 translate-y-0 scale-100 opacity-100"
-                            : "",
-                          product.phase === "entering"
-                            ? "translate-x-6 -translate-y-3 scale-[0.985] opacity-0"
-                            : "",
-                          product.phase === "exiting"
-                            ? "translate-x-6 -translate-y-3 scale-[0.985] opacity-0"
-                            : "",
-                        ].join(" ")}
-                        style={{
-                          transitionDuration: `${reviewTransitionMs}ms`,
-                        }}
-                      >
-                        <div className="flex items-center gap-2">
-                          <div className="grid h-20 w-20 shrink-0 place-items-center overflow-hidden">
-                            <img
-                              src={product.productImage}
-                              alt=""
-                              draggable="false"
-                              loading="lazy"
-                              className="h-full w-full object-contain"
-                            />
-                          </div>
-
-                          <div className="min-w-0">
-                            <h3 className="text-[18px] font-semibold leading-[1.1] text-[#1d1d1f] sm:text-[22px]">
-                              {product.productTitle}
-                            </h3>
-                            <p className="mt-3 max-w-[350px] text-[16px] leading-[1.28] text-[#8f8f8f]">
-                              {product.productDescription}
-                            </p>
-                          </div>
+                      <div className="flex items-center gap-2">
+                        <div className="grid h-20 w-20 shrink-0 place-items-center overflow-hidden">
+                          <img
+                            src={product.productImage}
+                            alt=""
+                            draggable="false"
+                            loading="lazy"
+                            className="h-full w-full object-contain"
+                          />
                         </div>
-                      </article>
-                    </div>
-                  ))}
-                </div>
+
+                        <div className="min-w-0">
+                          <h3 className="text-[18px] font-semibold leading-[1.1] text-[#1d1d1f] sm:text-[22px]">
+                            {product.productTitle}
+                          </h3>
+                          <p className="mt-3 max-w-[350px] text-[16px] leading-[1.28] text-[#8f8f8f]">
+                            {product.productDescription}
+                          </p>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                ))}
               </div>
-            ) : null}
+            </div>
           </div>
         </div>
       </div>

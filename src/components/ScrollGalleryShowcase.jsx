@@ -490,7 +490,6 @@ export default function ScrollGalleryShowcase({
         if (count <= 1) return;
         if (self.progress > 0.015 && self.progress < 0.985) {
           hideScrollHint();
-          queueScrollHint();
         }
         const idx = clampInt(self.progress * count, 0, count - 1);
         if (idx !== activeIndexRef.current) {

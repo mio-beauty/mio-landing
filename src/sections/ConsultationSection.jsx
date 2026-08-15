@@ -101,14 +101,14 @@ export default function ConsultationSection() {
 
   return (
     <section id="contacts" className="scroll-mt-28 bg-[#F8F8F8]">
-      <div className="relative flex flex-col justify-center px-4 py-8 lg:px-33.5 lg:py-36">
+      <div className="relative flex flex-col items-center justify-center px-4 py-12 sm:px-8 sm:py-16 md:px-12 lg:px-16 lg:py-28 xl:px-24 xl:py-36 2xl:px-32">
         <span id="contact" className="absolute -top-28" aria-hidden="true" />
-        <div className="flex flex-col gap-3 text-center">
-          <h2 className="text-2xl font-medium leading-tight text-[#0B0B0B] lg:text-5xl">
+        <div className="mx-auto flex w-full max-w-[1100px] flex-col items-center gap-3 text-center">
+          <h2 className="text-[clamp(1.75rem,4.2vw,3rem)] font-medium leading-[1.08] text-[#0B0B0B]">
             <span>
               {t("consultation.titleStart")}
               <img
-                className="hidden px-3 align-middle lg:inline-block"
+                className="hidden h-[1.15em] w-auto px-2 align-middle lg:inline-block xl:px-3"
                 src={consultationWideImg}
                 alt=""
               />
@@ -116,24 +116,24 @@ export default function ConsultationSection() {
             </span>
             <span className="mt-2 block">
               <img
-                className="hidden px-3 align-middle lg:inline-block"
+                className="hidden h-[1.15em] w-auto px-2 align-middle lg:inline-block xl:px-3"
                 src={consultationImg}
                 alt=""
               />
               {t("consultation.titleEnd")}
               <img
-                className="hidden px-3 align-middle lg:inline-block"
+                className="hidden h-[1.15em] w-auto px-2 align-middle lg:inline-block xl:px-3"
                 src={consultationAltImg}
                 alt=""
               />
             </span>
           </h2>
-          <p className="pt-3 text-sm text-[#0000007c] lg:text-[20px]">
+          <p className="mx-auto max-w-[760px] pt-3 text-sm leading-[1.45] text-[#0000007c] sm:text-base lg:text-[20px]">
             {t("consultation.description")}
           </p>
         </div>
 
-        <div className="flex flex-col gap-6 py-6 text-[#757575] lg:px-96 lg:pt-28">
+        <div className="mx-auto flex w-full max-w-[720px] flex-col gap-5 py-8 text-[#757575] sm:gap-6 sm:py-10 lg:pt-20">
           <div className="relative border-b border-[#CCCCCC] px-3 py-2.5">
             <input
               className="w-full border-none bg-transparent text-sm text-[#0B0B0B] outline-none"
@@ -213,11 +213,11 @@ export default function ConsultationSection() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-3.5 pt-8 lg:flex-row-reverse lg:items-center lg:justify-between">
+          <div className="flex flex-col gap-4 pt-7 sm:pt-8 lg:flex-row-reverse lg:items-center lg:justify-between">
             <button
               onClick={handleClick}
               disabled={status === "loading"}
-              className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#1D1D1D] p-2.5 text-[16px] text-white duration-300 hover:bg-[#1d1d1de1] lg:w-[30%] lg:py-3"
+              className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#1D1D1D] p-3 text-[15px] text-white duration-300 hover:bg-[#1d1d1de1] sm:text-[16px] lg:w-[240px] lg:shrink-0 lg:py-3"
             >
               {status === "idle" && t("consultation.cta")}
               {status === "loading" && (
@@ -228,14 +228,14 @@ export default function ConsultationSection() {
               {status === "failed" && t("consultation.cta")}
             </button>
 
-            <p className="text-center text-sm text-[#757575]">
+            <p className="text-center text-xs leading-[1.4] text-[#757575] sm:text-sm lg:text-left">
               {t("consultation.helper")}
             </p>
           </div>
         </div>
 
-        <div className="flex flex-col items-center lg:px-96">
-          <div className="absolute bottom-6 z-50 flex w-full translate-y-0 flex-col items-center gap-3 px-4 lg:px-108">
+        <div className="flex flex-col items-center">
+          <div className="fixed inset-x-4 bottom-6 z-50 flex flex-col items-center gap-3 sm:inset-x-8 lg:inset-x-auto lg:left-1/2 lg:w-[calc(100%-4rem)] lg:max-w-[720px] lg:-translate-x-1/2">
             {status === "error" && (
               <div className="flex flex-col items-center justify-between gap-2 rounded-xl border border-[#757575] bg-[#000000D9] px-3 py-2.5 lg:flex-row">
                 <div className="flex items-center gap-2 lg:items-start">
@@ -260,7 +260,7 @@ export default function ConsultationSection() {
             )}
 
             {status === "success" && (
-              <div className="flex w-full items-center justify-between rounded-xl border border-[#757575] bg-[#000000D9] px-3 py-2.5 lg:w-[60%]">
+              <div className="flex w-full items-center justify-between rounded-xl border border-[#757575] bg-[#000000D9] px-3 py-2.5">
                 <div className="flex items-center gap-2">
                   <img src={checkFilledIconImg} alt="" />
                   <p className="text-[16px] text-[#FFFFFF]">
@@ -277,7 +277,7 @@ export default function ConsultationSection() {
             )}
 
             {status === "failed" && (
-              <div className="flex w-full items-center justify-between rounded-xl border border-[#757575] bg-[#000000D9] px-3 py-2.5 lg:w-[60%]">
+              <div className="flex w-full items-center justify-between rounded-xl border border-[#757575] bg-[#000000D9] px-3 py-2.5">
                 <div className="flex items-center gap-2">
                   <img src={closeFilledIconImg} alt="" />
                   <p className="text-[16px] text-[#FFFFFF]">
