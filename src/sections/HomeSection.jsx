@@ -108,16 +108,18 @@ export default function HomeSection() {
     <section className="bg-[#FFFFFF]">
       <div className="relative lg:h-screen">
         <div className="relative min-h-[var(--mio-mobile-hero-height,100svh)] overflow-hidden lg:min-h-screen lg:bg-[#D0C1AD]">
-          <div className="absolute inset-0 lg:hidden">
-            <img
-              src={heroImg2}
-              alt=""
-              fetchPriority="high"
-              loading="eager"
-              decoding="async"
-              className="h-[var(--mio-mobile-hero-height,100svh)] w-full object-cover object-top"
-            />
-          </div>
+          <a href="#">
+            <div className="absolute inset-0 lg:hidden">
+              <img
+                src={heroImg2}
+                alt=""
+                fetchPriority="high"
+                loading="eager"
+                decoding="async"
+                className="h-[var(--mio-mobile-hero-height,100svh)] w-full object-cover object-top"
+              />
+            </div>
+          </a>
 
           <div className="absolute inset-0 hidden lg:block">
             <img
@@ -130,7 +132,7 @@ export default function HomeSection() {
             />
           </div>
 
-          <div className="relative z-[20] lg:px-36">
+          <div className="relative z-[900] lg:px-36">
             <Navbar textColor="dark" reveal={isVisible} />
           </div>
 

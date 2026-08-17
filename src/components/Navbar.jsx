@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import burgerLogoImg from "../assets/img/burger-logo.svg";
 import chevronImg from "../assets/img/chevron.svg";
 import closeIconImg from "../assets/img/ic_X_mark.svg";
@@ -12,12 +13,41 @@ const LANGUAGES = ["uz", "ru", "en"];
 
 export default function Navbar({ textColor = "white", reveal = true }) {
   const { language, setLanguage, t, get } = useI18n();
+  const location = useLocation();
   const [openLang, setOpenLang] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const [isHiddenOnScroll, setIsHiddenOnScroll] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [hoverOffsets, setHoverOffsets] = useState({});
   const langRef = useRef(null);
   const navItems = get("navbar.navItems", []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDelta = currentScrollY - lastScrollY;
+      setHasScrolled(currentScrollY > 12);
+
+      if (currentScrollY <= 12) {
+        setIsHiddenOnScroll(false);
+      } else if (scrollDelta > 6) {
+        setIsHiddenOnScroll(true);
+      } else if (scrollDelta < -6) {
+        setIsHiddenOnScroll(false);
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -73,22 +103,27 @@ export default function Navbar({ textColor = "white", reveal = true }) {
   const desktopTextColor =
     textColor === "dark" ? "text-[#0B0B0B]" : "text-[#FFFFFF]";
   const activeLanguageIndex = Math.max(LANGUAGES.indexOf(language), 0);
+  const hasSolidBackground = location.pathname !== "/" || hasScrolled;
 
   return (
-    <div className="relative z-[200] flex items-center justify-between bg-transparent px-4 pt-4 lg:px-0 lg:pt-12">
-      <img
-        className="h-[24px] w-auto max-w-[158px] object-contain lg:h-[40px] lg:max-w-[210px]"
-        src={logoImg}
-        alt="MIO BEAUTY"
-        style={{
-          opacity: reveal ? 1 : 0,
-          transform: reveal
-            ? "translate3d(0, 0, 0)"
-            : "translate3d(0, -10px, 0)",
-          transition:
-            "opacity 960ms cubic-bezier(0.22,1,0.36,1), transform 960ms cubic-bezier(0.22,1,0.36,1)",
-        }}
-      />
+    <div
+      className={`fixed inset-x-0 top-0 z-900 flex items-center justify-between will-change-transform px-4 py-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:px-36 lg:pt-6 ${hasSolidBackground ? "bg-white shadow-[0_8px_30px_rgba(20,20,20,0.04)]" : "bg-transparent shadow-none"} ${isHiddenOnScroll ? "lg:-translate-y-[110%]" : "lg:translate-y-0"}`}
+    >
+      <Link to="/" aria-label="MIO BEAUTY home">
+        <img
+          className="h-[24px] w-auto max-w-[158px] object-contain lg:h-[40px] lg:max-w-[210px]"
+          src={logoImg}
+          alt="MIO BEAUTY"
+          style={{
+            opacity: reveal ? 1 : 0,
+            transform: reveal
+              ? "translate3d(0, 0, 0)"
+              : "translate3d(0, -10px, 0)",
+            transition:
+              "opacity 960ms cubic-bezier(0.22,1,0.36,1), transform 960ms cubic-bezier(0.22,1,0.36,1)",
+          }}
+        />
+      </Link>
 
       <ul
         className={`hidden cursor-pointer items-center gap-10 text-sm font-medium lg:flex ${desktopTextColor}`}
@@ -151,7 +186,9 @@ export default function Navbar({ textColor = "white", reveal = true }) {
                 : "translate3d(0, -10px, 0)",
               transition:
                 "opacity 960ms cubic-bezier(0.22,1,0.36,1), transform 960ms cubic-bezier(0.22,1,0.36,1)",
-              transitionDelay: reveal ? `${90 + navItems.length * 45}ms` : "0ms",
+              transitionDelay: reveal
+                ? `${90 + navItems.length * 45}ms`
+                : "0ms",
             }}
             onClick={() => setOpenLang((prev) => !prev)}
             aria-expanded={openLang}

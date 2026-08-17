@@ -119,11 +119,22 @@ export default function ProductsSection() {
   useLayoutEffect(() => {
     if (!showAllProducts || typeof window === "undefined") return undefined;
 
-    const frameId = window.requestAnimationFrame(() => {
-      ScrollTrigger.refresh();
-    });
+    const refresh = () => ScrollTrigger.refresh();
+    const frameId = window.requestAnimationFrame(refresh);
+    window.addEventListener("load", refresh);
 
-    return () => window.cancelAnimationFrame(frameId);
+    const resizeObserver = typeof ResizeObserver !== "undefined"
+      ? new ResizeObserver(refresh)
+      : null;
+    if (resizeObserver && productScrollerRef.current) {
+      resizeObserver.observe(productScrollerRef.current);
+    }
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener("load", refresh);
+      resizeObserver?.disconnect();
+    };
   }, [showAllProducts]);
 
   const scrollProducts = (direction) => {
@@ -176,7 +187,7 @@ export default function ProductsSection() {
           </div>
 
           <div
-            className={`bg-white py-10 sm:px-5 sm:py-12 lg:rounded-[32px] lg:px-4 lg:py-15 ${showAllProducts ? "px-4" : "pl-4 pr-0"}`}
+            className={`bg-white py-10 sm:px-5 sm:py-12 lg:rounded-[32px] lg:px-4 lg:py-15 ${showAllProducts ? "mb-10 px-4 pb-16 sm:mb-14 lg:mb-20 lg:pb-24" : "pl-4 pr-0"}`}
           >
             <div className="mx-auto flex items-end justify-between gap-4 pb-6 text-left sm:text-center">
               <h2 className="text-[30px] leading-[1.02] font-medium text-[#111111] sm:text-[42px] sm:leading-[1.05] lg:text-[50px]">
