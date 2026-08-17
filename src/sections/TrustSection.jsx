@@ -1,13 +1,19 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
-import faceImg from "../assets/img/face.jpg";
-import face2Img from "../assets/img/face2.jpg";
-import face3Img from "../assets/img/face3.jpg";
-import face4Img from "../assets/img/face4.jpg";
-import result1Img from "../assets/img/result1.png";
+import preview1Img from "../assets/img/Монтажная область 1.jpg";
+import preview2Img from "../assets/img/Монтажная область 2.jpg";
+import preview3Img from "../assets/img/Монтажная область 3.jpg";
+import preview4Img from "../assets/img/Монтажная область 4.jpg";
+import preview5Img from "../assets/img/Монтажная область 5.jpg";
 import { useI18n } from "../i18n/I18nProvider.jsx";
 
-const PREVIEWS = [faceImg, face2Img, face3Img, face4Img, result1Img];
+const PREVIEWS = [
+  preview1Img,
+  preview2Img,
+  preview3Img,
+  preview4Img,
+  preview5Img,
+];
 const PREVIEW_EDGE_GUTTER = 24;
 const PREVIEW_SCALE_EASE = "cubic-bezier(0.32, 0, 0.67, 0)";
 const PREVIEW_ENTER_SCALE = 0.18;
@@ -310,9 +316,18 @@ export default function TrustSection() {
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,20,16,0.06)_0%,rgba(24,20,16,0.18)_100%)]" />
           </div>
 
-          <div
+          <a
+            href="#contact"
             ref={labelRef}
-            className="pointer-events-none fixed left-0 top-0 z-[130] hidden h-[80px] w-[80px] origin-center items-center justify-center rounded-full border border-white/30 bg-white/16 text-[14px] font-medium text-white shadow-[0_10px_35px_rgba(17,12,8,0.22)] backdrop-blur-[14px] transition-transform duration-[120ms] will-change-transform lg:flex"
+            className="pointer-events-auto fixed left-0 top-0 z-[130] hidden h-[80px] w-[80px] origin-center items-center justify-center rounded-full border border-white/30 bg-white/16 text-[14px] font-medium text-white shadow-[0_10px_35px_rgba(17,12,8,0.22)] backdrop-blur-[14px] transition-transform duration-[120ms] will-change-transform lg:flex"
+            aria-label={t("trust.hoverLabel")}
+            onPointerEnter={(event) => {
+              setHoveredId(activeItem?.id ?? null);
+              setHoverPreview({ visible: true });
+              updatePreviewPosition(event);
+            }}
+            onPointerMove={updatePreviewPosition}
+            onPointerLeave={hidePreview}
             style={{
               transform: `translate3d(-50%, -50%, 0) scale(${hoverPreview.visible ? 1 : isPreviewMounted ? 0 : PREVIEW_ENTER_SCALE})`,
               transitionTimingFunction: PREVIEW_SCALE_EASE,
@@ -321,7 +336,7 @@ export default function TrustSection() {
             <span ref={labelTextRef} className="block will-change-transform">
               {t("trust.hoverLabel")}
             </span>
-          </div>
+          </a>
         </>
       )}
 

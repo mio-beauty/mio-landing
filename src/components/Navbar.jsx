@@ -86,6 +86,14 @@ export default function Navbar({ textColor = "white", reveal = true }) {
     setOpenLang(false);
   };
 
+  const handleLogoClick = (event) => {
+    if (location.pathname !== "/") return;
+
+    event.preventDefault();
+    globalThis.__mioLenis?.scrollTo(0, { duration: 1.2 }) ??
+      window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const handleNavMove = (index, event) => {
     const rect = event.currentTarget.getBoundingClientRect();
     const offsetX = ((event.clientX - rect.left) / rect.width - 0.5) * 14;
@@ -109,7 +117,7 @@ export default function Navbar({ textColor = "white", reveal = true }) {
     <div
       className={`fixed inset-x-0 top-0 z-900 flex items-center justify-between will-change-transform px-4 py-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:px-36 lg:pt-6 ${hasSolidBackground ? "bg-white shadow-[0_8px_30px_rgba(20,20,20,0.04)]" : "bg-transparent shadow-none"} ${isHiddenOnScroll ? "lg:-translate-y-[110%]" : "lg:translate-y-0"}`}
     >
-      <Link to="/" aria-label="MIO BEAUTY home">
+      <Link to="/" onClick={handleLogoClick} aria-label="MIO BEAUTY home">
         <img
           className="h-[24px] w-auto max-w-[158px] object-contain lg:h-[40px] lg:max-w-[210px]"
           src={logoImg}
