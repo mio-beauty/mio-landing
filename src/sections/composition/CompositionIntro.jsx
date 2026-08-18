@@ -5,7 +5,7 @@ export default function CompositionIntro({ headingRef, paragraphRef }) {
   const headingLines = get("composition.headingLines", []);
 
   return (
-    <header className="max-w-170 lg:col-span-5">
+    <header className="flex flex-row justify-between lg:col-span-5">
       <h2
         ref={headingRef}
         className="max-w-[320px] text-[18px] font-semibold leading-[1.04] text-[#0B0B0B] sm:max-w-[560px] sm:text-[30px] lg:max-w-none lg:text-[36px]"

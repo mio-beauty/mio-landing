@@ -200,8 +200,12 @@ export default function TrustSection() {
     moveYRef.current?.(event.clientY);
     moveLabelXRef.current?.(event.clientX);
     moveLabelYRef.current?.(event.clientY);
-    moveLabelTextXRef.current?.(Math.max(-8, Math.min(8, event.movementX * 0.9)));
-    moveLabelTextYRef.current?.(Math.max(-8, Math.min(8, event.movementY * 0.9)));
+    moveLabelTextXRef.current?.(
+      Math.max(-8, Math.min(8, event.movementX * 0.9)),
+    );
+    moveLabelTextYRef.current?.(
+      Math.max(-8, Math.min(8, event.movementY * 0.9)),
+    );
 
     if (!isPreviewMounted) {
       setIsPreviewMounted(true);
@@ -269,7 +273,7 @@ export default function TrustSection() {
     <section
       ref={sectionRef}
       id="results"
-      className="relative isolate z-20 overflow-hidden bg-[#FBF9F6] pb-0 pt-8 lg:overflow-visible lg:px-36 lg:py-18"
+      className="relative isolate z-20 overflow-hidden bg-[#FBFBFB] pb-0 pt-8 lg:overflow-visible lg:px-36 lg:py-18"
       onPointerLeave={hidePreview}
     >
       <div className="px-4 lg:px-0">
@@ -372,7 +376,7 @@ export default function TrustSection() {
                 <div className="hidden lg:grid lg:grid-cols-[120px_minmax(0,1fr)_320px] lg:items-center lg:gap-6">
                   <div
                     className={`text-[68px] leading-none tracking-[-0.05em] transition-colors duration-300 ${
-                      isActive ? "text-[#1B1714]" : "text-[#C9C2B9]"
+                      isActive ? "text-[#1B1714]" : "text-[#C5C5C5]"
                     }`}
                   >
                     {item.id}
@@ -380,7 +384,7 @@ export default function TrustSection() {
 
                   <h2
                     className={`min-w-0 text-[76px] leading-[0.94] tracking-[-0.06em] transition-colors duration-300 ${
-                      isActive ? "text-[#1B1714]" : "text-[#C9C2B9]"
+                      isActive ? "text-[#1B1714]" : "text-[#C5C5C5]"
                     }`}
                   >
                     {item.title}

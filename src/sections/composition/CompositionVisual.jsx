@@ -51,7 +51,7 @@ export default function CompositionVisual({
             <img
               src={SpfImage}
               alt="Product bottle"
-              className="h-auto w-[170px] select-none drop-shadow-[0_28px_48px_rgba(15,23,42,0.14)] sm:w-72 sm:drop-shadow-[0_40px_70px_rgba(15,23,42,0.16)] lg:w-102.25"
+              className="w-42.5 select-none sm:w-72 lg:w-125"
               draggable="false"
             />
           </div>
@@ -98,7 +98,7 @@ export default function CompositionVisual({
                 ref={(el) => {
                   cardsInnerRefs.current[i] = el;
                 }}
-                className="pointer-events-none flex min-h-[156px] w-full max-w-none flex-col items-center gap-3 rounded-[14px] bg-[#F8F8F8] px-3 py-4 text-center will-change-transform sm:min-h-[210px] sm:gap-4 sm:rounded-2xl sm:p-6 lg:pointer-events-auto lg:max-w-62.5 lg:p-6"
+                className="pointer-events-none flex min-h-[156px] w-full max-w-none flex-col items-center gap-3 rounded-[16px] bg-white px-3 py-4 text-center shadow-[0_24px_60px_rgba(15,23,42,0.08)] will-change-transform sm:min-h-[210px] sm:gap-4 sm:rounded-3xl sm:p-6 lg:pointer-events-auto lg:max-w-62.5 lg:p-6"
               >
                 <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-white sm:h-12 sm:w-12">
                   {f.iconSrc}
