@@ -325,7 +325,7 @@ export default function TrustSection() {
           <h3 className="max-w-[640px] text-[clamp(2rem,9vw,3.25rem)] leading-[0.95] font-semibold tracking-[-0.04em] text-[#171411] lg:text-[64px]">
             {t("trust.title")}
           </h3>
-          <p className="hidden max-w-[280px] text-right text-[15px] leading-[1.35] text-[#7D7369] lg:block">
+          <p className="hidden max-w-[280px] text-right text-[15px] leading-[1.35] text-[#5F554D] lg:block">
             {t("trust.description")}
           </p>
         </div>
@@ -407,13 +407,13 @@ export default function TrustSection() {
             >
               <div className="px-4 py-6 lg:px-0 lg:py-12">
                 <div className="flex flex-col gap-4 lg:hidden">
-                  <div className="mb-2 text-[12px] font-medium tracking-[0.18em] text-[#9C9287] uppercase">
+                  <div className="mb-2 text-[12px] font-medium tracking-[0.18em] text-[#6B625A] uppercase">
                     {item.id}
                   </div>
                   <h2 className="text-[30px] leading-[0.98] tracking-[-0.05em] text-[#191512]">
                     {item.title}
                   </h2>
-                  <p className="max-w-[320px] text-[15px] leading-[1.35] text-[#7D7369]">
+                  <p className="max-w-[320px] text-[15px] leading-[1.35] text-[#5F554D]">
                     {item.service}
                   </p>
                 </div>

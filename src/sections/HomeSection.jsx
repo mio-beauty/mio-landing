@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
-import heroImg from "../assets/img/banner.jpg";
-import heroImg2 from "../assets/img/hero2.png";
+import heroImg from "../assets/img/optimized/banner.webp";
+import heroImg2 from "../assets/img/optimized/hero2.webp";
 import Navbar from "../components/Navbar.jsx";
 import { useI18n } from "../i18n/I18nProvider.jsx";
 
@@ -108,11 +108,13 @@ export default function HomeSection() {
     <section className="bg-[#FFFFFF]">
       <div className="relative lg:h-screen">
         <div className="relative min-h-[var(--mio-mobile-hero-height,100svh)] overflow-hidden lg:min-h-screen lg:bg-[#D0C1AD]">
-          <a href="#">
+          <a href="/" aria-label="Bosh sahifaga o‘tish">
             <div className="absolute inset-0 lg:hidden">
               <img
                 src={heroImg2}
                 alt=""
+                width="1080"
+                height="1446"
                 fetchPriority="high"
                 loading="eager"
                 decoding="async"
@@ -125,6 +127,8 @@ export default function HomeSection() {
             <img
               src={heroImg}
               alt=""
+              width="1920"
+              height="1080"
               fetchPriority="high"
               loading="eager"
               decoding="async"

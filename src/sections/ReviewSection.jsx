@@ -345,7 +345,7 @@ export default function ReviewSection() {
               <h2 className="pb-2 text-[28px] font-semibold leading-none text-[#161616] sm:text-[34px]">
                 {t("reviews.title")}
               </h2>
-              <p className="mt-3 pb-5 text-[14px] leading-[1.25] text-[#969696] sm:mt-4 sm:pb-6 sm:text-[18px]">
+              <p className="mt-3 pb-5 text-[14px] leading-[1.25] text-[#6B6B6B] sm:mt-4 sm:pb-6 sm:text-[18px]">
                 {t("reviews.description")}
               </p>
 
@@ -501,7 +501,7 @@ export default function ReviewSection() {
                                 src={item.screenImage}
                                 alt=""
                                 draggable="false"
-                                className="h-[99.5%] w-full flex-none  object-top object-bottom"
+                                className="h-auto w-full flex-none aspect-[1179/2556] object-cover object-top"
                               />
                             ))}
                           </div>

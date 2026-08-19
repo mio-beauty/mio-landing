@@ -122,6 +122,8 @@ export default function Navbar({ textColor = "white", reveal = true }) {
           className="h-[24px] w-auto max-w-[158px] object-contain lg:h-[40px] lg:max-w-[210px]"
           src={logoImg}
           alt="MIO BEAUTY"
+          width="5718"
+          height="1310"
           style={{
             opacity: reveal ? 1 : 0,
             transform: reveal

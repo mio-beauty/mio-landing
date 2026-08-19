@@ -50,7 +50,7 @@ function FeaturedProductCard({
             <h3 className="text-[28px] leading-[0.98] font-medium text-[#111111] sm:text-[34px] lg:text-[40px]">
               {title}
             </h3>
-            <span className="rounded-full bg-[#FF8B64] px-1.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-white sm:text-[11px]">
+            <span className="rounded-full bg-[#FF8B64] px-1.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#1D1D1E] sm:text-[11px]">
               {subtitle}
             </span>
           </div>
@@ -89,7 +89,7 @@ function ProductCard({ title, description, image, imageClassName, buyLabel }) {
           <h3 className="line-clamp-2 text-[18px] leading-[1.15] font-medium text-[#111111] sm:text-[20px]">
             {title}
           </h3>
-          <p className="line-clamp-2 pt-2 text-[13px] leading-[1.35] text-[#8A8A8D] sm:text-[14px]">
+          <p className="line-clamp-2 pt-2 text-[13px] leading-[1.35] text-[#66666A] sm:text-[14px]">
             {description}
           </p>
         </div>

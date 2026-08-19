@@ -46,7 +46,7 @@ export default function QuestionSection() {
                   <p className="text-[16px] text-[#0B0B0B]">{item.title}</p>
                 </span>
                 <ChevronRight
-                  className={`shrink-0 text-[#757575] transition-transform duration-300 ${
+                  className={`shrink-0 text-[#5F5F5F] transition-transform duration-300 ${
                     openStates[index] ? "rotate-90" : ""
                   }`}
                 />

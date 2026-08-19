@@ -1,4 +1,4 @@
-import SpfImage from "../../assets/img/spf.png";
+import SpfImage from "../../assets/img/optimized/spf.webp";
 import { useI18n } from "../../i18n/I18nProvider.jsx";
 
 export default function CompositionVisual({
@@ -51,6 +51,8 @@ export default function CompositionVisual({
             <img
               src={SpfImage}
               alt="Product bottle"
+              width="896"
+              height="1200"
               className="w-42.5 select-none sm:w-72 lg:w-125"
               draggable="false"
             />

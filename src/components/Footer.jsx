@@ -113,7 +113,7 @@ export default function Footer() {
                 <div className="relative lg:w-[60%]">
                   <input
                     className={`w-full rounded-lg border-none bg-[#FFFFFF] px-3 py-2.5 outline-none ${
-                      focused || phone ? "text-[#0B0B0B]" : "text-[#757575]"
+                      focused || phone ? "text-[#0B0B0B]" : "text-[#5F5F5F]"
                     }`}
                     placeholder={!error ? "+998" : ""}
                     type="text"
@@ -125,7 +125,7 @@ export default function Footer() {
                   />
 
                   {error && !phone && !focused && (
-                    <span className="pointer-events-none absolute left-3 top-2.5 text-sm text-[#757575]">
+                    <span className="pointer-events-none absolute left-3 top-2.5 text-sm text-[#5F5F5F]">
                       +998<span className="text-red-500">*</span>
                     </span>
                   )}
@@ -140,12 +140,12 @@ export default function Footer() {
                 </button>
               </div>
 
-              <p className="text-[16px] text-[#757575]">{t("footer.helper")}</p>
+              <p className="text-[16px] text-[#B8B8B8]">{t("footer.helper")}</p>
             </div>
           </div>
         </div>
 
-        <div className="px-4 pb-10 pt-8 text-lg text-[#757575] lg:px-0">
+        <div className="px-4 pb-10 pt-8 text-lg text-[#B8B8B8] lg:px-0">
           <p className="text-sm">{t("footer.copyright")}</p>
         </div>
       </div>

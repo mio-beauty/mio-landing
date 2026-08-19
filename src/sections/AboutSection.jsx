@@ -4,8 +4,8 @@ import AboutTimeline from "../components/AboutTimeline.jsx";
 import { getAboutTimelineState } from "../components/aboutTimelineState.js";
 import consultationImage from "../assets/img/Consultation.png";
 import consultationWideImage from "../assets/img/Consultation2.png";
-import heroImage from "../assets/img/banner.jpg";
-import spfImage from "../assets/img/spf.png";
+import heroImage from "../assets/img/optimized/banner.webp";
+import spfImage from "../assets/img/optimized/spf.webp";
 
 // Certificate asset was removed; keep the 2025 image slot empty.
 const certificateImage = null;

@@ -128,12 +128,12 @@ export default function ConsultationSection() {
               />
             </span>
           </h2>
-          <p className="mx-auto max-w-[760px] pt-3 text-sm leading-[1.45] text-[#0000007c] sm:text-base lg:text-[20px]">
+          <p className="mx-auto max-w-[760px] pt-3 text-sm leading-[1.45] text-[#555555] sm:text-base lg:text-[20px]">
             {t("consultation.description")}
           </p>
         </div>
 
-        <div className="mx-auto flex w-full max-w-[720px] flex-col gap-5 py-8 text-[#757575] sm:gap-6 sm:py-10 lg:pt-20">
+        <div className="mx-auto flex w-full max-w-[720px] flex-col gap-5 py-8 text-[#5F5F5F] sm:gap-6 sm:py-10 lg:pt-20">
           <div className="relative border-b border-[#CCCCCC] px-3 py-2.5">
             <input
               className="w-full border-none bg-transparent text-sm text-[#0B0B0B] outline-none"
@@ -228,7 +228,7 @@ export default function ConsultationSection() {
               {status === "failed" && t("consultation.cta")}
             </button>
 
-            <p className="text-center text-xs leading-[1.4] text-[#757575] sm:text-sm lg:text-left">
+            <p className="text-center text-xs leading-[1.4] text-[#5F5F5F] sm:text-sm lg:text-left">
               {t("consultation.helper")}
             </p>
           </div>

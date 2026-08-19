@@ -130,7 +130,6 @@ export default function LoadingIntro() {
   return (
     <div
       className={`loading-intro ${isDone ? "loading-intro--done" : ""}`}
-      aria-label="MIO BEAUTY loading"
     >
       <div ref={stageRef} className="loading-intro__stage" aria-hidden="true">
         {LETTERS.map((letter, index) => (
