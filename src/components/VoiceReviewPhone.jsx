@@ -23,6 +23,7 @@ function buildWaveBars(progress) {
 
 export default function VoiceReviewPhone({
   audioUrl,
+  transcript,
   customerName,
   city,
   isActive = true,
@@ -35,21 +36,25 @@ export default function VoiceReviewPhone({
   const [isExpanded, setIsExpanded] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const transcriptText = transcript?.[language] ?? transcript?.uz ?? "";
 
   useLayoutEffect(() => {
     const card = cardRef.current;
     const details = detailsRef.current;
     if (!card || !details) return undefined;
 
+    const detailsHeight = isExpanded ? details.scrollHeight : 0;
+    const expandedCardHeight = 92 + 8 + detailsHeight + 16;
+
     gsap.killTweensOf([card, details]);
     gsap.to(card, {
-      height: isExpanded ? 158 : 92,
+      height: isExpanded ? expandedCardHeight : 92,
       duration: 0.5,
       ease: "power3.out",
       overwrite: true,
     });
     gsap.to(details, {
-      maxHeight: isExpanded ? 48 : 0,
+      maxHeight: detailsHeight,
       marginTop: isExpanded ? 8 : 0,
       opacity: isExpanded ? 1 : 0,
       y: isExpanded ? 0 : -6,
@@ -61,10 +66,20 @@ export default function VoiceReviewPhone({
     return () => {
       gsap.killTweensOf([card, details]);
     };
-  }, [isExpanded]);
+  }, [isExpanded, transcriptText]);
 
   useEffect(() => {
     if (!isActive) setIsExpanded(false);
+  }, [isActive]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || isActive) return;
+
+    audio.pause();
+    audio.currentTime = 0;
+    setIsPlaying(false);
+    setCurrentTime(0);
   }, [isActive]);
 
   const messageClock = useMemo(() => {
@@ -242,7 +257,7 @@ export default function VoiceReviewPhone({
         ref={detailsRef}
         className="origin-top max-h-0 overflow-hidden text-[12px] leading-[1.35] text-[#8e8e8e] opacity-0"
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        {transcriptText}
       </div>
     </article>
   );

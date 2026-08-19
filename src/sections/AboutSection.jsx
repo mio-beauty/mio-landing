@@ -4,9 +4,11 @@ import AboutTimeline from "../components/AboutTimeline.jsx";
 import { getAboutTimelineState } from "../components/aboutTimelineState.js";
 import consultationImage from "../assets/img/Consultation.png";
 import consultationWideImage from "../assets/img/Consultation2.png";
-import certificateImage from "../assets/img/certifikat.png";
 import heroImage from "../assets/img/banner.jpg";
 import spfImage from "../assets/img/spf.png";
+
+// Certificate asset was removed; keep the 2025 image slot empty.
+const certificateImage = null;
 
 const ABOUT_STEPS = [
   {

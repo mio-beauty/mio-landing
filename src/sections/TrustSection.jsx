@@ -10,8 +10,8 @@ import { useI18n } from "../i18n/I18nProvider.jsx";
 const PREVIEWS = [
   preview1Img,
   preview2Img,
-  preview3Img,
   preview4Img,
+  preview3Img,
   preview5Img,
 ];
 const PREVIEW_EDGE_GUTTER = 24;
@@ -51,6 +51,8 @@ export default function TrustSection() {
   const moveLabelTextYRef = useRef(null);
   const scrollIdleTimeoutRef = useRef(0);
   const isScrollLockedRef = useRef(false);
+  const isPointerInsideSectionRef = useRef(false);
+  const updatePreviewPositionRef = useRef(null);
 
   useEffect(() => {
     if (items[0]?.id) {
@@ -129,8 +131,7 @@ export default function TrustSection() {
   );
 
   useEffect(() => {
-    const dismissPreview = () => {
-      isScrollLockedRef.current = true;
+    const handleScroll = () => {
       if (showFrameRef.current) {
         window.cancelAnimationFrame(showFrameRef.current);
         showFrameRef.current = 0;
@@ -138,24 +139,53 @@ export default function TrustSection() {
       if (scrollIdleTimeoutRef.current) {
         window.clearTimeout(scrollIdleTimeoutRef.current);
       }
-      setHoverPreview((current) => ({
-        ...current,
-        visible: false,
-      }));
-      setHoveredId(null);
-      moveLabelTextXRef.current?.(0);
-      moveLabelTextYRef.current?.(0);
+
+      // Keep the hover preview alive while the pointer is still over Trust.
+      // Scrolling changes the section's position, so refresh the preview from
+      // the last known pointer coordinates and the item under the pointer.
+      if (isPointerInsideSectionRef.current) {
+        isScrollLockedRef.current = false;
+        const { x, y } = pointerPositionRef.current;
+        const target = document
+          .elementsFromPoint(x, y)
+          .map((element) => element.closest("[data-trust-item-id]"))
+          .find(Boolean);
+        const itemId = target?.getAttribute("data-trust-item-id");
+
+        if (itemId) {
+          setActiveId(itemId);
+          setHoveredId(itemId);
+        }
+
+        updatePreviewPositionRef.current?.({
+          clientX: x,
+          clientY: y,
+          movementX: 0,
+          movementY: 0,
+        });
+      }
 
       scrollIdleTimeoutRef.current = window.setTimeout(() => {
         isScrollLockedRef.current = false;
       }, SCROLL_IDLE_DELAY_MS);
     };
 
-    window.addEventListener("scroll", dismissPreview, { passive: true });
+    const dismissPreview = () => {
+      isScrollLockedRef.current = true;
+      setHoverPreview((current) => ({ ...current, visible: false }));
+      setHoveredId(null);
+      moveLabelTextXRef.current?.(0);
+      moveLabelTextYRef.current?.(0);
+      scrollIdleTimeoutRef.current = window.setTimeout(() => {
+        isScrollLockedRef.current = false;
+      }, SCROLL_IDLE_DELAY_MS);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("hashchange", dismissPreview);
 
     return () => {
-      window.removeEventListener("scroll", dismissPreview);
+      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("hashchange", dismissPreview);
     };
   }, []);
@@ -226,6 +256,10 @@ export default function TrustSection() {
     setHoverPreview({ visible: true });
   };
 
+  useEffect(() => {
+    updatePreviewPositionRef.current = updatePreviewPosition;
+  });
+
   const handleItemEnter = (itemId, event) => {
     if (isScrollLockedRef.current) return;
     setActiveId(itemId);
@@ -274,7 +308,17 @@ export default function TrustSection() {
       ref={sectionRef}
       id="results"
       className="relative isolate z-20 overflow-hidden bg-[#FBFBFB] pb-0 pt-8 lg:overflow-visible lg:px-36 lg:py-18"
-      onPointerLeave={hidePreview}
+      onPointerEnter={() => {
+        isPointerInsideSectionRef.current = true;
+      }}
+      onPointerMove={(event) => {
+        isPointerInsideSectionRef.current = true;
+        updatePreviewPosition(event);
+      }}
+      onPointerLeave={() => {
+        isPointerInsideSectionRef.current = false;
+        hidePreview();
+      }}
     >
       <div className="px-4 lg:px-0">
         <div className="mb-8 flex items-end justify-between gap-6 border-b border-[#DED8D1] pb-4 lg:mb-0">
@@ -291,7 +335,7 @@ export default function TrustSection() {
         <>
           <div
             ref={previewRef}
-            className="pointer-events-none fixed left-0 top-0 z-[120] hidden h-[380px] w-[300px] origin-center overflow-hidden rounded-[6px] bg-[#E8DFD4] shadow-[0_30px_80px_rgba(34,24,16,0.16)] transition-transform duration-[120ms] will-change-transform lg:block"
+            className="pointer-events-none fixed left-0 top-0 z-[120] hidden h-[380px] w-[300px] origin-center overflow-hidden rounded-[20px] bg-[#E8DFD4] shadow-[0_30px_80px_rgba(34,24,16,0.16)] transition-transform duration-[120ms] will-change-transform lg:block"
             style={{
               transform: `translate3d(-50%, -50%, 0) scale(${hoverPreview.visible ? 1 : isPreviewMounted ? PREVIEW_CLOSE_SCALE : PREVIEW_ENTER_SCALE})`,
               transitionTimingFunction: PREVIEW_SCALE_EASE,
@@ -351,6 +395,7 @@ export default function TrustSection() {
           return (
             <article
               key={item.id}
+              data-trust-item-id={item.id}
               className="cursor-pointer border-b border-[#DED8D1] transition-colors duration-300"
               onPointerEnter={(event) => handleItemEnter(item.id, event)}
               onPointerMove={(event) => handleItemMove(item.id, event)}
