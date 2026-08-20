@@ -52,7 +52,7 @@ const REVIEW_STEP_VISUALS = [
     id: "review-2",
     order: "02",
     screenImage: phoneShotImg2,
-    productImage: productImg4,
+    productImage: productImg2,
     voiceReview: {
       audioUrl: voiceReviewAudio2,
       transcript: {
@@ -86,7 +86,7 @@ const REVIEW_STEP_VISUALS = [
     id: "review-4",
     order: "04",
     screenImage: phoneShotImg4,
-    productImage: productImg2,
+    productImage: productImg4,
     voiceReview: {
       audioUrl: voiceReviewAudio4,
       transcript: {
@@ -149,36 +149,30 @@ export default function ReviewSection() {
 
   const syncVisibleProducts = useCallback(
     (nextStepIndex) => {
-      const desiredIds = reviewSteps
-        .slice(0, nextStepIndex + 1)
-        .map((item) => item.id)
-        .reverse();
+      // Keep only the active product. Previous products are allowed to finish
+      // their exit animation, but are never retained in the stack.
+      const desiredIds = [reviewSteps[nextStepIndex]?.id].filter(Boolean);
 
       setVisibleProducts((prev) => {
         const prevMap = new Map(prev.map((item) => [item.id, item]));
-        const entering = desiredIds
-          .filter((id) => !prevMap.has(id))
-          .map((id) => {
-            const source = reviewSteps.find((item) => item.id === id);
-            return source ? { ...source, phase: "entering" } : null;
-          })
-          .filter(Boolean);
+        const desiredId = desiredIds[0];
+        const current = desiredId ? prevMap.get(desiredId) : null;
+        const previous = prev.find(
+          (item) => item.id !== desiredId && item.phase !== "exiting",
+        ) ?? prev.find((item) => item.id !== desiredId);
+        const source = reviewSteps.find((item) => item.id === desiredId);
 
-        const persisted = prev.map((item) => {
-          if (desiredIds.includes(item.id)) {
-            return {
-              ...item,
-              phase: item.phase === "exiting" ? "entered" : item.phase,
-            };
-          }
-
-          return {
-            ...item,
-            phase: "exiting",
-          };
-        });
-
-        return [...entering, ...persisted];
+        return [
+          current
+            ? {
+                ...current,
+                phase: current.phase === "exiting" ? "entered" : current.phase,
+              }
+            : source
+              ? { ...source, phase: "entering" }
+              : null,
+          previous ? { ...previous, phase: "exiting" } : null,
+        ].filter(Boolean);
       });
     },
     [reviewSteps],
@@ -624,13 +618,19 @@ export default function ReviewSection() {
                       }}
                     >
                       <div className="flex items-center gap-2">
-                        <div className="grid h-20 w-20 shrink-0 place-items-center overflow-hidden">
+                        <div className="grid h-20 w-20 shrink-0 place-items-center overflow-hidden rounded-xl bg-[#F8F8F8]">
                           <img
                             src={product.productImage}
                             alt=""
                             draggable="false"
                             loading="lazy"
-                            className="h-full w-full object-contain"
+                            className={`h-full w-full object-contain transform-gpu ${
+                              product.id === "review-2"
+                                ? "scale-[1.8]"
+                                : product.id === "review-4"
+                                  ? "scale-[1.25]"
+                                  : "scale-[1.5]"
+                            }`}
                           />
                         </div>
 

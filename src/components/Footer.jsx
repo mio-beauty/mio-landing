@@ -112,7 +112,7 @@ export default function Footer() {
               <div className="flex flex-col gap-2 lg:flex-row">
                 <div className="relative lg:w-[60%]">
                   <input
-                    className={`w-full rounded-lg border-none bg-[#FFFFFF] px-3 py-2.5 outline-none ${
+                    className={`w-full rounded-full border-none bg-[#FFFFFF] px-3 py-2.5 outline-none ${
                       focused || phone ? "text-[#0B0B0B]" : "text-[#5F5F5F]"
                     }`}
                     placeholder={!error ? "+998" : ""}
@@ -133,7 +133,7 @@ export default function Footer() {
 
                 <button
                   onClick={handleSubmit}
-                  className="flex items-center justify-center rounded-3xl border-none bg-[#FFFFFF] px-5 py-2.5 font-medium text-[#0B0B0B]"
+                  className="flex items-center justify-center rounded-full border-none bg-[#FFFFFF] px-5 py-2.5 font-medium text-[#0B0B0B]"
                 >
                   {t("footer.cta")}
                   <ArrowRight size={18} />

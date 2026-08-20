@@ -170,9 +170,9 @@
     "title": "Answers to key questions",
     "description": "All photos are from our clients after a skincare course",
     "items": [
-      { "title": "How much does it cost?", "content": "It really depends on what your skin actually needs. We'll pick the perfect routine for you and let you know the exact price during your consultation." },
-      { "title": "Are your products certified?", "content": "Absolutely! All of our products are officially certified for quality and safety. We'd be more than happy to show you the paperwork during our chat if you'd like." },
-      { "title": "When will I see results?", "content": "You'll probably start noticing the first changes in just a few weeks, depending on your skin. But remember, consistency is key if you want those results to last!" }
+      { "title": "How much does it cost?", "content": "The price of individual products and skincare sets depends on the products selected and your skin’s specific needs. We do not recommend the same products to every client, because everyone’s skin type, condition, concerns, and desired results are different. During the consultation, we first identify your skin’s needs and then recommend suitable skincare options. The price of the selected products or set will be explained in detail during the consultation. Our goal is not to recommend as many products as possible, but to help you choose the care your skin actually needs. That is why we avoid adding unnecessary products and aim to create a simple, convenient, and personalized skincare routine for you." },
+      { "title": "Are your products certified?", "content": "Our products have documents confirming their quality and ingredients. For us, it is important that every product is of good quality, has a clear composition, and is selected appropriately according to the client’s skin needs. We provide detailed information about each product, including its ingredients, purpose, and role in a skincare routine. If you have questions about a product’s quality or composition, the relevant information about supporting documents can be provided during the consultation. When selecting skincare, we pay attention not only to the product name or appearance, but also to its ingredients, purpose, and suitability for your skin’s needs. This helps you receive clear information about every product included in your routine and make a more informed choice when selecting skincare products." },
+      { "title": "When will I see results?", "content": "The first changes can appear differently for each person and depend on the skin’s initial condition, existing concerns, and how consistently the skincare routine is followed. For some clients, improvements in hydration, softness, smoothness, and the overall appearance of the skin may become noticeable within the first few weeks. The skin may start to look more hydrated, softer, smoother, and more cared for. However, concerns such as pigmentation, dark spots, acne marks, uneven skin tone, enlarged pores, or signs of aging may require more time and consistent care. These concerns do not appear overnight, so improving their appearance usually takes time and happens gradually. Using larger amounts of products will not necessarily make the results appear faster. What matters most is using the products in the correct order, in the recommended amount, and consistently. It is also important to monitor your skin throughout the routine, as your skincare needs may change and the routine can be adjusted accordingly. Since every person’s skin responds differently, it would not be appropriate to promise an exact result within a specific timeframe. Consistency, properly selected products, and patience are key to achieving lasting results. Our goal is not simply to recommend products, but to help you build and maintain a proper, consistent skincare routine." }
     ]
   },
   "consultation": {
@@ -215,7 +215,7 @@
     "privacy": "Privacy policy",
     "terms": "User agreement",
     "certificates": "Certificates",
-    "copyright": "Â© 2026 MIOBEAUTY, All rights reserved"
+    "copyright": "© 2026 MIOBEAUTY, All rights reserved"
   },
   "modal": {
     "title": "Leave your contact details for a consultation.",

@@ -104,7 +104,7 @@ export default function ConsultationSection() {
       <div className="relative flex flex-col items-center justify-center px-4 py-12 sm:px-8 sm:py-16 md:px-12 lg:px-16 lg:py-28 xl:px-24 xl:py-36 2xl:px-32">
         <span id="contact" className="absolute -top-28" aria-hidden="true" />
         <div className="mx-auto flex w-full max-w-[1100px] flex-col items-center gap-3 text-center">
-          <h2 className="text-[clamp(1.75rem,4.2vw,3rem)] font-medium leading-[1.08] text-[#0B0B0B]">
+          <h2 className="text-[clamp(1.75rem,4.2vw,3rem)] font-medium leading-[1.08] text-[#0B0B0B] lg:text-[clamp(1.75rem,3.5vw,2.5rem)]">
             <span>
               {t("consultation.titleStart")}
               <img
@@ -138,7 +138,9 @@ export default function ConsultationSection() {
             <input
               className="w-full border-none bg-transparent text-sm text-[#0B0B0B] outline-none"
               type="text"
-              placeholder={!errors.name ? t("consultation.namePlaceholder") : ""}
+              placeholder={
+                !errors.name ? t("consultation.namePlaceholder") : ""
+              }
               value={form.name}
               onChange={handleNameChange}
             />
@@ -155,7 +157,9 @@ export default function ConsultationSection() {
               className="w-full border-none bg-transparent text-sm text-[#0B0B0B] outline-none"
               type="text"
               inputMode="tel"
-              placeholder={!errors.phone ? t("consultation.phonePlaceholder") : ""}
+              placeholder={
+                !errors.phone ? t("consultation.phonePlaceholder") : ""
+              }
               value={form.phone}
               onChange={handlePhoneChange}
               onFocus={handlePhoneFocus}
@@ -217,7 +221,7 @@ export default function ConsultationSection() {
             <button
               onClick={handleClick}
               disabled={status === "loading"}
-              className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#1D1D1D] p-3 text-[15px] text-white duration-300 hover:bg-[#1d1d1de1] sm:text-[16px] lg:w-[240px] lg:shrink-0 lg:py-3"
+              className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#1D1D1D] p-3 text-[15px] text-white duration-300 hover:bg-[#1d1d1de1] sm:text-[16px] lg:w-[240px] lg:shrink-0 lg:py-3"
             >
               {status === "idle" && t("consultation.cta")}
               {status === "loading" && (

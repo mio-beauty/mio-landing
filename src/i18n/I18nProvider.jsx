@@ -1,4 +1,13 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import en from "./locales/en.json";
 import ru from "./locales/ru.json";
 import uz from "./locales/uz.json";
@@ -20,7 +29,7 @@ function getNestedValue(source, path) {
 }
 
 export function I18nProvider({ children }) {
-  const [language, setLanguage] = useState(() => {
+  const [language, setLanguageState] = useState(() => {
     if (typeof window === "undefined") return DEFAULT_LANGUAGE;
 
     const storedLanguage = window.localStorage.getItem(STORAGE_KEY);
@@ -28,6 +37,48 @@ export function I18nProvider({ children }) {
       ? storedLanguage
       : DEFAULT_LANGUAGE;
   });
+  const pendingScrollRef = useRef(null);
+
+  const setLanguage = useCallback((nextLanguage) => {
+    if (typeof window !== "undefined") {
+      const scrollY = window.scrollY;
+      const distanceFromBottom =
+        document.documentElement.scrollHeight - scrollY - window.innerHeight;
+
+      pendingScrollRef.current = {
+        scrollY,
+        distanceFromBottom,
+      };
+    }
+
+    setLanguageState(nextLanguage);
+  }, []);
+
+  useLayoutEffect(() => {
+    const pendingScroll = pendingScrollRef.current;
+    if (pendingScroll === null || typeof window === "undefined") return;
+
+    const restoreScroll = () => {
+      const isNearBottom = pendingScroll.distanceFromBottom < 24;
+      const targetY = isNearBottom
+        ? Math.max(
+            0,
+            document.documentElement.scrollHeight -
+              window.innerHeight -
+              pendingScroll.distanceFromBottom,
+          )
+        : pendingScroll.scrollY;
+
+      globalThis.__mioLenis?.scrollTo(targetY, { immediate: true });
+      window.scrollTo(0, targetY);
+    };
+
+    restoreScroll();
+    const frameId = window.requestAnimationFrame(restoreScroll);
+    pendingScrollRef.current = null;
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [language, setLanguage]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -53,7 +104,7 @@ export function I18nProvider({ children }) {
       numberLocale:
         language === "ru" ? "ru-RU" : language === "en" ? "en-US" : "uz-UZ",
     };
-  }, [language]);
+  }, [language, setLanguage]);
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
