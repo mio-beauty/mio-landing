@@ -263,6 +263,8 @@ export default function AboutSection() {
                     ref={mainImageRef}
                     src={activeStep.primaryImage}
                     alt={activeStep.title}
+                    loading="lazy"
+                    decoding="async"
                     className="absolute inset-0 h-full w-full object-cover will-change-transform will-change-opacity"
                   />
                 </div>
@@ -272,6 +274,8 @@ export default function AboutSection() {
                     ref={smallImageRef}
                     src={activeStep.secondaryImage}
                     alt={`${activeStep.year} detail`}
+                    loading="lazy"
+                    decoding="async"
                     className="absolute inset-0 h-full w-full object-cover will-change-transform will-change-opacity"
                   />
                 </div>
@@ -308,9 +312,9 @@ export default function AboutSection() {
               className="about-mobile-reveal relative min-h-[680px] overflow-hidden rounded-[24px] bg-white px-1 pb-8 pt-1"
             >
               <div className="relative h-[370px] overflow-hidden rounded-[22px] bg-[#F3E5D9]">
-                <img src={activeStep.primaryImage} alt={activeStep.title} className="absolute inset-0 h-full w-full object-cover" />
+                <img src={activeStep.primaryImage} alt={activeStep.title} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
                 <div className="absolute bottom-4 left-4 h-[148px] w-[124px] overflow-hidden rounded-[18px] border-4 border-white bg-[#FAEEE4] shadow-[0_10px_24px_rgba(53,36,24,0.16)]">
-                  <img src={activeStep.secondaryImage} alt={`${activeStep.year} detail`} className="h-full w-full object-cover" />
+                  <img src={activeStep.secondaryImage} alt={`${activeStep.year} detail`} loading="lazy" decoding="async" className="h-full w-full object-cover" />
                 </div>
               </div>
               <div className="mt-9 px-1">
@@ -339,6 +343,8 @@ export default function AboutSection() {
                     <img
                       src={step.primaryImage}
                       alt={step.title}
+                      loading="lazy"
+                      decoding="async"
                       className="aspect-[0.98] w-full object-cover"
                     />
 
@@ -346,6 +352,8 @@ export default function AboutSection() {
                       <img
                         src={step.secondaryImage}
                         alt={`${step.year} detail`}
+                        loading="lazy"
+                        decoding="async"
                         className="h-full w-full object-cover"
                       />
                     </div>

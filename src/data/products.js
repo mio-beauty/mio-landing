@@ -283,4 +283,13 @@ const products = [
   },
 ];
 
-export default products;
+const productsWithDetails = products.map((product) => ({
+  ...product,
+  details: {
+    uz: "Bu mahsulot haqida batafsil ma’lumot keyinroq qo‘shiladi.",
+    ru: "Подробная информация об этом продукте будет добавлена позже.",
+    en: "Detailed information about this product will be added soon.",
+  },
+}));
+
+export default productsWithDetails;

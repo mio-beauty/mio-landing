@@ -111,6 +111,8 @@ export default function ConsultationSection() {
                 className="hidden h-[1.15em] w-auto px-2 align-middle lg:inline-block xl:px-3"
                 src={consultationWideImg}
                 alt=""
+                loading="lazy"
+                decoding="async"
               />
               {t("consultation.titleMiddle")}
             </span>
@@ -119,12 +121,16 @@ export default function ConsultationSection() {
                 className="hidden h-[1.15em] w-auto px-2 align-middle lg:inline-block xl:px-3"
                 src={consultationImg}
                 alt=""
+                loading="lazy"
+                decoding="async"
               />
               {t("consultation.titleEnd")}
               <img
                 className="hidden h-[1.15em] w-auto px-2 align-middle lg:inline-block xl:px-3"
                 src={consultationAltImg}
                 alt=""
+                loading="lazy"
+                decoding="async"
               />
             </span>
           </h2>

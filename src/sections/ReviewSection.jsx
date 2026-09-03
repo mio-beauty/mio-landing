@@ -13,92 +13,92 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import VoiceReviewPhone from "../components/VoiceReviewPhone";
 import { useI18n } from "../i18n/I18nProvider.jsx";
 import iphoneMockupImg from "../assets/imags/iphone_mockup_1x1.svg";
-import productImg2 from "../assets/img/pro1.png";
-import productImg3 from "../assets/img/pro2.png";
-import productImg1 from "../assets/img/pro3.png";
-import productImg4 from "../assets/img/pro4.png";
+// import productImg2 from "../assets/img/pro1.png";
+// import productImg3 from "../assets/img/pro2.png";
+// import productImg1 from "../assets/img/pro3.png";
+// import productImg4 from "../assets/img/pro4.png";
 import phoneShotImg1 from "../assets/img/ph1.jpg";
 import phoneShotImg2 from "../assets/img/ph2.jpg";
 import phoneShotImg3 from "../assets/img/ph3.jpg";
 import phoneShotImg4 from "../assets/img/ph4.jpg";
-import voiceReviewAudio1 from "../assets/img/mp1.mp3";
-import voiceReviewAudio2 from "../assets/img/mp2.mp3";
-import voiceReviewAudio3 from "../assets/img/mp3.mp3";
-import voiceReviewAudio4 from "../assets/img/mp4.mp3";
+// import voiceReviewAudio1 from "../assets/img/mp1.mp3";
+// import voiceReviewAudio2 from "../assets/img/mp2.mp3";
+// import voiceReviewAudio3 from "../assets/img/mp3.mp3";
+// import voiceReviewAudio4 from "../assets/img/mp4.mp3";
 
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
-const REVIEW_STEP_VISUALS = [
-  {
-    id: "review-1",
-    order: "01",
-    screenImage: phoneShotImg1,
-    productImage: productImg1,
-    voiceReview: {
-      audioUrl: voiceReviewAudio1,
-      transcript: {
-        uz: "Ayniqsa, mana bu yuzdagi qichish, achishishdan judayam qiynalardim. Mana bu suv tekkanda, yozda zagar olganga oʻxshab qizarib ketardi. Kuperozlarimda muammo koʻp boʻlardi i krem koʻp tanlardi. Keyin SPF surganimda, u SPFdan qanaqadir yuzimda... terida ajratma hosil boʻlib, yuzga oʻtirmasdi. Hozir namlantiruvchi krem, tilla qoʻshilganlik krem i plyus mana bu... SPFni ketma-ketlikda surayotganim uchun, oʻzi yuzim... anavi dimogʻimdan emas, yuzimdan nafas olayotgandekman. Qanaqadir boshqacha, yengil boʻlyapman-da.",
-        ru: "Особенно я очень мучилась от зуда и жжения на лице. Когда попадала вода, летом лицо краснело, как будто обгорело на солнце. Было много проблем с куперозом, и кожа подбирала далеко не каждый крем. Потом, когда я наносила SPF, от этого SPF на лице... на коже появлялись какие-то выделения, и он не ложился на лицо. Сейчас, из-за того что я последовательно наношу увлажняющий крем, крем с добавлением золота и плюс этот... SPF, мое лицо... как будто я дышу не носом, а самим лицом. Я чувствую себя как-то по-другому, так легко.",
-        en: "Especially, I suffered a lot from itching and burning on my face. When water touched it, in the summer it would turn red as if I had gotten a sunburn. I had a lot of issues with rosacea, and my skin was very picky with creams. Then, when I applied SPF, that SPF would somehow cause... secretions on the skin, and it wouldn't settle on my face properly. Now, because I am applying the moisturizing cream, the gold-infused cream, plus this... SPF in sequence, my face... it feels like I'm breathing through my face rather than my nose. I feel somehow different and so light.",
-      },
+// const REVIEW_STEP_VISUALS = [
+//   {
+//     id: "review-1",
+//     order: "01",
+//     screenImage: phoneShotImg1,
+//     productImage: productImg1,
+//     voiceReview: {
+//       // audioUrl: voiceReviewAudio1,
+//       transcript: {
+//         uz: "Ayniqsa, mana bu yuzdagi qichish, achishishdan judayam qiynalardim. Mana bu suv tekkanda, yozda zagar olganga oʻxshab qizarib ketardi. Kuperozlarimda muammo koʻp boʻlardi i krem koʻp tanlardi. Keyin SPF surganimda, u SPFdan qanaqadir yuzimda... terida ajratma hosil boʻlib, yuzga oʻtirmasdi. Hozir namlantiruvchi krem, tilla qoʻshilganlik krem i plyus mana bu... SPFni ketma-ketlikda surayotganim uchun, oʻzi yuzim... anavi dimogʻimdan emas, yuzimdan nafas olayotgandekman. Qanaqadir boshqacha, yengil boʻlyapman-da.",
+//         ru: "Особенно я очень мучилась от зуда и жжения на лице. Когда попадала вода, летом лицо краснело, как будто обгорело на солнце. Было много проблем с куперозом, и кожа подбирала далеко не каждый крем. Потом, когда я наносила SPF, от этого SPF на лице... на коже появлялись какие-то выделения, и он не ложился на лицо. Сейчас, из-за того что я последовательно наношу увлажняющий крем, крем с добавлением золота и плюс этот... SPF, мое лицо... как будто я дышу не носом, а самим лицом. Я чувствую себя как-то по-другому, так легко.",
+//         en: "Especially, I suffered a lot from itching and burning on my face. When water touched it, in the summer it would turn red as if I had gotten a sunburn. I had a lot of issues with rosacea, and my skin was very picky with creams. Then, when I applied SPF, that SPF would somehow cause... secretions on the skin, and it wouldn't settle on my face properly. Now, because I am applying the moisturizing cream, the gold-infused cream, plus this... SPF in sequence, my face... it feels like I'm breathing through my face rather than my nose. I feel somehow different and so light.",
+//       },
 
-      customerName: "Munisa",
-      city: "Andijon",
-    },
-  },
-  {
-    id: "review-2",
-    order: "02",
-    screenImage: phoneShotImg2,
-    productImage: productImg2,
-    voiceReview: {
-      audioUrl: voiceReviewAudio2,
-      transcript: {
-        uz: "Rahmat kattakon! Allah rozi boʻlsin, barakasini bersin. Yoʻq, hammasi zoʻr. Qachon qanaqa zakaz qilsam, vaqtida, aytganimdek, koʻnglimdagidek yetib keladi. Keti-ketiga ulanib, alhamdulillah, suryapman, ishlatyapman, hammasi zoʻr. Qizimnikida ham zoʻr, ugrisiga ancha qiynalardi, hozir yuzlari ancha yaxshilangan, terini rangi ham yaxshilangan.",
-        ru: "Огромное спасибо! Пусть Аллах будет доволен и дарует благословение. Нет, всё супер. Когда бы и что бы я ни заказала, всё приходит вовремя, как я и просила, именно так, как мне хочется. Одно за другим, альхамдулиллях, наношу, использую, всё отлично. У дочки тоже всё супер, она очень мучилась с акне, сейчас её лицо намного улучшилось, и цвет кожи тоже стал лучше.",
-        en: "Thank you so much! May Allah be pleased with you and bestow His blessings. No, everything is great. Whenever and whatever I order, it arrives on time, just as I requested, exactly to my heart's desire. One after another, alhamdulillah, I'm applying it, using it, everything is great. It's great for my daughter too; she used to suffer a lot with acne, but now her face has improved significantly, and her skin tone has improved as well.",
-      },
-      customerName: "Malika",
-      city: "Toshkent",
-    },
-  },
-  {
-    id: "review-3",
-    order: "03",
-    screenImage: phoneShotImg3,
-    productImage: productImg3,
+//       customerName: "Munisa",
+//       city: "Andijon",
+//     },
+//   },
+//   {
+//     id: "review-2",
+//     order: "02",
+//     screenImage: phoneShotImg2,
+//     productImage: productImg2,
+//     voiceReview: {
+//       // audioUrl: voiceReviewAudio2,
+//       transcript: {
+//         uz: "Rahmat kattakon! Allah rozi boʻlsin, barakasini bersin. Yoʻq, hammasi zoʻr. Qachon qanaqa zakaz qilsam, vaqtida, aytganimdek, koʻnglimdagidek yetib keladi. Keti-ketiga ulanib, alhamdulillah, suryapman, ishlatyapman, hammasi zoʻr. Qizimnikida ham zoʻr, ugrisiga ancha qiynalardi, hozir yuzlari ancha yaxshilangan, terini rangi ham yaxshilangan.",
+//         ru: "Огромное спасибо! Пусть Аллах будет доволен и дарует благословение. Нет, всё супер. Когда бы и что бы я ни заказала, всё приходит вовремя, как я и просила, именно так, как мне хочется. Одно за другим, альхамдулиллях, наношу, использую, всё отлично. У дочки тоже всё супер, она очень мучилась с акне, сейчас её лицо намного улучшилось, и цвет кожи тоже стал лучше.",
+//         en: "Thank you so much! May Allah be pleased with you and bestow His blessings. No, everything is great. Whenever and whatever I order, it arrives on time, just as I requested, exactly to my heart's desire. One after another, alhamdulillah, I'm applying it, using it, everything is great. It's great for my daughter too; she used to suffer a lot with acne, but now her face has improved significantly, and her skin tone has improved as well.",
+//       },
+//       customerName: "Malika",
+//       city: "Toshkent",
+//     },
+//   },
+//   {
+//     id: "review-3",
+//     order: "03",
+//     screenImage: phoneShotImg3,
+//     productImage: productImg3,
 
-    voiceReview: {
-      audioUrl: voiceReviewAudio3,
-      transcript: {
-        uz: "Assalomu alaykum, yaxshimisiz? Birinchi kunidanoq oʻzi effekti sezildi. Tiniqlashishni boshladi, hozir yo... natijasi zoʻr! Yana olamiz i oluvchilarga tavsiya beramiz.",
-        ru: "Здравствуйте, как вы? Эффект был ощутим с самого первого дня. Кожа начала светлеть, сейчас ну... результат супер! Будем брать ещё и рекомендуем покупателям.",
-        en: "Hello, how are you? The effect was noticeable right from the very first day. It started to clear up, and now well... the result is awesome! We will buy again and we recommend it to buyers.",
-      },
+//     voiceReview: {
+//       // audioUrl: voiceReviewAudio3,
+//       transcript: {
+//         uz: "Assalomu alaykum, yaxshimisiz? Birinchi kunidanoq oʻzi effekti sezildi. Tiniqlashishni boshladi, hozir yo... natijasi zoʻr! Yana olamiz i oluvchilarga tavsiya beramiz.",
+//         ru: "Здравствуйте, как вы? Эффект был ощутим с самого первого дня. Кожа начала светлеть, сейчас ну... результат супер! Будем брать ещё и рекомендуем покупателям.",
+//         en: "Hello, how are you? The effect was noticeable right from the very first day. It started to clear up, and now well... the result is awesome! We will buy again and we recommend it to buyers.",
+//       },
 
-      customerName: "Ruxshona",
-      city: "Andijon",
-    },
-  },
-  {
-    id: "review-4",
-    order: "04",
-    screenImage: phoneShotImg4,
-    productImage: productImg4,
-    voiceReview: {
-      audioUrl: voiceReviewAudio4,
-      transcript: {
-        uz: "Yaxshimisiz, charchamayapsizmi? Effektlari boʻyicha... mi? Effekti vapshe zoʻr! Yuzim ancha tiniqlashib, yaltirab, rosa yaxshi boʻlyapti. Effektlari zoʻr ekan. Rahmat sizlarga!",
-        ru: "Здравствуйте, как вы? Не устаете? Насчет эффекта... да? Эффект вообще супер! Лицо заметно посветлело, сияет, всё становится очень хорошо. Эффект действительно классный. Спасибо вам!",
-        en: "Hello, how are you? Are you doing well? Regarding the effects... right? The effect is absolutely amazing! My face has cleared up a lot, it's glowing, and it's getting really good. The effects are great. Thank you all!",
-      },
-      customerName: "Nilufar",
-      city: "Samarqand",
-    },
-  },
-];
+//       customerName: "Ruxshona",
+//       city: "Andijon",
+//     },
+//   },
+//   {
+//     id: "review-4",
+//     order: "04",
+//     screenImage: phoneShotImg4,
+//     productImage: productImg4,
+//     voiceReview: {
+//       // audioUrl: voiceReviewAudio4,
+//       transcript: {
+//         uz: "Yaxshimisiz, charchamayapsizmi? Effektlari boʻyicha... mi? Effekti vapshe zoʻr! Yuzim ancha tiniqlashib, yaltirab, rosa yaxshi boʻlyapti. Effektlari zoʻr ekan. Rahmat sizlarga!",
+//         ru: "Здравствуйте, как вы? Не устаете? Насчет эффекта... да? Эффект вообще супер! Лицо заметно посветлело, сияет, всё становится очень хорошо. Эффект действительно классный. Спасибо вам!",
+//         en: "Hello, how are you? Are you doing well? Regarding the effects... right? The effect is absolutely amazing! My face has cleared up a lot, it's glowing, and it's getting really good. The effects are great. Thank you all!",
+//       },
+//       customerName: "Nilufar",
+//       city: "Samarqand",
+//     },
+//   },
+// ];
 
 const MOTION_MS = 760;
 const MOTION_SEC = 0.76;
@@ -157,9 +157,10 @@ export default function ReviewSection() {
         const prevMap = new Map(prev.map((item) => [item.id, item]));
         const desiredId = desiredIds[0];
         const current = desiredId ? prevMap.get(desiredId) : null;
-        const previous = prev.find(
-          (item) => item.id !== desiredId && item.phase !== "exiting",
-        ) ?? prev.find((item) => item.id !== desiredId);
+        const previous =
+          prev.find(
+            (item) => item.id !== desiredId && item.phase !== "exiting",
+          ) ?? prev.find((item) => item.id !== desiredId);
         const source = reviewSteps.find((item) => item.id === desiredId);
 
         return [
@@ -523,8 +524,7 @@ export default function ReviewSection() {
                           key={voiceStep.id}
                           className="absolute inset-0 transition-[transform,opacity] duration-700 ease-[cubic-bezier(.16,1,.3,1)]"
                           style={{
-                            zIndex:
-                              isInStack ? 10 - distance : 0,
+                            zIndex: isInStack ? 10 - distance : 0,
                             transform: !isInStack
                               ? "translateY(0) scale(.96)"
                               : stackIndex < 0

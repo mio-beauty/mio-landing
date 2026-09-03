@@ -13,7 +13,7 @@ import ru from "./locales/ru.json";
 import uz from "./locales/uz.json";
 
 const STORAGE_KEY = "mio-language";
-const DEFAULT_LANGUAGE = "uz";
+const DEFAULT_LANGUAGE = "ru";
 const SUPPORTED_LANGUAGES = ["uz", "ru", "en"];
 
 const resources = {

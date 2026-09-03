@@ -10,10 +10,8 @@
     "navItems": [
       { "label": "Ingredients", "href": "#composition" },
       { "label": "Products", "href": "#catalog" },
-      { "label": "Reviews", "href": "#reviews" },
       { "label": "Questions", "href": "#questions" },
-      { "label": "Contacts", "href": "#contact" },
-      { "label": "About", "href": "#about" }
+      { "label": "Contacts", "href": "#contact" }
     ],
     "selectLanguage": "Select language",
     "openMenu": "Open menu",
@@ -24,7 +22,11 @@
     "stats": [
       { "value": 100000, "suffix": "+", "text": "Customers chose MIO Beauty" },
       { "value": 92, "suffix": "%", "text": "Our customers choose us again" },
-      { "value": 300, "suffix": "+", "text": "Orders - delivered on time every day" }
+      {
+        "value": 300,
+        "suffix": "+",
+        "text": "Orders - delivered on time every day"
+      }
     ],
     "titleLead": "Skincare and skin care - that's us.",
     "titleRest": "MIO - BEAUTY",
@@ -40,7 +42,13 @@
     "problemButtonText": "Leave your number for a free consultation.",
     "modalButtonText": "View solutions",
     "scrollHint": "Scroll down",
-    "problemTitles": ["Acne", "Wrinkles", "Pigmentation", "Dryness", "Sensitivity"]
+    "problemTitles": [
+      "Acne",
+      "Wrinkles",
+      "Pigmentation",
+      "Dryness",
+      "Sensitivity"
+    ]
   },
   "products": {
     "featured": [
@@ -58,14 +66,23 @@
       }
     ],
     "cards": [
-      { "id": 1, "title": "Whitening cream", "description": "Skin whitening agent" },
+      {
+        "id": 1,
+        "title": "Whitening cream",
+        "description": "Skin whitening agent"
+      },
       { "id": 2, "title": "Micellar water", "description": "Makeup remover" },
-      { "id": 3, "title": "Moisturizing cream", "description": "Skin moisturizer" },
+      {
+        "id": 3,
+        "title": "Moisturizing cream",
+        "description": "Skin moisturizer"
+      },
       { "id": 4, "title": "Face mask", "description": "Deep skin care" },
       { "id": 5, "title": "Sparkling oil", "description": "Anti ageing agent" }
     ],
-    "buyNow": "Buy now",
-    "buy": "Buy",
+    "buyNow": "Learn more",
+    "buy": "Learn more",
+    "detailsPlaceholder": "Product ingredients, directions and benefits will be added here.",
     "allTitle": "See all our products"
   },
   "result": {
@@ -86,11 +103,31 @@
     "description": "Quality care, convenient service, and results that bring you back to us.",
     "hoverLabel": "Contact",
     "items": [
-      { "id": "01", "title": "Premium Quality", "service": "Premium skincare products imported from Switzerland, ranked among the world's top 3." },
-      { "id": "02", "title": "Personalized Consultation", "service": "We analyze your skin and recommend the skincare routine and products that are best suited to your needs." },
-      { "id": "03", "title": "Fast Delivery", "service": "We deliver your order quickly and conveniently throughout Tashkent." },
-      { "id": "04", "title": "100,000+ Happy Customers", "service": "More than 100,000 customers have chosen MIO Beauty for their daily skincare routine." },
-      { "id": "05", "title": "Lasting Results", "service": "With the right skincare routine and high-quality products, we help you achieve healthy, beautiful skin." }
+      {
+        "id": "01",
+        "title": "Premium Quality",
+        "service": "Premium skincare products imported from Switzerland, ranked among the world's top 3."
+      },
+      {
+        "id": "02",
+        "title": "Personalized Consultation",
+        "service": "We analyze your skin and recommend the skincare routine and products that are best suited to your needs."
+      },
+      {
+        "id": "03",
+        "title": "Fast Delivery",
+        "service": "We deliver your order quickly and conveniently throughout Tashkent."
+      },
+      {
+        "id": "04",
+        "title": "100,000+ Happy Customers",
+        "service": "More than 100,000 customers have chosen MIO Beauty for their daily skincare routine."
+      },
+      {
+        "id": "05",
+        "title": "Lasting Results",
+        "service": "With the right skincare routine and high-quality products, we help you achieve healthy, beautiful skin."
+      }
     ]
   },
   "composition": {
@@ -100,10 +137,22 @@
     "contactCta": "Contact",
     "contactAria": "Go to the consultation section",
     "features": [
-      { "title": "Top-level quality", "text": "A product trusted by international dermatologists and cosmetology experts." },
-      { "title": "Suitable for sensitive skin", "text": "Does not dry out or harm the skin. A perfect choice for delicate faces." },
-      { "title": "Ingredients from Europe", "text": "All natural and beneficial ingredients needed for your skincare are imported directly from Europe." },
-      { "title": "Eco-friendly and safe", "text": "97.8% of the formula is eco-friendly. Pure care with no unnecessary or harmful chemicals." }
+      {
+        "title": "Top-level quality",
+        "text": "A product trusted by international dermatologists and cosmetology experts."
+      },
+      {
+        "title": "Suitable for sensitive skin",
+        "text": "Does not dry out or harm the skin. A perfect choice for delicate faces."
+      },
+      {
+        "title": "Ingredients from Europe",
+        "text": "All natural and beneficial ingredients needed for your skincare are imported directly from Europe."
+      },
+      {
+        "title": "Eco-friendly and safe",
+        "text": "97.8% of the formula is eco-friendly. Pure care with no unnecessary or harmful chemicals."
+      }
     ]
   },
   "reviews": {
@@ -170,9 +219,18 @@
     "title": "Answers to key questions",
     "description": "All photos are from our clients after a skincare course",
     "items": [
-      { "title": "How much does it cost?", "content": "The price of individual products and skincare sets depends on the products selected and your skin’s specific needs. We do not recommend the same products to every client, because everyone’s skin type, condition, concerns, and desired results are different. During the consultation, we first identify your skin’s needs and then recommend suitable skincare options. The price of the selected products or set will be explained in detail during the consultation. Our goal is not to recommend as many products as possible, but to help you choose the care your skin actually needs. That is why we avoid adding unnecessary products and aim to create a simple, convenient, and personalized skincare routine for you." },
-      { "title": "Are your products certified?", "content": "Our products have documents confirming their quality and ingredients. For us, it is important that every product is of good quality, has a clear composition, and is selected appropriately according to the client’s skin needs. We provide detailed information about each product, including its ingredients, purpose, and role in a skincare routine. If you have questions about a product’s quality or composition, the relevant information about supporting documents can be provided during the consultation. When selecting skincare, we pay attention not only to the product name or appearance, but also to its ingredients, purpose, and suitability for your skin’s needs. This helps you receive clear information about every product included in your routine and make a more informed choice when selecting skincare products." },
-      { "title": "When will I see results?", "content": "The first changes can appear differently for each person and depend on the skin’s initial condition, existing concerns, and how consistently the skincare routine is followed. For some clients, improvements in hydration, softness, smoothness, and the overall appearance of the skin may become noticeable within the first few weeks. The skin may start to look more hydrated, softer, smoother, and more cared for. However, concerns such as pigmentation, dark spots, acne marks, uneven skin tone, enlarged pores, or signs of aging may require more time and consistent care. These concerns do not appear overnight, so improving their appearance usually takes time and happens gradually. Using larger amounts of products will not necessarily make the results appear faster. What matters most is using the products in the correct order, in the recommended amount, and consistently. It is also important to monitor your skin throughout the routine, as your skincare needs may change and the routine can be adjusted accordingly. Since every person’s skin responds differently, it would not be appropriate to promise an exact result within a specific timeframe. Consistency, properly selected products, and patience are key to achieving lasting results. Our goal is not simply to recommend products, but to help you build and maintain a proper, consistent skincare routine." }
+      {
+        "title": "How much does it cost?",
+        "content": "The price of individual products and skincare sets depends on the products selected and your skin’s specific needs. We do not recommend the same products to every client, because everyone’s skin type, condition, concerns, and desired results are different. During the consultation, we first identify your skin’s needs and then recommend suitable skincare options. The price of the selected products or set will be explained in detail during the consultation. Our goal is not to recommend as many products as possible, but to help you choose the care your skin actually needs. That is why we avoid adding unnecessary products and aim to create a simple, convenient, and personalized skincare routine for you."
+      },
+      {
+        "title": "Are your products certified?",
+        "content": "Our products have documents confirming their quality and ingredients. For us, it is important that every product is of good quality, has a clear composition, and is selected appropriately according to the client’s skin needs. We provide detailed information about each product, including its ingredients, purpose, and role in a skincare routine. If you have questions about a product’s quality or composition, the relevant information about supporting documents can be provided during the consultation. When selecting skincare, we pay attention not only to the product name or appearance, but also to its ingredients, purpose, and suitability for your skin’s needs. This helps you receive clear information about every product included in your routine and make a more informed choice when selecting skincare products."
+      },
+      {
+        "title": "When will I see results?",
+        "content": "The first changes can appear differently for each person and depend on the skin’s initial condition, existing concerns, and how consistently the skincare routine is followed. For some clients, improvements in hydration, softness, smoothness, and the overall appearance of the skin may become noticeable within the first few weeks. The skin may start to look more hydrated, softer, smoother, and more cared for. However, concerns such as pigmentation, dark spots, acne marks, uneven skin tone, enlarged pores, or signs of aging may require more time and consistent care. These concerns do not appear overnight, so improving their appearance usually takes time and happens gradually. Using larger amounts of products will not necessarily make the results appear faster. What matters most is using the products in the correct order, in the recommended amount, and consistently. It is also important to monitor your skin throughout the routine, as your skincare needs may change and the routine can be adjusted accordingly. Since every person’s skin responds differently, it would not be appropriate to promise an exact result within a specific timeframe. Consistency, properly selected products, and patience are key to achieving lasting results. Our goal is not simply to recommend products, but to help you build and maintain a proper, consistent skincare routine."
+      }
     ]
   },
   "consultation": {
@@ -240,25 +298,45 @@
       {
         "year": "2023",
         "title": "The brand launched, and the first customers quickly noticed the results.",
-        "titleLines": ["The brand launched,", "and the first", "customers quickly", "noticed the results."],
+        "titleLines": [
+          "The brand launched,",
+          "and the first",
+          "customers quickly",
+          "noticed the results."
+        ],
         "description": "The products were adapted for everyday use, and consultation became an important part of the service. A loyal audience started forming around MIO."
       },
       {
         "year": "2024",
         "title": "The range expanded and the results became even more systematic.",
-        "titleLines": ["The range expanded,", "and the results", "became even", "more systematic."],
+        "titleLines": [
+          "The range expanded,",
+          "and the results",
+          "became even",
+          "more systematic."
+        ],
         "description": "Separate solutions appeared for different skin needs. Customers began choosing us not only for the products, but also for the right care direction."
       },
       {
         "year": "2025",
         "title": "Quality, service and trust came together in one place.",
-        "titleLines": ["Quality, service", "and trust", "came together", "in one place."],
+        "titleLines": [
+          "Quality, service",
+          "and trust",
+          "came together",
+          "in one place."
+        ],
         "description": "We raised our quality standards and made the user journey simpler. At every step, we aimed to make the process clear and convenient."
       },
       {
         "year": "2026",
         "title": "Today MIO makes skincare simple, aesthetic and effective.",
-        "titleLines": ["Today MIO", "makes skincare", "simple, aesthetic", "and effective."],
+        "titleLines": [
+          "Today MIO",
+          "makes skincare",
+          "simple, aesthetic",
+          "and effective."
+        ],
         "description": "Our goal has not changed: helping each person find the right path for their skin. The brand is growing, but the person and their results are still at the center."
       }
     ]

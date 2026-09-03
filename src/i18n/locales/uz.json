@@ -10,10 +10,8 @@
     "navItems": [
       { "label": "Tarkib", "href": "#composition" },
       { "label": "Mahsulotlar", "href": "#catalog" },
-      { "label": "Sharhlar", "href": "#reviews" },
       { "label": "Savollar", "href": "#questions" },
-      { "label": "Kontaktlar", "href": "#contact" },
-      { "label": "Biz haqimizda", "href": "#about" }
+      { "label": "Kontaktlar", "href": "#contact" }
     ],
     "selectLanguage": "Tilni tanlang",
     "openMenu": "Menyuni ochish",
@@ -22,9 +20,21 @@
   "home": {
     "categories": ["Akne", "Ajin", "Dog'", "Quruqlik"],
     "stats": [
-      { "value": 100000, "suffix": "+", "text": "MIO Beauty'ni tanlagan mijozlar" },
-      { "value": 92, "suffix": "%", "text": "Mijozlarimiz yana bizni tanlaydi" },
-      { "value": 300, "suffix": "+", "text": "buyurtma — har kuni o'z vaqtida yetkaziladi" }
+      {
+        "value": 100000,
+        "suffix": "+",
+        "text": "MIO Beauty'ni tanlagan mijozlar"
+      },
+      {
+        "value": 92,
+        "suffix": "%",
+        "text": "Mijozlarimiz yana bizni tanlaydi"
+      },
+      {
+        "value": 300,
+        "suffix": "+",
+        "text": "buyurtma — har kuni o'z vaqtida yetkaziladi"
+      }
     ],
     "titleLead": "Parvarishlash va teri g'amxo'rligi - bu Biz. ",
     "titleRest": "MIO - GO'ZALLIK",
@@ -58,14 +68,35 @@
       }
     ],
     "cards": [
-      { "id": 1, "title": "Oqartiruvchi krem", "description": "Terini oqartiruvchi vosita" },
-      { "id": 2, "title": "Mitselyar suv", "description": "Makiyajni tozalash vositasi" },
-      { "id": 3, "title": "Namlantiruvchi krem", "description": "Terini namlantiruvchi vosita" },
-      { "id": 4, "title": "Yuz niqobi", "description": "Teri uchun chuqur parvarish" },
-      { "id": 5, "title": "Tomchi moyli zardoba", "description": "Ajinlarga qarshi serum" }
+      {
+        "id": 1,
+        "title": "Oqartiruvchi krem",
+        "description": "Terini oqartiruvchi vosita"
+      },
+      {
+        "id": 2,
+        "title": "Mitselyar suv",
+        "description": "Makiyajni tozalash vositasi"
+      },
+      {
+        "id": 3,
+        "title": "Namlantiruvchi krem",
+        "description": "Terini namlantiruvchi vosita"
+      },
+      {
+        "id": 4,
+        "title": "Yuz niqobi",
+        "description": "Teri uchun chuqur parvarish"
+      },
+      {
+        "id": 5,
+        "title": "Tomchi moyli zardoba",
+        "description": "Ajinlarga qarshi serum"
+      }
     ],
-    "buyNow": "Hozir sotib olish",
-    "buy": "Sotib olish",
+    "buyNow": "Batafsil",
+    "buy": "Batafsil",
+    "detailsPlaceholder": "Mahsulotning tarkibi, qo‘llash usuli va foydali xususiyatlari haqida ma’lumot shu yerga qo‘shiladi.",
     "allTitle": "Barcha mahsulotlarimizni ko'ring"
   },
   "result": {
@@ -86,11 +117,31 @@
     "description": "Sifatli parvarish, qulay servis va sizni yana bizga qaytaradigan natija.",
     "hoverLabel": "Aloqa",
     "items": [
-      { "id": "01", "title": "Premium sifat", "service": "Shveytsariyadan import qilinadigan, dunyo bo'yicha TOP-3 qatoriga kiruvchi premium parvarish mahsulotlari." },
-      { "id": "02", "title": "Shaxsiy konsultatsiya", "service": "Teringizni o'rganib, aynan sizga mos parvarish va mahsulotlarni tavsiya qilamiz." },
-      { "id": "03", "title": "Tezkor yetkazib berish", "service": "Buyurtmangizni Toshkent bo'ylab tez va qulay tarzda yetkazib beramiz." },
-      { "id": "04", "title": "100 000+ mamnun mijoz", "service": "100 mingdan ortiq mijoz kundalik parvarishi uchun MIO Beauty'ni tanlagan." },
-      { "id": "05", "title": "Doimiy natija", "service": "To'g'ri tanlangan parvarish va sifatli mahsulotlar bilan sog'lom va chiroyli teriga erishishingizga yordam beramiz." }
+      {
+        "id": "01",
+        "title": "Premium sifat",
+        "service": "Shveytsariyadan import qilinadigan, dunyo bo'yicha TOP-3 qatoriga kiruvchi premium parvarish mahsulotlari."
+      },
+      {
+        "id": "02",
+        "title": "Shaxsiy konsultatsiya",
+        "service": "Teringizni o'rganib, aynan sizga mos parvarish va mahsulotlarni tavsiya qilamiz."
+      },
+      {
+        "id": "03",
+        "title": "Tezkor yetkazib berish",
+        "service": "Buyurtmangizni Toshkent bo'ylab tez va qulay tarzda yetkazib beramiz."
+      },
+      {
+        "id": "04",
+        "title": "100 000+ mamnun mijoz",
+        "service": "100 mingdan ortiq mijoz kundalik parvarishi uchun MIO Beauty'ni tanlagan."
+      },
+      {
+        "id": "05",
+        "title": "Doimiy natija",
+        "service": "To'g'ri tanlangan parvarish va sifatli mahsulotlar bilan sog'lom va chiroyli teriga erishishingizga yordam beramiz."
+      }
     ]
   },
   "composition": {
@@ -100,10 +151,22 @@
     "contactCta": "Contact",
     "contactAria": "Konsultatsiya bo'limiga o'tish",
     "features": [
-      { "title": "Oliy darajadagi sifat", "text": "Xalqaro dermatologlar va kosmetologiya ekspertlarining ishonchini qozongan mahsulot." },
-      { "title": "Sezuvchan teriga mos", "text": "Terini quritmaydi va ziyon yetkazmaydi. Nozik yuzlar uchun mukammal tanlov." },
-      { "title": "Yevropadan keltirilgan tarkib", "text": "Teringiz parvarishi uchun zarur bo'lgan barcha tabiiy va foydali ingredientlar to'g'ridan-to'g'ri Yevropadan import qilinadi." },
-      { "title": "Ekologik toza va xavfsiz", "text": "Tarkibning 97,8% qismi ekologik toza. Hech qanday ortiqcha va zararli kimyosiz sof parvarish." }
+      {
+        "title": "Oliy darajadagi sifat",
+        "text": "Xalqaro dermatologlar va kosmetologiya ekspertlarining ishonchini qozongan mahsulot."
+      },
+      {
+        "title": "Sezuvchan teriga mos",
+        "text": "Terini quritmaydi va ziyon yetkazmaydi. Nozik yuzlar uchun mukammal tanlov."
+      },
+      {
+        "title": "Yevropadan keltirilgan tarkib",
+        "text": "Teringiz parvarishi uchun zarur bo'lgan barcha tabiiy va foydali ingredientlar to'g'ridan-to'g'ri Yevropadan import qilinadi."
+      },
+      {
+        "title": "Ekologik toza va xavfsiz",
+        "text": "Tarkibning 97,8% qismi ekologik toza. Hech qanday ortiqcha va zararli kimyosiz sof parvarish."
+      }
     ]
   },
   "reviews": {
@@ -170,9 +233,18 @@
     "title": "Asosiy savollarga javoblar",
     "description": "Barcha suratlar parvarish kursidan keyingi mijozlarimizga tegishli",
     "items": [
-      { "title": "Narxi qancha?", "content": "Mahsulot va parvarish to‘plamlarining narxi tanlangan vositalar hamda terining ehtiyojiga qarab farq qiladi. Har bir mijozga bir xil mahsulotlarni tavsiya qilmaymiz, chunki terining turi, holati, mavjud muammolari va parvarishdan kutayotgan natijasi har xil bo‘lishi mumkin. Konsultatsiya davomida avvalo teringizning ehtiyojlarini aniqlaymiz, shundan keyin sizga mos parvarish variantlarini tavsiya qilamiz. Siz tanlagan mahsulot yoki to‘plamning narxi haqida konsultatsiya vaqtida batafsil ma’lumot beriladi. Bizning maqsadimiz — shunchaki ko‘proq mahsulot tavsiya qilish emas, balki aynan teringizga kerak bo‘lgan parvarishni tanlashga yordam berish. Shu sababli keraksiz mahsulotlarni qo‘shmasdan, siz uchun qulay va tushunarli parvarish variantini shakllantirishga harakat qilamiz." },
-      { "title": "Mahsulotlar xavfsizmi?", "content": "Mahsulotlarimizning sifati va tarkibi bo‘yicha tasdiqlovchi hujjatlar mavjud. Biz uchun mahsulotning sifati, tarkibi va mijoz uchun xavfsiz hamda to‘g‘ri tanlanishi muhim. Har bir mahsulot haqida uning tarkibi, qo‘llash maqsadi va teriga ta’siri bo‘yicha batafsil ma’lumot beramiz. Mijoz mahsulot haqida savol tug‘ilganda, uning tarkibi va sifatini tasdiqlovchi hujjatlar bo‘yicha kerakli ma’lumotni konsultatsiya davomida olishi mumkin. Mahsulot tanlashda faqat uning nomi yoki tashqi ko‘rinishiga emas, balki tarkibi, vazifasi va teringizning ehtiyojiga mosligiga ham e’tibor beramiz. Shu orqali siz parvarishingizga qo‘shayotgan har bir mahsulot haqida yetarlicha ma’lumotga ega bo‘lishingizga yordam beramiz." },
-      { "title": "Qachon natija ko‘raman?", "content": "Birinchi o‘zgarishlar har bir insonda turlicha bo‘ladi va bu terining boshlang‘ich holati, mavjud muammolar hamda parvarishning muntazamligiga bog‘liq. Ba’zi mijozlarda dastlabki haftalardayoq terining namligi, yumshoqligi, silliqligi va umumiy ko‘rinishidagi ijobiy o‘zgarishlar sezilishi mumkin. Teri avvalgidan namroq, mayinroq va parvarishlanganroq ko‘rina boshlaydi. Ammo dog‘lar, pigmentatsiya, husnbuzar izlari, notekis teri rangi, kengaygan teshikchalar yoki qarish belgilari kabi muammolarni yaxshilash uchun ko‘proq vaqt va muntazam parvarish talab qilinishi mumkin. Chunki bunday muammolar bir kunda paydo bo‘lmagan va ularning ko‘rinishini yaxshilash ham bosqichma-bosqich kechadi. Natijani tezlashtirish uchun mahsulotlarni ko‘p miqdorda ishlatish shart emas. Aksincha, mahsulotlarni tavsiya qilingan tartibda, to‘g‘ri miqdorda va muntazam qo‘llash muhim. Shuningdek, parvarish davomida terining holatini kuzatib borish kerak: terining ehtiyoji o‘zgargan sari parvarish ham moslashtirilishi mumkin. Har bir terining reaksiyasi individual bo‘lgani sababli aniq natijani ma’lum bir kunda va’da qilish to‘g‘ri emas. Barqaror natija uchun muntazamlik, to‘g‘ri tanlangan mahsulotlar va sabr muhim. Bizning maqsadimiz — sizga shunchaki mahsulot tavsiya qilish emas, balki parvarish jarayonida teringizni to‘g‘ri va izchil parvarish qilishga yordam berish." }
+      {
+        "title": "Narxi qancha?",
+        "content": "Mahsulot va parvarish to‘plamlarining narxi tanlangan vositalar hamda terining ehtiyojiga qarab farq qiladi. Har bir mijozga bir xil mahsulotlarni tavsiya qilmaymiz, chunki terining turi, holati, mavjud muammolari va parvarishdan kutayotgan natijasi har xil bo‘lishi mumkin. Konsultatsiya davomida avvalo teringizning ehtiyojlarini aniqlaymiz, shundan keyin sizga mos parvarish variantlarini tavsiya qilamiz. Siz tanlagan mahsulot yoki to‘plamning narxi haqida konsultatsiya vaqtida batafsil ma’lumot beriladi. Bizning maqsadimiz — shunchaki ko‘proq mahsulot tavsiya qilish emas, balki aynan teringizga kerak bo‘lgan parvarishni tanlashga yordam berish. Shu sababli keraksiz mahsulotlarni qo‘shmasdan, siz uchun qulay va tushunarli parvarish variantini shakllantirishga harakat qilamiz."
+      },
+      {
+        "title": "Mahsulotlar xavfsizmi?",
+        "content": "Mahsulotlarimizning sifati va tarkibi bo‘yicha tasdiqlovchi hujjatlar mavjud. Biz uchun mahsulotning sifati, tarkibi va mijoz uchun xavfsiz hamda to‘g‘ri tanlanishi muhim. Har bir mahsulot haqida uning tarkibi, qo‘llash maqsadi va teriga ta’siri bo‘yicha batafsil ma’lumot beramiz. Mijoz mahsulot haqida savol tug‘ilganda, uning tarkibi va sifatini tasdiqlovchi hujjatlar bo‘yicha kerakli ma’lumotni konsultatsiya davomida olishi mumkin. Mahsulot tanlashda faqat uning nomi yoki tashqi ko‘rinishiga emas, balki tarkibi, vazifasi va teringizning ehtiyojiga mosligiga ham e’tibor beramiz. Shu orqali siz parvarishingizga qo‘shayotgan har bir mahsulot haqida yetarlicha ma’lumotga ega bo‘lishingizga yordam beramiz."
+      },
+      {
+        "title": "Qachon natija ko‘raman?",
+        "content": "Birinchi o‘zgarishlar har bir insonda turlicha bo‘ladi va bu terining boshlang‘ich holati, mavjud muammolar hamda parvarishning muntazamligiga bog‘liq. Ba’zi mijozlarda dastlabki haftalardayoq terining namligi, yumshoqligi, silliqligi va umumiy ko‘rinishidagi ijobiy o‘zgarishlar sezilishi mumkin. Teri avvalgidan namroq, mayinroq va parvarishlanganroq ko‘rina boshlaydi. Ammo dog‘lar, pigmentatsiya, husnbuzar izlari, notekis teri rangi, kengaygan teshikchalar yoki qarish belgilari kabi muammolarni yaxshilash uchun ko‘proq vaqt va muntazam parvarish talab qilinishi mumkin. Chunki bunday muammolar bir kunda paydo bo‘lmagan va ularning ko‘rinishini yaxshilash ham bosqichma-bosqich kechadi. Natijani tezlashtirish uchun mahsulotlarni ko‘p miqdorda ishlatish shart emas. Aksincha, mahsulotlarni tavsiya qilingan tartibda, to‘g‘ri miqdorda va muntazam qo‘llash muhim. Shuningdek, parvarish davomida terining holatini kuzatib borish kerak: terining ehtiyoji o‘zgargan sari parvarish ham moslashtirilishi mumkin. Har bir terining reaksiyasi individual bo‘lgani sababli aniq natijani ma’lum bir kunda va’da qilish to‘g‘ri emas. Barqaror natija uchun muntazamlik, to‘g‘ri tanlangan mahsulotlar va sabr muhim. Bizning maqsadimiz — sizga shunchaki mahsulot tavsiya qilish emas, balki parvarish jarayonida teringizni to‘g‘ri va izchil parvarish qilishga yordam berish."
+      }
     ]
   },
   "consultation": {
@@ -234,19 +306,32 @@
       {
         "year": "2022",
         "title": "MIO yo'li kichik, lekin aniq g'oya bilan boshlandi.",
-        "titleLines": ["MIO yo'li kichik,", "lekin aniq g'oya", "bilan boshlandi."],
+        "titleLines": [
+          "MIO yo'li kichik,",
+          "lekin aniq g'oya",
+          "bilan boshlandi."
+        ],
         "description": "Birinchi bosqichda biz teri muammolarini o'rganib, mijozlarga mos parvarish tizimini shakllantirdik. E'tibor faqat chiroyli qadoqqa emas, real natijaga qaratildi."
       },
       {
         "year": "2023",
         "title": "Brend ishga tushdi va ilk mijozlar natijani darhol sezishni boshladi.",
-        "titleLines": ["Brend ishga tushdi", "va ilk mijozlar", "natijani darhol", "sezishni boshladi."],
+        "titleLines": [
+          "Brend ishga tushdi",
+          "va ilk mijozlar",
+          "natijani darhol",
+          "sezishni boshladi."
+        ],
         "description": "Mahsulotlar kundalik foydalanishga moslandi, maslahat berish jarayoni esa xizmatning muhim qismiga aylandi. Shu yilda MIO atrofida ishonchli auditoriya shakllandi."
       },
       {
         "year": "2024",
         "title": "Assortiment kengaydi, natijalar esa yanada tizimli bo'ldi.",
-        "titleLines": ["Assortiment kengaydi,", "natijalar esa yanada", "tizimli bo'ldi."],
+        "titleLines": [
+          "Assortiment kengaydi,",
+          "natijalar esa yanada",
+          "tizimli bo'ldi."
+        ],
         "description": "Turli teri ehtiyojlari uchun alohida yechimlar paydo bo'ldi. Mijozlar bizni faqat mahsulot uchun emas, to'g'ri yo'nalish beradigan yondashuv uchun ham tanlay boshlashdi."
       },
       {
@@ -258,7 +343,12 @@
       {
         "year": "2026",
         "title": "Bugun MIO parvarishni oson, estetik va natijador qiladi.",
-        "titleLines": ["Bugun MIO", "parvarishni oson,", "estetik va", "natijador qiladi."],
+        "titleLines": [
+          "Bugun MIO",
+          "parvarishni oson,",
+          "estetik va",
+          "natijador qiladi."
+        ],
         "description": "Bizning maqsad o'zgarmadi: har bir odamga o'z terisi uchun to'g'ri yo'lni topishga yordam berish. Brend o'smoqda, lekin markazda hamon odam va uning natijasi turibdi."
       }
     ]

@@ -8,10 +8,11 @@ export default function ConsultationModal({
   isOpen,
   onClose,
   imageSrc,
+  product = null,
   prefersReducedMotion = false,
   originRect = null,
 }) {
-  const { t } = useI18n();
+  const { language, t } = useI18n();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("+998 ");
   const [submitStatus, setSubmitStatus] = useState("idle");
@@ -327,25 +328,6 @@ export default function ConsultationModal({
           0,
         )
         .to(
-          imageWrap ?? [],
-          {
-            autoAlpha: 0,
-            x: -20,
-            duration: 0.16,
-            ease: "power2.inOut",
-          },
-          0.02,
-        )
-        .to(
-          image ?? [],
-          {
-            scale: 1.08,
-            duration: 0.16,
-            ease: "power2.inOut",
-          },
-          0,
-        )
-        .to(
           panel,
           {
             x: translateX,
@@ -430,7 +412,7 @@ export default function ConsultationModal({
           <div className="grid h-full grid-cols-1 md:grid-cols-2">
             <div
               ref={imageWrapRef}
-              className="relative hidden md:block md:h-full"
+              className="relative block h-64 md:h-full"
             >
               <img
                 ref={imageRef}
@@ -450,55 +432,66 @@ export default function ConsultationModal({
                 ref={titleRef}
                 className="mb-6 text-[26px] font-semibold leading-[120%] text-black md:text-[32px]"
               >
-                {t("modal.title")}
+                {product?.title ?? t("modal.title")}
               </h3>
 
-              <form ref={formRef} className="flex w-full flex-col gap-6" onSubmit={handleSubmit}>
-                <div className="flex flex-col gap-4">
-                  <label className="block">
-                    <span className="text-sm font-medium text-black">
-                      {t("modal.name")}
-                    </span>
-                    <input
-                      ref={firstFieldRef}
-                      type="text"
-                      placeholder={t("modal.namePlaceholder")}
-                      value={name}
-                      onChange={(event) => {
-                        setName(event.target.value);
-                        if (submitStatus === "error") setSubmitStatus("idle");
-                      }}
-                      className="mt-2 h-9 w-full rounded-lg border border-[#CCCCCC] bg-white/86 px-4 text-black outline-none focus:border-black/30"
-                    />
-                  </label>
-                  <label className="mb-5 block">
-                    <span className="text-sm font-medium text-black">
-                      {t("modal.phone")}
-                    </span>
-                    <input
-                      ref={phoneFieldRef}
-                      type="tel"
-                      inputMode="tel"
-                      placeholder={t("modal.phonePlaceholder")}
-                      value={phone}
-                      onChange={handlePhoneChange}
-                      onFocus={handlePhoneFocus}
-                      className="mt-2 h-9 w-full rounded-lg border border-[#CCCCCC] bg-white/86 px-4 text-black outline-none focus:border-black/30"
-                    />
-                  </label>
+              {product ? (
+                <div ref={formRef} className="flex w-full flex-col gap-5">
+                  <p className="text-[15px] leading-[1.5] text-[#5F5B57] md:text-[17px]">
+                    {product.details?.[language] ?? product.details?.en}
+                  </p>
+                  <div className="rounded-2xl border border-black/10 bg-white/45 p-4 text-sm leading-[1.5] text-[#77716B]">
+                    {t("products.detailsPlaceholder")}
+                  </div>
                 </div>
+              ) : (
+                <form ref={formRef} className="flex w-full flex-col gap-6" onSubmit={handleSubmit}>
+                  <div className="flex flex-col gap-4">
+                    <label className="block">
+                      <span className="text-sm font-medium text-black">
+                        {t("modal.name")}
+                      </span>
+                      <input
+                        ref={firstFieldRef}
+                        type="text"
+                        placeholder={t("modal.namePlaceholder")}
+                        value={name}
+                        onChange={(event) => {
+                          setName(event.target.value);
+                          if (submitStatus === "error") setSubmitStatus("idle");
+                        }}
+                        className="mt-2 h-9 w-full rounded-lg border border-[#CCCCCC] bg-white/86 px-4 text-black outline-none focus:border-black/30"
+                      />
+                    </label>
+                    <label className="mb-5 block">
+                      <span className="text-sm font-medium text-black">
+                        {t("modal.phone")}
+                      </span>
+                      <input
+                        ref={phoneFieldRef}
+                        type="tel"
+                        inputMode="tel"
+                        placeholder={t("modal.phonePlaceholder")}
+                        value={phone}
+                        onChange={handlePhoneChange}
+                        onFocus={handlePhoneFocus}
+                        className="mt-2 h-9 w-full rounded-lg border border-[#CCCCCC] bg-white/86 px-4 text-black outline-none focus:border-black/30"
+                      />
+                    </label>
+                  </div>
 
-                <button
-                  type="submit"
-                  disabled={submitStatus === "loading"}
-                  className="inline-flex h-11 w-full cursor-pointer items-center justify-center rounded-lg bg-[#1D1B19] px-6 font-normal text-white disabled:cursor-wait disabled:opacity-70"
-                >
-                  {submitStatus === "loading" ? "..." : t("modal.cta")}
-                </button>
-                {submitStatus === "error" && (
-                  <p className="-mt-3 text-sm text-red-600">{t("modal.validationError")}</p>
-                )}
-              </form>
+                  <button
+                    type="submit"
+                    disabled={submitStatus === "loading"}
+                    className="inline-flex h-11 w-full cursor-pointer items-center justify-center rounded-lg bg-[#1D1B19] px-6 font-normal text-white disabled:cursor-wait disabled:opacity-70"
+                  >
+                    {submitStatus === "loading" ? "..." : t("modal.cta")}
+                  </button>
+                  {submitStatus === "error" && (
+                    <p className="-mt-3 text-sm text-red-600">{t("modal.validationError")}</p>
+                  )}
+                </form>
+              )}
             </div>
           </div>
         </div>
