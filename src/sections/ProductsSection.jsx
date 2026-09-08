@@ -6,6 +6,9 @@ import { useI18n } from "../i18n/I18nProvider.jsx";
 import products from "../data/products.js";
 import ConsultationModal from "../components/ConsultationModal.jsx";
 
+// Temporarily disable product card modals while keeping the functionality available.
+const productDetailsEnabled = false;
+
 const featuredVisuals = [
   "from-[#FFF2EC] via-[#FFE4DA] to-[#FFD0C1]",
   "from-[#F4F4F3] via-[#EEF2F6] to-[#DFE8F3]",
@@ -24,8 +27,8 @@ function FeaturedProductCard({
 }) {
   return (
     <article
-      className="group cursor-pointer overflow-hidden border border-[#0000000D] bg-white"
-      onClick={(event) => onDetails?.(event.currentTarget)}
+      className="group overflow-hidden border border-[#0000000D] bg-white"
+      onClick={onDetails ? (event) => onDetails(event.currentTarget) : undefined}
     >
       <div
         className={`relative isolate flex aspect-[0.92] items-center justify-center overflow-hidden bg-gradient-to-b sm:aspect-[1/1.02] lg:aspect-[1/1.05] ${accentClassName} before:absolute before:inset-auto before:bottom-[12%] before:left-1/2 before:h-34 before:w-34 before:-translate-x-1/2 before:rounded-full before:blur-[12px] sm:before:h-42 sm:before:w-42 lg:before:h-50 lg:before:w-50`}
@@ -53,16 +56,13 @@ function FeaturedProductCard({
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={(event) => {
-            event.stopPropagation();
-            onDetails?.(event.currentTarget);
-          }}
-          className={`w-full cursor-pointer rounded-full px-5 py-3 text-[14px] leading-none font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-4 sm:text-[15px] lg:text-[16px] ${buttonClassName}`}
+        <a
+          href="#contact"
+          onClick={(event) => event.stopPropagation()}
+          className={`block w-full cursor-pointer text-center rounded-full px-5 py-3 text-[14px] leading-none font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-4 sm:text-[15px] lg:text-[16px] ${buttonClassName}`}
         >
           {buyNowLabel}
-        </button>
+        </a>
       </div>
     </article>
   );
@@ -71,8 +71,8 @@ function FeaturedProductCard({
 function ProductCard({ title, description, image, imageClassName, buyLabel, onDetails }) {
   return (
     <article
-      className="group flex h-full min-w-0 cursor-pointer flex-col transition-transform duration-300 md:hover:-translate-y-1"
-      onClick={(event) => onDetails?.(event.currentTarget)}
+      className="group flex h-full min-w-0 flex-col transition-transform duration-300 md:hover:-translate-y-1"
+      onClick={onDetails ? (event) => onDetails(event.currentTarget) : undefined}
     >
       <div className="overflow-hidden rounded-[14px] bg-[#F7F1EC]">
         <img
@@ -95,16 +95,13 @@ function ProductCard({ title, description, image, imageClassName, buyLabel, onDe
         </div>
 
         <div className="mt-auto pt-6">
-          <button
-            type="button"
-            onClick={(event) => {
-              event.stopPropagation();
-              onDetails?.(event.currentTarget);
-            }}
-            className="w-full cursor-pointer rounded-full bg-[#F2F2F2] px-5 py-2.5 text-[12px] leading-none font-medium text-[#171717] opacity-100 transition-all duration-300 hover:bg-[#EBEBEB] md:translate-y-2 md:opacity-0 md:pointer-events-none md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-hover:pointer-events-auto md:focus-visible:translate-y-0 md:focus-visible:opacity-100 md:focus-visible:pointer-events-auto"
+          <a
+          href="#contact"
+          onClick={(event) => event.stopPropagation()}
+            className="block w-full cursor-pointer text-center rounded-full bg-[#F2F2F2] px-5 py-2.5 text-[12px] leading-none font-medium text-[#171717] opacity-100 transition-all duration-300 hover:bg-[#EBEBEB] md:translate-y-2 md:opacity-0 md:pointer-events-none md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-hover:pointer-events-auto md:focus-visible:translate-y-0 md:focus-visible:opacity-100 md:focus-visible:pointer-events-auto"
           >
             {buyLabel}
-          </button>
+          </a>
         </div>
       </div>
     </article>
@@ -220,7 +217,7 @@ export default function ProductsSection() {
               <FeaturedProductCard
                 key={product.id}
                 {...product}
-                onDetails={(trigger) => openProductDetails(product, trigger)}
+                onDetails={productDetailsEnabled ? (trigger) => openProductDetails(product, trigger) : undefined}
               />
             ))}
           </div>
@@ -286,7 +283,7 @@ export default function ProductsSection() {
                   >
                     <ProductCard
                       {...product}
-                      onDetails={(trigger) => openProductDetails(product, trigger)}
+                      onDetails={productDetailsEnabled ? (trigger) => openProductDetails(product, trigger) : undefined}
                     />
                   </div>
                 ))}
