@@ -292,7 +292,7 @@
     "name": "Имя",
     "namePlaceholder": "Ваше имя",
     "phone": "Телефон номер",
-    "phonePlaceholder": "+998",
+    "phonePlaceholder": "+7",
     "cta": "Получить консультацию",
     "validationError": "Введите имя и корректный номер телефона",
     "submitError": "Сообщение не отправлено. Попробуйте ещё раз",

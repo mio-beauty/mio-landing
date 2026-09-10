@@ -6,6 +6,7 @@ import consultationAltImg from "../assets/img/Consultation3.png";
 import checkFilledIconImg from "../assets/img/ic_check_filled.svg";
 import closeFilledIconImg from "../assets/img/ic_close_filled.svg";
 import errorIconImg from "../assets/img/ic_error.svg";
+import { formatPhone } from "../utils/phone.js";
 import { useI18n } from "../i18n/I18nProvider.jsx";
 
 export default function ConsultationSection() {
@@ -25,33 +26,17 @@ export default function ConsultationSection() {
     }
   }, [status]);
 
-  const formatPhone = (value) => {
-    let numbers = value.replace(/\D/g, "");
-    if (numbers.startsWith("998")) numbers = numbers.slice(3);
-    numbers = numbers.slice(0, 9);
-
-    if (numbers.length === 0) return "+998 ";
-
-    let formatted = "+998";
-    if (numbers.length > 0) formatted += " " + numbers.slice(0, 2);
-    if (numbers.length > 2) formatted += " " + numbers.slice(2, 5);
-    if (numbers.length > 5) formatted += " " + numbers.slice(5, 7);
-    if (numbers.length > 7) formatted += " " + numbers.slice(7, 9);
-
-    return formatted;
-  };
-
   const handlePhoneChange = (e) => {
     setForm((prev) => ({ ...prev, phone: formatPhone(e.target.value) }));
     if (errors.phone) setErrors((prev) => ({ ...prev, phone: false }));
   };
 
   const handlePhoneFocus = () => {
-    if (!form.phone) setForm((prev) => ({ ...prev, phone: "+998 " }));
+    if (!form.phone) setForm((prev) => ({ ...prev, phone: "+7 " }));
   };
 
   const handlePhoneBlur = () => {
-    if (form.phone === "+998 " || form.phone === "+998") {
+    if (form.phone === "+7 " || form.phone === "+7") {
       setForm((prev) => ({ ...prev, phone: "" }));
     }
   };
@@ -68,8 +53,8 @@ export default function ConsultationSection() {
       name: !form.name.trim(),
       phone:
         !form.phone.trim() ||
-        form.phone === "+998 " ||
-        phoneNumbers.length < 12,
+        form.phone === "+7 " ||
+        phoneNumbers.length !== 11,
     };
 
     setErrors(newErrors);

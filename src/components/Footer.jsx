@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import footerLogoImg from "../assets/img/Logo-footer.svg";
 import footerOrangeLogoImg from "../assets/img/Logo-footer-orange.svg";
+import { formatPhone } from "../utils/phone.js";
 import { useI18n } from "../i18n/I18nProvider.jsx";
 
 export default function Footer() {
@@ -12,22 +13,6 @@ export default function Footer() {
   const infoLinks = get("footer.infoLinks", []);
   const infoLinkTargets = ["#results", "#composition", "#reviews"];
 
-  const formatPhone = (value) => {
-    let numbers = value.replace(/\D/g, "");
-    if (numbers.startsWith("998")) numbers = numbers.slice(3);
-    numbers = numbers.slice(0, 9);
-
-    if (numbers.length === 0) return "+998 ";
-
-    let formatted = "+998";
-    if (numbers.length > 0) formatted += " " + numbers.slice(0, 2);
-    if (numbers.length > 2) formatted += " " + numbers.slice(2, 5);
-    if (numbers.length > 5) formatted += " " + numbers.slice(5, 7);
-    if (numbers.length > 7) formatted += " " + numbers.slice(7, 9);
-
-    return formatted;
-  };
-
   const handlePhoneChange = (e) => {
     setPhone(formatPhone(e.target.value));
     if (error) setError(false);
@@ -35,18 +20,18 @@ export default function Footer() {
 
   const handlePhoneFocus = () => {
     setFocused(true);
-    if (!phone) setPhone("+998 ");
+    if (!phone) setPhone("+7 ");
   };
 
   const handlePhoneBlur = () => {
     setFocused(false);
-    if (phone === "+998 " || phone === "+998") setPhone("");
+    if (phone === "+7 " || phone === "+7") setPhone("");
   };
 
   const handleSubmit = () => {
     const phoneNumbers = phone.replace(/\D/g, "");
 
-    if (!phone.trim() || phone === "+998 " || phoneNumbers.length < 12) {
+    if (!phone.trim() || phone === "+7 " || phoneNumbers.length !== 11) {
       setPhone("");
       setError(true);
       return;
@@ -58,7 +43,11 @@ export default function Footer() {
     const telegramText = encodeURIComponent(
       `Assalomu alaykum, konsultatsiya uchun raqamim: ${phone}`,
     );
-    window.open(`https://t.me/miobeauty?text=${telegramText}`, "_blank", "noopener,noreferrer");
+    window.open(
+      `https://t.me/miobeauty?text=${telegramText}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
   };
 
   return (
@@ -86,18 +75,39 @@ export default function Footer() {
             <ul className="flex flex-col gap-3 text-sm">
               <li className="font-semibold">{t("footer.contactsTitle")}</li>
               <li className="flex">
-                <a href="https://t.me/miobeauty" target="_blank" rel="noreferrer">Telegram</a>
+                <a
+                  href="https://t.me/miobeauty"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Telegram
+                </a>
                 <ArrowUpRight size={16} />
               </li>
               <li className="flex">
-                <a href="https://www.instagram.com/miobeautyuz/" target="_blank" rel="noreferrer">Instagram</a>
+                <a
+                  href="https://www.instagram.com/miobeautyuz/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Instagram
+                </a>
                 <ArrowUpRight size={16} />
               </li>
               <li className="flex">
-                <a href="https://www.facebook.com/miobeautyuz/" target="_blank" rel="noreferrer">Facebook</a>
+                <a
+                  href="https://www.facebook.com/miobeautyuz/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Facebook
+                </a>
                 <ArrowUpRight size={16} />
               </li>
-              <li>+998 90 001 04 44</li>
+              <li>
+                <a href="tel:+79653546677">+7 (965) 354-66-77</a>
+              </li>
+              <li>ООО «Дермалаб»</li>
             </ul>
           </div>
 
@@ -115,7 +125,7 @@ export default function Footer() {
                     className={`w-full rounded-full border-none bg-[#FFFFFF] px-3 py-2.5 outline-none ${
                       focused || phone ? "text-[#0B0B0B]" : "text-[#5F5F5F]"
                     }`}
-                    placeholder={!error ? "+998" : ""}
+                    placeholder={!error ? "+7" : ""}
                     type="text"
                     inputMode="tel"
                     value={phone}
@@ -126,7 +136,7 @@ export default function Footer() {
 
                   {error && !phone && !focused && (
                     <span className="pointer-events-none absolute left-3 top-2.5 text-sm text-[#5F5F5F]">
-                      +998<span className="text-red-500">*</span>
+                      +7<span className="text-red-500">*</span>
                     </span>
                   )}
                 </div>

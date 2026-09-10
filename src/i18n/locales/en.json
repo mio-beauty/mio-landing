@@ -280,7 +280,7 @@
     "name": "Name",
     "namePlaceholder": "Your name",
     "phone": "Phone number",
-    "phonePlaceholder": "+998",
+    "phonePlaceholder": "+7",
     "cta": "Get consultation",
     "validationError": "Enter your name and a valid phone number",
     "submitError": "Message was not sent. Please try again",

@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { formatPhone } from "../utils/phone.js";
 import { useI18n } from "../i18n/I18nProvider.jsx";
 import checkFilledIconImg from "../assets/img/ic_check_filled.svg";
 import closeFilledIconImg from "../assets/img/ic_close_filled.svg";
@@ -14,7 +15,7 @@ export default function ConsultationModal({
 }) {
   const { language, t } = useI18n();
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("+998 ");
+  const [phone, setPhone] = useState("+7 ");
   const [submitStatus, setSubmitStatus] = useState("idle");
   const firstFieldRef = useRef(null);
   const phoneFieldRef = useRef(null);
@@ -27,20 +28,6 @@ export default function ConsultationModal({
   const titleRef = useRef(null);
   const formRef = useRef(null);
   const tlRef = useRef(null);
-
-  const formatPhone = (value) => {
-    let numbers = value.replace(/\D/g, "");
-    if (numbers.startsWith("998")) numbers = numbers.slice(3);
-    numbers = numbers.slice(0, 9);
-
-    let formatted = "+998";
-    if (numbers.length > 0) formatted += " " + numbers.slice(0, 2);
-    if (numbers.length > 2) formatted += " " + numbers.slice(2, 5);
-    if (numbers.length > 5) formatted += " " + numbers.slice(5, 7);
-    if (numbers.length > 7) formatted += " " + numbers.slice(7, 9);
-
-    return formatted + (numbers.length === 0 ? " " : "");
-  };
 
   const handlePhoneChange = (e) => {
     setPhone(formatPhone(e.target.value));
@@ -57,7 +44,7 @@ export default function ConsultationModal({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!name.trim() || phone.replace(/\D/g, "").length < 12) {
+    if (!name.trim() || phone.replace(/\D/g, "").length !== 11) {
       setSubmitStatus("error");
       return;
     }
@@ -74,7 +61,7 @@ export default function ConsultationModal({
       if (!response.ok) throw new Error("Contact form request failed");
 
       setName("");
-      setPhone("+998 ");
+      setPhone("+7 ");
       setSubmitStatus("success");
     } catch {
       setSubmitStatus("failed");
