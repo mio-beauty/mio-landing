@@ -84,26 +84,7 @@ export default function Footer() {
                 </a>
                 <ArrowUpRight size={16} />
               </li>
-              <li className="flex">
-                <a
-                  href="https://www.instagram.com/miobeautyuz/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Instagram
-                </a>
-                <ArrowUpRight size={16} />
-              </li>
-              <li className="flex">
-                <a
-                  href="https://www.facebook.com/miobeautyuz/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Facebook
-                </a>
-                <ArrowUpRight size={16} />
-              </li>
+
               <li>
                 <a href="tel:+79653546677">+7 (965) 354-66-77</a>
               </li>
